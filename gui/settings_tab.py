@@ -1,223 +1,122 @@
-import time
-import threading
-import logging
-import win32com.client
-import win32api
-import win32con
-import wmi
-from PyQt5.QtCore import QObject, pyqtSignal
-from core.device import USBDevice
-from core.whitelist import Whitelist
+from PyQt5 import QtWidgets, QtCore, QtGui
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QCheckBox, QComboBox, QSpinBox
 
-class USBMonitor(QObject):  # Make USBMonitor inherit from QObject to support signals
-    # Define signals
-    device_connected = pyqtSignal(object)
-    device_disconnected = pyqtSignal(object)
-    
-    def __init__(self, whitelist=None, callback=None):
-        """
-        Initialize the USB monitor for Windows systems.
+class SettingsTab(QWidget):
+    def __init__(self, config, parent=None):
+        super().__init__(parent)  # Pass only parent to QWidget
+        self.config = config  # Store config as a separate attribute
+        self.init_ui()
         
-        Args:
-            whitelist: A Whitelist object for checking allowed devices
-            callback: A function to call when USB events are detected
-        """
-        super().__init__()  # Initialize QObject
-        self.whitelist = whitelist if whitelist else Whitelist()
-        self.callback = callback
-        self.running = False
-        self.thread = None
-        self.wmi = wmi.WMI()
-        self.logger = logging.getLogger('usbshield.monitor')
+    def init_ui(self):
+        # Main layout
+        layout = QVBoxLayout(self)
         
-    def start(self):
-        """Start monitoring USB devices."""
-        if self.running:
-            return
-            
-        self.running = True
-        self.thread = threading.Thread(target=self._monitor_thread, daemon=True)
-        self.thread.start()
-        self.logger.info("USB monitoring started")
+        # USB Protection Settings
+        protection_group = QtWidgets.QGroupBox("USB Protection Settings")
+        protection_layout = QVBoxLayout()
         
-        # Scan existing devices
-        self._scan_existing_devices()
+        # Enable USB Protection
+        self.enable_protection = QCheckBox("Enable USB Protection")
+        self.enable_protection.setChecked(True)
+        protection_layout.addWidget(self.enable_protection)
         
-    def stop(self):
-        """Stop monitoring USB devices."""
-        if not self.running:
-            return
-            
-        self.running = False
-        if self.thread:
-            self.thread.join(timeout=1.0)
-        self.logger.info("USB monitoring stopped")
+        # Block unauthorized devices
+        self.block_unauthorized = QCheckBox("Block Unauthorized Devices")
+        self.block_unauthorized.setChecked(True)
+        protection_layout.addWidget(self.block_unauthorized)
         
-    def _monitor_thread(self):
-        """Thread function to monitor USB device events."""
-        watcher = self.wmi.watch_for(
-            notification_type="Creation",
-            wmi_class="Win32_USBControllerDevice",
-            delay_secs=1
-        )
+        # Notification settings
+        notification_layout = QHBoxLayout()
+        notification_layout.addWidget(QLabel("Notification Type:"))
+        self.notification_type = QComboBox()
+        self.notification_type.addItems(["Silent", "Toast", "Dialog"])
+        notification_layout.addWidget(self.notification_type)
+        protection_layout.addLayout(notification_layout)
         
-        removal_watcher = self.wmi.watch_for(
-            notification_type="Deletion",
-            wmi_class="Win32_USBControllerDevice",
-            delay_secs=1
-        )
+        protection_group.setLayout(protection_layout)
+        layout.addWidget(protection_group)
         
-        while self.running:
-            try:
-                # Check for new devices
-                usb_device = watcher(timeout_ms=500)
-                if usb_device:
-                    self._handle_device_added()
-                    
-                # Check for removed devices    
-                usb_removed = removal_watcher(timeout_ms=500)
-                if usb_removed:
-                    self._handle_device_removed()
-                    
-                time.sleep(0.5)  # Small sleep to reduce CPU usage
-            except wmi.x_wmi_timed_out:
-                continue
-            except Exception as e:
-                self.logger.error(f"Error in USB monitoring thread: {e}")
-                time.sleep(1)  # Sleep longer on error
+        # Whitelist Settings
+        whitelist_group = QtWidgets.QGroupBox("Whitelist Settings")
+        whitelist_layout = QVBoxLayout()
         
-    def _handle_device_added(self):
-        """Handle a USB device being added."""
-        devices = self._get_current_devices()
-        for device in devices:
-            # Check if we've seen this device before (simple approach)
-            device_id = device.get_identifier()
-            allowed = self.whitelist.is_allowed(device)
-            
-            self.logger.info(f"Device connected: {device}")
-            
-            # Emit the signal
-            event_data = {
-                'action': 'connected',
-                'device': device,
-                'allowed': allowed
-            }
-            self.device_connected.emit(event_data)
-            
-            if self.callback:
-                self.callback(event_data)
-    
-    def _handle_device_removed(self):
-        """Handle a USB device being removed."""
-        # In Windows, we don't get specific information about which device was removed
-        # We can just notify that a device was removed
-        event_data = {
-            'action': 'disconnected',
-            'device': None
-        }
+        # Auto-approve settings
+        self.auto_approve = QCheckBox("Auto-approve devices from same manufacturer")
+        whitelist_layout.addWidget(self.auto_approve)
         
-        # Emit the signal
-        self.device_disconnected.emit(event_data)
+        # History settings
+        history_layout = QHBoxLayout()
+        history_layout.addWidget(QLabel("Keep device history (days):"))
+        self.history_days = QSpinBox()
+        self.history_days.setRange(1, 365)
+        self.history_days.setValue(30)
+        history_layout.addWidget(self.history_days)
+        whitelist_layout.addLayout(history_layout)
         
-        if self.callback:
-            self.callback(event_data)
-    
-    def _scan_existing_devices(self):
-        """Scan and process existing USB devices."""
-        devices = self._get_current_devices()
-        for device in devices:
-            allowed = self.whitelist.is_allowed(device)
-            
-            self.logger.info(f"Existing device: {device} (Allowed: {allowed})")
-            
-            # Emit signal for existing devices
-            event_data = {
-                'action': 'existing',
-                'device': device,
-                'allowed': allowed
-            }
-            self.device_connected.emit(event_data)
-            
-            if self.callback:
-                self.callback(event_data)
-    
-    def _get_current_devices(self):
-        """
-        Get a list of current USB devices.
+        whitelist_group.setLayout(whitelist_layout)
+        layout.addWidget(whitelist_group)
         
-        Returns:
-            list: List of USBDevice objects
-        """
-        devices = []
+        # Advanced settings
+        advanced_group = QtWidgets.QGroupBox("Advanced Settings")
+        advanced_layout = QVBoxLayout()
         
-        # Get all USB devices
-        usb_devices = self.wmi.Win32_USBHub()
-        pnp_devices = self.wmi.Win32_PnPEntity()
+        # Logging settings
+        self.enable_logging = QCheckBox("Enable detailed logging")
+        self.enable_logging.setChecked(True)
+        advanced_layout.addWidget(self.enable_logging)
         
-        for usb in usb_devices:
-            # Get more info from PnP entities
-            for pnp in pnp_devices:
-                if pnp.PNPDeviceID and usb.DeviceID in pnp.PNPDeviceID:
-                    # Extract VID and PID from the PNP ID
-                    vid, pid = self._extract_vid_pid(pnp.PNPDeviceID)
-                    if vid and pid:
-                        device = USBDevice(
-                            vendor_id=vid,
-                            product_id=pid,
-                            serial=self._extract_serial(pnp.PNPDeviceID),
-                            manufacturer=pnp.Manufacturer,
-                            product=pnp.Caption
-                        )
-                        devices.append(device)
-                        break
+        # Startup settings
+        self.start_with_windows = QCheckBox("Start with Windows")
+        self.start_with_windows.setChecked(True)
+        advanced_layout.addWidget(self.start_with_windows)
         
-        return devices
-    
-    def _extract_vid_pid(self, pnp_id):
-        """
-        Extract Vendor ID and Product ID from a PnP Device ID.
+        # Silent mode
+        self.silent_mode = QCheckBox("Silent Mode (no notifications)")
+        advanced_layout.addWidget(self.silent_mode)
         
-        Args:
-            pnp_id: PnP Device ID string
-            
-        Returns:
-            tuple: (vid, pid) or (None, None) if not found
-        """
+        advanced_group.setLayout(advanced_layout)
+        layout.addWidget(advanced_group)
+        
+        # Add spacer
+        layout.addStretch()
+        
+        # Save/Cancel buttons
+        button_layout = QHBoxLayout()
+        self.save_button = QPushButton("Save Settings")
+        self.cancel_button = QPushButton("Cancel")
+        button_layout.addWidget(self.save_button)
+        button_layout.addWidget(self.cancel_button)
+        layout.addLayout(button_layout)
+        
+        # Connect signals
+        self.save_button.clicked.connect(self.save_settings)
+        self.cancel_button.clicked.connect(self.cancel_changes)
+        
+        # Load settings from config
+        self.load_settings()
+        
+    def load_settings(self):
+        """Load settings from config"""
         try:
-            # Format is usually like "USB\VID_1234&PID_5678\..."
-            if "VID_" in pnp_id and "PID_" in pnp_id:
-                vid_start = pnp_id.find("VID_") + 4
-                vid_end = pnp_id.find("&", vid_start)
-                vid = pnp_id[vid_start:vid_end]
-                
-                pid_start = pnp_id.find("PID_") + 4
-                pid_end = pnp_id.find("\\", pid_start)
-                if pid_end == -1:  # End of string
-                    pid_end = len(pnp_id)
-                pid = pnp_id[pid_start:pid_end]
-                
-                return vid, pid
-        except Exception as e:
-            self.logger.error(f"Error extracting VID/PID: {e}")
-        
-        return None, None
-        
-    def _extract_serial(self, pnp_id):
-        """
-        Extract serial number from a PnP Device ID.
-        
-        Args:
-            pnp_id: PnP Device ID string
-            
-        Returns:
-            str: Serial number or empty string if not found
-        """
-        try:
-            # Format is usually like "USB\VID_1234&PID_5678\1234567890"
-            parts = pnp_id.split("\\")
-            if len(parts) >= 3:
-                return parts[2]
-        except Exception:
+            # Here you would load settings from self.config
+            # For example:
+            # self.enable_protection.setChecked(self.config.get('enable_protection', True))
             pass
+        except Exception as e:
+            print(f"Error loading settings: {e}")
         
-        return ""
+    def save_settings(self):
+        """Save settings to config"""
+        try:
+            # Here you would save settings to self.config
+            # For example:
+            # self.config.set('enable_protection', self.enable_protection.isChecked())
+            # self.config.save()
+            print("Settings saved")
+        except Exception as e:
+            print(f"Error saving settings: {e}")
+        
+    def cancel_changes(self):
+        # Here you would revert any changes
+        self.load_settings()
+        print("Changes canceled")

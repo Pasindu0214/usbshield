@@ -5,10 +5,15 @@ import win32com.client
 import win32api
 import win32con
 import wmi
+from PyQt5.QtCore import QObject, pyqtSignal
 from core.device import USBDevice
 from core.whitelist import Whitelist
 
-class USBMonitor:
+class USBMonitor(QObject):  # Make USBMonitor inherit from QObject to support signals
+    # Define signals
+    device_connected = pyqtSignal(object)
+    device_disconnected = pyqtSignal(object)
+    
     def __init__(self, whitelist=None, callback=None):
         """
         Initialize the USB monitor for Windows systems.
@@ -17,6 +22,7 @@ class USBMonitor:
             whitelist: A Whitelist object for checking allowed devices
             callback: A function to call when USB events are detected
         """
+        super().__init__()  # Initialize QObject
         self.whitelist = whitelist if whitelist else Whitelist()
         self.callback = callback
         self.running = False
@@ -90,22 +96,31 @@ class USBMonitor:
             
             self.logger.info(f"Device connected: {device}")
             
+            # Emit the signal
+            event_data = {
+                'action': 'connected',
+                'device': device,
+                'allowed': allowed
+            }
+            self.device_connected.emit(event_data)
+            
             if self.callback:
-                self.callback({
-                    'action': 'connected',
-                    'device': device,
-                    'allowed': allowed
-                })
+                self.callback(event_data)
     
     def _handle_device_removed(self):
         """Handle a USB device being removed."""
         # In Windows, we don't get specific information about which device was removed
         # We can just notify that a device was removed
+        event_data = {
+            'action': 'disconnected',
+            'device': None
+        }
+        
+        # Emit the signal
+        self.device_disconnected.emit(event_data)
+        
         if self.callback:
-            self.callback({
-                'action': 'disconnected',
-                'device': None
-            })
+            self.callback(event_data)
     
     def _scan_existing_devices(self):
         """Scan and process existing USB devices."""
@@ -115,12 +130,16 @@ class USBMonitor:
             
             self.logger.info(f"Existing device: {device} (Allowed: {allowed})")
             
+            # Emit signal for existing devices
+            event_data = {
+                'action': 'existing',
+                'device': device,
+                'allowed': allowed
+            }
+            self.device_connected.emit(event_data)
+            
             if self.callback:
-                self.callback({
-                    'action': 'existing',
-                    'device': device,
-                    'allowed': allowed
-                })
+                self.callback(event_data)
     
     def _get_current_devices(self):
         """
