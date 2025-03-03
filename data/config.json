@@ -1,0 +1,20 @@
+{
+    "auto_scan": true,
+    "block_unknown_devices": true,
+    "quarantine_malicious_files": true,
+    "scan_all_files": true,
+    "log_level": "INFO",
+    "scan_extensions": [
+        ".exe",
+        ".dll",
+        ".pdf",
+        ".doc",
+        ".docx",
+        ".xls",
+        ".xlsx",
+        ".ppt",
+        ".pptx",
+        ".zip",
+        ".rar"
+    ]
+}

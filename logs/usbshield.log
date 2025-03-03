@@ -1,0 +1,9 @@
+2025-03-03 21:51:37,520 - usbshield - INFO - Starting USBShield application
+2025-03-03 21:51:37,521 - usbshield - ERROR - Error loading configuration: Expecting value: line 1 column 1 (char 0)
+2025-03-03 21:51:37,521 - usbshield - INFO - Configuration saved successfully
+2025-03-03 21:51:37,521 - usbshield - ERROR - Error loading whitelist: Expecting value: line 1 column 1 (char 0)
+2025-03-03 21:51:37,686 - usbshield - ERROR - Error loading YARA rules: yara_rules\usb_malware.yar(2): unterminated regular expression
+2025-03-03 21:52:44,222 - usbshield - INFO - Starting USBShield application
+2025-03-03 21:52:44,233 - usbshield - INFO - Configuration loaded successfully
+2025-03-03 21:52:44,233 - usbshield - ERROR - Error loading whitelist: Expecting value: line 1 column 1 (char 0)
+2025-03-03 21:52:44,296 - usbshield - ERROR - Error loading YARA rules: yara_rules\usb_malware.yar(2): unterminated regular expression
