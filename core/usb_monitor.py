@@ -1,15 +1,12 @@
 import time
 import threading
 import logging
-import win32com.client
-import win32api
-import win32con
 import wmi
 from PyQt5.QtCore import QObject, pyqtSignal
 from core.device import USBDevice
 from core.whitelist import Whitelist
 
-class USBMonitor(QObject):  # Make USBMonitor inherit from QObject to support signals
+class USBMonitor(QObject):
     # Define signals
     device_connected = pyqtSignal(object)
     device_disconnected = pyqtSignal(object)
@@ -27,7 +24,6 @@ class USBMonitor(QObject):  # Make USBMonitor inherit from QObject to support si
         self.callback = callback
         self.running = False
         self.thread = None
-        self.wmi = wmi.WMI()
         self.logger = logging.getLogger('usbshield.monitor')
         
     def start(self):
@@ -41,7 +37,10 @@ class USBMonitor(QObject):  # Make USBMonitor inherit from QObject to support si
         self.logger.info("USB monitoring started")
         
         # Scan existing devices
-        self._scan_existing_devices()
+        try:
+            self._scan_existing_devices()
+        except Exception as e:
+            self.logger.error(f"Error scanning existing devices: {e}")
         
     def stop(self):
         """Stop monitoring USB devices."""
@@ -55,57 +54,99 @@ class USBMonitor(QObject):  # Make USBMonitor inherit from QObject to support si
         
     def _monitor_thread(self):
         """Thread function to monitor USB device events."""
-        watcher = self.wmi.watch_for(
-            notification_type="Creation",
-            wmi_class="Win32_USBControllerDevice",
-            delay_secs=1
-        )
-        
-        removal_watcher = self.wmi.watch_for(
-            notification_type="Deletion",
-            wmi_class="Win32_USBControllerDevice",
-            delay_secs=1
-        )
-        
-        while self.running:
-            try:
-                # Check for new devices
-                usb_device = watcher(timeout_ms=500)
-                if usb_device:
-                    self._handle_device_added()
+        try:
+            # Create a new WMI connection in this thread
+            w = wmi.WMI()
+            
+            # Set up device insertion event watcher
+            device_creation = w.Win32_DeviceChangeEvent.watch_for(
+                EventType=2  # Creation
+            )
+            
+            # Set up device removal event watcher
+            device_removal = w.Win32_DeviceChangeEvent.watch_for(
+                EventType=3  # Removal
+            )
+            
+            while self.running:
+                try:
+                    # Check for new devices (with timeout)
+                    device_added = device_creation(timeout_ms=500)
+                    if device_added:
+                        # Handle device connection
+                        self.logger.info("USB device connected")
+                        # We need to scan for the new device
+                        self._handle_device_added()
+                        
+                    # Check for removed devices (with timeout)
+                    device_removed = device_removal(timeout_ms=500)
+                    if device_removed:
+                        # Handle device disconnection
+                        self.logger.info("USB device disconnected")
+                        self._handle_device_removed()
                     
-                # Check for removed devices    
-                usb_removed = removal_watcher(timeout_ms=500)
-                if usb_removed:
-                    self._handle_device_removed()
+                    time.sleep(0.5)  # Small sleep to reduce CPU usage
+                except wmi.x_wmi_timed_out:
+                    # Timeout is expected, just continue
+                    continue
+                except Exception as e:
+                    self.logger.error(f"Error in monitor loop: {e}")
+                    time.sleep(1)  # Sleep longer on error
                     
-                time.sleep(0.5)  # Small sleep to reduce CPU usage
-            except wmi.x_wmi_timed_out:
-                continue
-            except Exception as e:
-                self.logger.error(f"Error in USB monitoring thread: {e}")
-                time.sleep(1)  # Sleep longer on error
-        
+        except Exception as e:
+            self.logger.error(f"Error in monitoring thread: {e}")
+    
     def _handle_device_added(self):
         """Handle a USB device being added."""
-        devices = self._get_current_devices()
-        for device in devices:
-            # Check if we've seen this device before (simple approach)
-            device_id = device.get_identifier()
-            allowed = self.whitelist.is_allowed(device)
+        try:
+            # Create a new WMI connection to avoid thread issues
+            w = wmi.WMI()
             
-            self.logger.info(f"Device connected: {device}")
-            
-            # Emit the signal
-            event_data = {
-                'action': 'connected',
-                'device': device,
-                'allowed': allowed
-            }
-            self.device_connected.emit(event_data)
-            
-            if self.callback:
-                self.callback(event_data)
+            # Get current devices
+            for usb_device in w.Win32_USBControllerDevice():
+                try:
+                    # Get the dependent device
+                    dependent = usb_device.Dependent
+                    
+                    # Extract the device name from the path
+                    device_id = dependent.DeviceID if hasattr(dependent, 'DeviceID') else ""
+                    
+                    if not device_id:
+                        continue
+                    
+                    # Try to extract vendor and product ID
+                    vid, pid = self._extract_vid_pid(device_id)
+                    if not vid or not pid:
+                        continue
+                    
+                    # Create a device object
+                    device = USBDevice(
+                        vendor_id=vid,
+                        product_id=pid,
+                        serial=self._extract_serial(device_id),
+                        manufacturer=getattr(dependent, 'Manufacturer', 'Unknown'),
+                        product=getattr(dependent, 'Name', 'Unknown Device')
+                    )
+                    
+                    # Check if allowed
+                    allowed = self.whitelist.is_allowed(device)
+                    
+                    # Emit the signal
+                    event_data = {
+                        'action': 'connected',
+                        'device': device,
+                        'allowed': allowed
+                    }
+                    self.device_connected.emit(event_data)
+                    
+                    if self.callback:
+                        self.callback(event_data)
+                        
+                except Exception as e:
+                    self.logger.error(f"Error processing device: {e}")
+                
+        except Exception as e:
+            self.logger.error(f"Error handling device addition: {e}")
     
     def _handle_device_removed(self):
         """Handle a USB device being removed."""
@@ -124,77 +165,80 @@ class USBMonitor(QObject):  # Make USBMonitor inherit from QObject to support si
     
     def _scan_existing_devices(self):
         """Scan and process existing USB devices."""
-        devices = self._get_current_devices()
-        for device in devices:
-            allowed = self.whitelist.is_allowed(device)
+        try:
+            # Create a new WMI connection to avoid thread issues
+            w = wmi.WMI()
             
-            self.logger.info(f"Existing device: {device} (Allowed: {allowed})")
-            
-            # Emit signal for existing devices
-            event_data = {
-                'action': 'existing',
-                'device': device,
-                'allowed': allowed
-            }
-            self.device_connected.emit(event_data)
-            
-            if self.callback:
-                self.callback(event_data)
+            # Get all USB devices
+            for usb_device in w.Win32_USBControllerDevice():
+                try:
+                    # Get the dependent device
+                    dependent = usb_device.Dependent
+                    
+                    # Extract the device name from the path
+                    device_id = dependent.DeviceID if hasattr(dependent, 'DeviceID') else ""
+                    
+                    if not device_id:
+                        continue
+                    
+                    # Try to extract vendor and product ID
+                    vid, pid = self._extract_vid_pid(device_id)
+                    if not vid or not pid:
+                        continue
+                    
+                    # Create a device object
+                    device = USBDevice(
+                        vendor_id=vid,
+                        product_id=pid,
+                        serial=self._extract_serial(device_id),
+                        manufacturer=getattr(dependent, 'Manufacturer', 'Unknown'),
+                        product=getattr(dependent, 'Name', 'Unknown Device')
+                    )
+                    
+                    # Check if allowed
+                    allowed = self.whitelist.is_allowed(device)
+                    
+                    self.logger.info(f"Existing device: {device} (Allowed: {allowed})")
+                    
+                    # Emit signal for existing devices
+                    event_data = {
+                        'action': 'existing',
+                        'device': device,
+                        'allowed': allowed
+                    }
+                    self.device_connected.emit(event_data)
+                    
+                    if self.callback:
+                        self.callback(event_data)
+                        
+                except Exception as e:
+                    self.logger.error(f"Error processing existing device: {e}")
+                
+        except Exception as e:
+            self.logger.error(f"Error scanning existing devices: {e}")
     
-    def _get_current_devices(self):
+    def _extract_vid_pid(self, device_id):
         """
-        Get a list of current USB devices.
-        
-        Returns:
-            list: List of USBDevice objects
-        """
-        devices = []
-        
-        # Get all USB devices
-        usb_devices = self.wmi.Win32_USBHub()
-        pnp_devices = self.wmi.Win32_PnPEntity()
-        
-        for usb in usb_devices:
-            # Get more info from PnP entities
-            for pnp in pnp_devices:
-                if pnp.PNPDeviceID and usb.DeviceID in pnp.PNPDeviceID:
-                    # Extract VID and PID from the PNP ID
-                    vid, pid = self._extract_vid_pid(pnp.PNPDeviceID)
-                    if vid and pid:
-                        device = USBDevice(
-                            vendor_id=vid,
-                            product_id=pid,
-                            serial=self._extract_serial(pnp.PNPDeviceID),
-                            manufacturer=pnp.Manufacturer,
-                            product=pnp.Caption
-                        )
-                        devices.append(device)
-                        break
-        
-        return devices
-    
-    def _extract_vid_pid(self, pnp_id):
-        """
-        Extract Vendor ID and Product ID from a PnP Device ID.
+        Extract Vendor ID and Product ID from a device ID.
         
         Args:
-            pnp_id: PnP Device ID string
+            device_id: Device ID string
             
         Returns:
             tuple: (vid, pid) or (None, None) if not found
         """
         try:
             # Format is usually like "USB\VID_1234&PID_5678\..."
-            if "VID_" in pnp_id and "PID_" in pnp_id:
-                vid_start = pnp_id.find("VID_") + 4
-                vid_end = pnp_id.find("&", vid_start)
-                vid = pnp_id[vid_start:vid_end]
+            if "VID_" in device_id and "PID_" in device_id:
+                vid_start = device_id.find("VID_") + 4
+                vid_end = device_id.find("&", vid_start)
+                vid = device_id[vid_start:vid_end]
                 
-                pid_start = pnp_id.find("PID_") + 4
-                pid_end = pnp_id.find("\\", pid_start)
+                pid_start = device_id.find("PID_") + 4
+                pid_end = device_id.find("\\", pid_start)
                 if pid_end == -1:  # End of string
-                    pid_end = len(pnp_id)
-                pid = pnp_id[pid_start:pid_end]
+                    pid_end = len(device_id)
+                pid = device_id[pid_start:pid_end]
                 
                 return vid, pid
         except Exception as e:
@@ -202,19 +246,19 @@ class USBMonitor(QObject):  # Make USBMonitor inherit from QObject to support si
         
         return None, None
         
-    def _extract_serial(self, pnp_id):
+    def _extract_serial(self, device_id):
         """
-        Extract serial number from a PnP Device ID.
+        Extract serial number from a device ID.
         
         Args:
-            pnp_id: PnP Device ID string
+            device_id: Device ID string
             
         Returns:
             str: Serial number or empty string if not found
         """
         try:
             # Format is usually like "USB\VID_1234&PID_5678\1234567890"
-            parts = pnp_id.split("\\")
+            parts = device_id.split("\\")
             if len(parts) >= 3:
                 return parts[2]
         except Exception:
