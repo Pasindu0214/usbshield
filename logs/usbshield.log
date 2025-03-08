@@ -12,3 +12,24 @@
 2025-03-04 21:53:25,074 - usbshield - ERROR - Error loading whitelist: Expecting value: line 1 column 1 (char 0)
 2025-03-04 21:53:25,144 - usbshield.whitelist - ERROR - Failed to load whitelist: Expecting value: line 1 column 1 (char 0)
 2025-03-04 21:53:26,010 - usbshield.monitor - INFO - USB monitoring started
+2025-03-04 21:55:17,272 - usbshield - INFO - Starting USBShield application
+2025-03-04 21:55:17,273 - usbshield - INFO - Configuration loaded successfully
+2025-03-04 21:55:17,273 - usbshield - ERROR - Error loading whitelist: Expecting value: line 1 column 1 (char 0)
+2025-03-04 21:55:17,285 - usbshield.whitelist - ERROR - Failed to load whitelist: Expecting value: line 1 column 1 (char 0)
+2025-03-04 21:55:17,536 - usbshield.monitor - INFO - USB monitoring started
+2025-03-04 21:55:17,745 - usbshield.monitor - INFO - Existing device: (Standard USB Host Controller) USB Composite Device (046D:C534) (Allowed: False)
+2025-03-04 21:55:17,835 - usbshield.monitor - INFO - Existing device: (Standard system devices) USB Input Device (046D:C534&MI_00) (Allowed: False)
+2025-03-04 21:55:17,857 - usbshield.monitor - INFO - Existing device: (Standard keyboards) HID Keyboard Device (046D:C534&MI_00) (Allowed: False)
+2025-03-04 21:55:17,879 - usbshield.monitor - INFO - Existing device: (Standard system devices) USB Input Device (046D:C534&MI_01) (Allowed: False)
+2025-03-04 21:55:17,902 - usbshield.monitor - INFO - Existing device: Microsoft HID-compliant mouse (046D:C534&MI_01&COL01) (Allowed: False)
+2025-03-04 21:55:17,925 - usbshield.monitor - INFO - Existing device: Microsoft HID-compliant consumer control device (046D:C534&MI_01&COL02) (Allowed: False)
+2025-03-04 21:55:17,950 - usbshield.monitor - INFO - Existing device: (Standard system devices) HID-compliant system controller (046D:C534&MI_01&COL03) (Allowed: False)
+2025-03-04 21:55:17,971 - usbshield.monitor - INFO - Existing device: (Standard system devices) HID-compliant vendor-defined device (046D:C534&MI_01&COL04) (Allowed: False)
+2025-03-04 21:55:17,994 - usbshield.monitor - INFO - Existing device: (Standard system devices) HID-compliant vendor-defined device (046D:C534&MI_01&COL05) (Allowed: False)
+2025-03-04 21:55:18,017 - usbshield.monitor - INFO - Existing device: Intel Corporation Intel(R) Wireless Bluetooth(R) (8087:0033) (Allowed: False)
+2025-03-04 21:55:18,057 - usbshield.monitor - INFO - Existing device: (Standard USB Host Controller) USB Composite Device (3277:0033) (Allowed: False)
+2025-03-04 21:55:18,081 - usbshield.monitor - INFO - Existing device: Microsoft USB2.0 FHD UVC WebCam (3277:0033&MI_00) (Allowed: False)
+2025-03-04 21:55:18,103 - usbshield.monitor - INFO - Existing device: Microsoft USB2.0 IR UVC WebCam (3277:0033&MI_02) (Allowed: False)
+2025-03-04 21:55:18,128 - usbshield.monitor - INFO - Existing device: WinUsb Device Camera DFU Device (3277:0033&MI_04) (Allowed: False)
+2025-03-04 21:55:18,164 - usbshield.monitor - INFO - Existing device: Generic USB4 Device Router USB4 Root Router (8086:A73E) (Allowed: False)
+2025-03-04 21:55:18,202 - usbshield.monitor - INFO - Existing device: Generic USB4 Device Router USB4 Root Router (8086:A76D) (Allowed: False)
