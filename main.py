@@ -1,389 +1,511 @@
 import sys
-import time
 import os
-import psutil
 import win32api
 import win32con
-import win32gui
 import win32file
 import wmi
-import tkinter as tk
-from tkinter import ttk, messagebox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QHBoxLayout, QLabel
+from PyQt5.QtWidgets import QPushButton, QTableWidget, QTableWidgetItem, QHeaderView, QCheckBox, QMessageBox
+from PyQt5.QtWidgets import QDialog, QGroupBox, QFormLayout, QLineEdit, QTextEdit, QProgressBar, QMenu
+from PyQt5.QtCore import Qt, QTimer, pyqtSignal, QObject
+from PyQt5.QtGui import QIcon, QFont, QColor
 from datetime import datetime
+from usb_scanner import USBScanner
 
-class USBShield:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("USBShield - USB Security")
-        self.root.geometry("900x600")
-        self.root.minsize(800, 500)
+# Signal emitter for scan updates
+class ScanSignalEmitter(QObject):
+    scan_updated = pyqtSignal(dict)
+
+# Main application class
+class USBShield(QMainWindow):
+    def __init__(self):
+        super().__init__()
         
         # Initialize variables
         self.allowed_devices = set()
         self.device_log = []
         self.current_drives = set()
-        self.autoblock = True  # Define autoblock attribute here, before setup_settings_tab is called
+        self.autoblock = True  # Default to blocking all new devices
         
-        # Set icon if available
-        try:
-            self.root.iconbitmap("usb_icon.ico")
-        except:
-            pass
-            
-        # Create menu
-        self.menu_bar = tk.Menu(root)
-        self.file_menu = tk.Menu(self.menu_bar, tearoff=0)
-        self.file_menu.add_command(label="Exit", command=self.root.quit)
-        self.menu_bar.add_cascade(label="File", menu=self.file_menu)
+        # Initialize scanner
+        self.scan_signal_emitter = ScanSignalEmitter()
+        self.scan_signal_emitter.scan_updated.connect(self.update_scan_results)
+        self.scanner = USBScanner(callback=self.scan_signal_emitter.scan_updated.emit)
+        self.current_scan_drive = None
         
-        self.help_menu = tk.Menu(self.menu_bar, tearoff=0)
-        self.help_menu.add_command(label="About", command=self.show_about)
-        self.menu_bar.add_cascade(label="Help", menu=self.help_menu)
+        self.init_ui()
         
-        self.root.config(menu=self.menu_bar)
+        # Start USB monitoring
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update_device_list)
+        self.timer.start(1000)  # Check every second
         
-        # Create notebook for tabs
-        self.notebook = ttk.Notebook(root)
-        self.notebook.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+    def init_ui(self):
+        self.setWindowTitle('USBShield - USB Security')
+        self.setWindowIcon(QIcon('usb_icon.ico'))
+        self.setGeometry(100, 100, 900, 600)
         
-        # Device Management Tab
-        self.device_frame = ttk.Frame(self.notebook)
-        self.notebook.add(self.device_frame, text="Device Management")
+        # Create central widget and main layout
+        self.central_widget = QWidget()
+        self.setCentralWidget(self.central_widget)
+        main_layout = QVBoxLayout(self.central_widget)
         
-        # Settings Tab
-        self.settings_frame = ttk.Frame(self.notebook)
-        self.notebook.add(self.settings_frame, text="Settings")
+        # Create tab widget
+        self.tabs = QTabWidget()
+        main_layout.addWidget(self.tabs)
         
-        # Logs Tab
-        self.logs_frame = ttk.Frame(self.notebook)
-        self.notebook.add(self.logs_frame, text="Logs")
+        # Create tabs
+        self.device_tab = QWidget()
+        self.settings_tab = QWidget()
+        self.logs_tab = QWidget()
+        self.scan_tab = QWidget()  # New tab for scan results
         
-        # Set up each tab
+        self.tabs.addTab(self.device_tab, "Device Management")
+        self.tabs.addTab(self.scan_tab, "Scan Results")  # Add scan tab
+        self.tabs.addTab(self.settings_tab, "Settings")
+        self.tabs.addTab(self.logs_tab, "Logs")
+        
+        # Setup tab contents
         self.setup_device_tab()
+        self.setup_scan_tab()  # Setup scan tab
         self.setup_settings_tab()
         self.setup_logs_tab()
         
-        # Start monitoring
-        self.update_device_list()
-        self.start_usb_monitoring()
+        # Create menu bar
+        self.create_menu()
+        
+        self.show()
+    
+    def create_menu(self):
+        menubar = self.menuBar()
+        
+        # File menu
+        file_menu = menubar.addMenu('File')
+        
+        # Exit action
+        exit_action = file_menu.addAction('Exit')
+        exit_action.triggered.connect(self.close)
+        
+        # Scan menu
+        scan_menu = menubar.addMenu('Scan')
+        
+        # Scan drive action
+        scan_drive_action = scan_menu.addAction('Scan USB Drive')
+        scan_drive_action.triggered.connect(self.scan_selected_drive)
+        
+        # Stop scan action
+        stop_scan_action = scan_menu.addAction('Stop Scan')
+        stop_scan_action.triggered.connect(self.stop_scan)
+        
+        # Help menu
+        help_menu = menubar.addMenu('Help')
+        
+        # About action
+        about_action = help_menu.addAction('About')
+        about_action.triggered.connect(self.show_about_dialog)
     
     def setup_device_tab(self):
-        # Label
-        label_frame = ttk.LabelFrame(self.device_frame, text="USB Device Management")
-        label_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        layout = QVBoxLayout()
         
-        info_label = ttk.Label(label_frame, 
-                              text="This tab shows all removable USB storage devices. You can whitelist devices to allow them to be used.")
-        info_label.pack(anchor=tk.W, padx=5, pady=5)
+        # Add informational label
+        info_label = QLabel("USB Device Management")
+        info_label.setFont(QFont('Arial', 12, QFont.Bold))
+        layout.addWidget(info_label)
         
-        # Treeview for devices
-        columns = ("Device", "Vendor ID", "Product ID", "Serial", "Status", "Actions")
-        self.device_tree = ttk.Treeview(label_frame, columns=columns, show="headings", height=15)
+        description_label = QLabel("This tab shows all USB removable storage devices that have been connected to your computer. You can whitelist devices to allow them to be used.")
+        layout.addWidget(description_label)
         
-        # Define column headings
-        for col in columns:
-            self.device_tree.heading(col, text=col)
+        # Create table for devices
+        self.device_table = QTableWidget()
+        self.device_table.setColumnCount(7)  # Added column for scan button
+        self.device_table.setHorizontalHeaderLabels(["Device", "Vendor ID", "Product ID", "Serial", "Status", "Actions", "Scan"])
+        self.device_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
         
-        # Set column widths
-        self.device_tree.column("Device", width=300)
-        self.device_tree.column("Vendor ID", width=100)
-        self.device_tree.column("Product ID", width=100)
-        self.device_tree.column("Serial", width=150)
-        self.device_tree.column("Status", width=100)
-        self.device_tree.column("Actions", width=100)
+        # Enable right-click menu
+        self.device_table.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.device_table.customContextMenuRequested.connect(self.show_device_context_menu)
         
-        # Add scrollbar
-        scrollbar = ttk.Scrollbar(label_frame, orient=tk.VERTICAL, command=self.device_tree.yview)
-        self.device_tree.configure(yscroll=scrollbar.set)
+        layout.addWidget(self.device_table)
         
-        # Pack tree and scrollbar
-        self.device_tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        # Button layout
+        button_layout = QHBoxLayout()
         
-        # Button frame
-        button_frame = ttk.Frame(self.device_frame)
-        button_frame.pack(fill=tk.X, padx=10, pady=10)
+        # Add buttons
+        refresh_button = QPushButton("Refresh Devices")
+        refresh_button.clicked.connect(self.update_device_list)
+        button_layout.addWidget(refresh_button)
         
-        # Buttons
-        refresh_button = ttk.Button(button_frame, text="Refresh Devices", command=self.update_device_list)
-        refresh_button.pack(side=tk.LEFT, padx=5)
+        whitelist_all_button = QPushButton("Whitelist All")
+        whitelist_all_button.clicked.connect(self.whitelist_all_devices)
+        button_layout.addWidget(whitelist_all_button)
         
-        whitelist_all_button = ttk.Button(button_frame, text="Whitelist All", command=self.whitelist_all_devices)
-        whitelist_all_button.pack(side=tk.LEFT, padx=5)
+        remove_all_button = QPushButton("Remove All")
+        remove_all_button.clicked.connect(self.remove_all_devices)
+        button_layout.addWidget(remove_all_button)
         
-        remove_all_button = ttk.Button(button_frame, text="Remove All", command=self.remove_all_devices)
-        remove_all_button.pack(side=tk.LEFT, padx=5)
+        layout.addLayout(button_layout)
         
         # Auto-approve checkbox
-        self.auto_approve_var = tk.BooleanVar(value=False)
-        auto_approve_check = ttk.Checkbutton(button_frame, text="Automatically approve devices from trusted manufacturers",
-                                            variable=self.auto_approve_var)
-        auto_approve_check.pack(side=tk.LEFT, padx=20)
+        self.auto_approve_checkbox = QCheckBox("Automatically approve devices from trusted manufacturers")
+        layout.addWidget(self.auto_approve_checkbox)
+        
+        self.device_tab.setLayout(layout)
+    
+    def setup_scan_tab(self):
+        layout = QVBoxLayout()
+        
+        # Add informational label
+        info_label = QLabel("USB Drive Scan Results")
+        info_label.setFont(QFont('Arial', 12, QFont.Bold))
+        layout.addWidget(info_label)
+        
+        # Scan status
+        status_layout = QHBoxLayout()
+        status_layout.addWidget(QLabel("Current scan:"))
+        self.scan_status_label = QLabel("No scan in progress")
+        status_layout.addWidget(self.scan_status_label)
+        status_layout.addStretch()
+        
+        # Progress bar
+        self.scan_progress_bar = QProgressBar()
+        self.scan_progress_bar.setTextVisible(False)
+        self.scan_progress_bar.setRange(0, 0)  # Indeterminate progress
+        self.scan_progress_bar.hide()
+        
+        layout.addLayout(status_layout)
+        layout.addWidget(self.scan_progress_bar)
+        
+        # Create table for suspicious files
+        self.suspicious_files_table = QTableWidget()
+        self.suspicious_files_table.setColumnCount(3)
+        self.suspicious_files_table.setHorizontalHeaderLabels(["File Path", "Reason", "SHA-256 Hash"])
+        self.suspicious_files_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        self.suspicious_files_table.horizontalHeader().setSectionResizeMode(2, QHeaderView.Stretch)
+        
+        # Enable right-click menu
+        self.suspicious_files_table.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.suspicious_files_table.customContextMenuRequested.connect(self.show_file_context_menu)
+        
+        layout.addWidget(QLabel("Suspicious Files:"))
+        layout.addWidget(self.suspicious_files_table)
+        
+        # Button layout
+        button_layout = QHBoxLayout()
+        
+        # Add buttons
+        self.stop_scan_button = QPushButton("Stop Scan")
+        self.stop_scan_button.clicked.connect(self.stop_scan)
+        self.stop_scan_button.setEnabled(False)
+        button_layout.addWidget(self.stop_scan_button)
+        
+        quarantine_all_button = QPushButton("Quarantine All")
+        quarantine_all_button.clicked.connect(self.quarantine_all_files)
+        button_layout.addWidget(quarantine_all_button)
+        
+        clear_results_button = QPushButton("Clear Results")
+        clear_results_button.clicked.connect(self.clear_scan_results)
+        button_layout.addWidget(clear_results_button)
+        
+        layout.addLayout(button_layout)
+        
+        self.scan_tab.setLayout(layout)
     
     def setup_settings_tab(self):
-        # Settings Frame
-        settings_inner_frame = ttk.LabelFrame(self.settings_frame, text="Security Settings")
-        settings_inner_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        layout = QVBoxLayout()
+        
+        # Create settings group
+        settings_group = QGroupBox("Security Settings")
+        settings_layout = QVBoxLayout()
         
         # Auto-block option
-        self.autoblock_var = tk.BooleanVar(value=self.autoblock)
-        autoblock_check = ttk.Checkbutton(settings_inner_frame, 
-                                         text="Automatically block all new USB storage devices",
-                                         variable=self.autoblock_var,
-                                         command=self.toggle_autoblock)
-        autoblock_check.pack(anchor=tk.W, padx=10, pady=10)
+        self.autoblock_checkbox = QCheckBox("Automatically block all new USB storage devices")
+        self.autoblock_checkbox.setChecked(self.autoblock)
+        self.autoblock_checkbox.stateChanged.connect(self.toggle_autoblock)
+        settings_layout.addWidget(self.autoblock_checkbox)
+        
+        # Auto-scan option
+        self.autoscan_checkbox = QCheckBox("Automatically scan new USB devices")
+        self.autoscan_checkbox.setChecked(True)
+        settings_layout.addWidget(self.autoscan_checkbox)
         
         # Notification settings
-        notification_frame = ttk.LabelFrame(settings_inner_frame, text="Notifications")
-        notification_frame.pack(fill=tk.X, padx=10, pady=10)
+        notification_group = QGroupBox("Notifications")
+        notification_layout = QVBoxLayout()
         
-        self.notify_connect_var = tk.BooleanVar(value=True)
-        notify_connect_check = ttk.Checkbutton(notification_frame, 
-                                              text="Show notification when USB device is connected",
-                                              variable=self.notify_connect_var)
-        notify_connect_check.pack(anchor=tk.W, padx=10, pady=5)
+        self.notify_connect_checkbox = QCheckBox("Show notification when USB device is connected")
+        self.notify_connect_checkbox.setChecked(True)
+        notification_layout.addWidget(self.notify_connect_checkbox)
         
-        self.notify_block_var = tk.BooleanVar(value=True)
-        notify_block_check = ttk.Checkbutton(notification_frame, 
-                                            text="Show notification when USB device is blocked",
-                                            variable=self.notify_block_var)
-        notify_block_check.pack(anchor=tk.W, padx=10, pady=5)
+        self.notify_block_checkbox = QCheckBox("Show notification when USB device is blocked")
+        self.notify_block_checkbox.setChecked(True)
+        notification_layout.addWidget(self.notify_block_checkbox)
         
-        # Save settings button
-        save_button = ttk.Button(settings_inner_frame, text="Save Settings", command=self.save_settings)
-        save_button.pack(anchor=tk.E, padx=10, pady=10)
+        self.notify_scan_checkbox = QCheckBox("Show notification when scan completes")
+        self.notify_scan_checkbox.setChecked(True)
+        notification_layout.addWidget(self.notify_scan_checkbox)
+        
+        notification_group.setLayout(notification_layout)
+        settings_layout.addWidget(notification_group)
+        
+        # Save button
+        save_button = QPushButton("Save Settings")
+        save_button.clicked.connect(self.save_settings)
+        settings_layout.addWidget(save_button, 0, Qt.AlignRight)
+        
+        settings_group.setLayout(settings_layout)
+        layout.addWidget(settings_group)
+        
+        self.settings_tab.setLayout(layout)
     
     def setup_logs_tab(self):
-        # Logs Frame
-        logs_inner_frame = ttk.LabelFrame(self.logs_frame, text="USB Activity Logs")
-        logs_inner_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        layout = QVBoxLayout()
         
-        # Treeview for logs
-        columns = ("Timestamp", "Event", "Device", "Status")
-        self.logs_tree = ttk.Treeview(logs_inner_frame, columns=columns, show="headings", height=20)
+        # Add informational label
+        info_label = QLabel("USB Activity Logs")
+        info_label.setFont(QFont('Arial', 12, QFont.Bold))
+        layout.addWidget(info_label)
         
-        # Define column headings
-        for col in columns:
-            self.logs_tree.heading(col, text=col)
+        # Create table for logs
+        self.logs_table = QTableWidget()
+        self.logs_table.setColumnCount(4)
+        self.logs_table.setHorizontalHeaderLabels(["Timestamp", "Event", "Device", "Status"])
+        self.logs_table.horizontalHeader().setSectionResizeMode(2, QHeaderView.Stretch)
         
-        # Set column widths
-        self.logs_tree.column("Timestamp", width=150)
-        self.logs_tree.column("Event", width=150)
-        self.logs_tree.column("Device", width=300)
-        self.logs_tree.column("Status", width=100)
+        layout.addWidget(self.logs_table)
         
-        # Add scrollbar
-        scrollbar = ttk.Scrollbar(logs_inner_frame, orient=tk.VERTICAL, command=self.logs_tree.yview)
-        self.logs_tree.configure(yscroll=scrollbar.set)
+        # Button layout
+        button_layout = QHBoxLayout()
         
-        # Pack tree and scrollbar
-        self.logs_tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        # Add buttons
+        clear_button = QPushButton("Clear Logs")
+        clear_button.clicked.connect(self.clear_logs)
+        button_layout.addWidget(clear_button)
         
-        # Button frame
-        button_frame = ttk.Frame(self.logs_frame)
-        button_frame.pack(fill=tk.X, padx=10, pady=10)
+        export_button = QPushButton("Export Logs")
+        export_button.clicked.connect(self.export_logs)
+        button_layout.addWidget(export_button)
         
-        # Buttons
-        clear_logs_button = ttk.Button(button_frame, text="Clear Logs", command=self.clear_logs)
-        clear_logs_button.pack(side=tk.LEFT, padx=5)
+        layout.addLayout(button_layout)
         
-        export_logs_button = ttk.Button(button_frame, text="Export Logs", command=self.export_logs)
-        export_logs_button.pack(side=tk.LEFT, padx=5)
-    
-    def show_about(self):
-        messagebox.showinfo("About USB Shield", 
-                           "USB Shield v1.0\n\nA security application to monitor and control USB storage devices.\n\n"
-                           "Developed by Security Team")
-    
-    def save_settings(self):
-        # Here you would save settings to a config file
-        self.autoblock = self.autoblock_var.get()
-        messagebox.showinfo("Settings", "Settings saved successfully.")
-    
-    def toggle_autoblock(self):
-        self.autoblock = self.autoblock_var.get()
+        self.logs_tab.setLayout(layout)
     
     def update_device_list(self):
         # Clear existing items
-        for item in self.device_tree.get_children():
-            self.device_tree.delete(item)
+        self.device_table.setRowCount(0)
         
-        # Get all USB storage devices
+        # Get USB removable storage devices
         self.detect_usb_drives()
     
     def detect_usb_drives(self):
         """Detect only removable USB storage devices (flash drives)"""
         wmi_obj = wmi.WMI()
         
-        # Get all disk drives
-        for drive in wmi_obj.Win32_DiskDrive():
-            # Check if it's a USB drive (removable media)
-            if drive.InterfaceType == "USB" and drive.MediaType and "Removable" in drive.MediaType:
-                # Get associated partitions and logical disks
-                for partition in wmi_obj.Win32_DiskDriveToDiskPartition():
-                    if partition.Antecedent.DeviceID == drive.DeviceID:
-                        for logical_disk in wmi_obj.Win32_LogicalDiskToPartition():
-                            if logical_disk.Antecedent == partition.Dependent:
-                                # Get the drive letter
-                                for disk in wmi_obj.Win32_LogicalDisk():
-                                    if disk.DeviceID == logical_disk.Dependent.DeviceID:
-                                        # This is a USB removable storage device
-                                        device_name = f"{drive.Model} ({disk.DeviceID})"
-                                        vendor_id = drive.PNPDeviceID.split("\\")[1].split("&")[0] if "VID_" in drive.PNPDeviceID else "N/A"
-                                        product_id = drive.PNPDeviceID.split("\\")[1].split("&")[1] if "PID_" in drive.PNPDeviceID else "N/A"
-                                        serial = drive.SerialNumber.strip() if drive.SerialNumber else "N/A"
-                                        
-                                        # Clean up vendor and product IDs
-                                        if vendor_id != "N/A":
-                                            vendor_id = vendor_id.replace("VID_", "")
-                                        if product_id != "N/A":
-                                            product_id = product_id.replace("PID_", "")
-                                        
-                                        # Determine status
-                                        status = "Allowed" if serial in self.allowed_devices else "Blocked"
-                                        
-                                        # Add to tree
-                                        item_id = self.device_tree.insert("", tk.END, values=(
-                                            device_name,
-                                            vendor_id,
-                                            product_id,
-                                            serial,
-                                            status,
-                                            "Remove" if status == "Allowed" else "Allow"
-                                        ))
-                                        
-                                        # Bind double-click event to toggle status
-                                        self.device_tree.tag_bind(item_id, '<Double-1>', 
-                                                               lambda event, s=serial: self.toggle_device_status(s))
-                                        
-                                        # Log device if it's new
-                                        if disk.DeviceID not in self.current_drives:
-                                            self.current_drives.add(disk.DeviceID)
-                                            self.log_event("Connected", device_name, status)
+        # Get all removable drives
+        try:
+            # Get all disk drives
+            for drive in wmi_obj.Win32_DiskDrive():
+                # Check if it's a USB drive (removable media)
+                if drive.InterfaceType == "USB" and drive.MediaType and "Removable" in drive.MediaType:
+                    # Get associated partitions and logical disks
+                    for partition in wmi_obj.Win32_DiskDriveToDiskPartition():
+                        if partition.Antecedent.DeviceID == drive.DeviceID:
+                            for logical_disk in wmi_obj.Win32_LogicalDiskToPartition():
+                                if logical_disk.Antecedent == partition.Dependent:
+                                    # Get the drive letter
+                                    for disk in wmi_obj.Win32_LogicalDisk():
+                                        if disk.DeviceID == logical_disk.Dependent.DeviceID:
+                                            # This is a USB removable storage device
+                                            device_name = f"{drive.Model} ({disk.DeviceID})"
+                                            vendor_id = drive.PNPDeviceID.split("\\")[1].split("&")[0] if "VID_" in drive.PNPDeviceID else "N/A"
+                                            product_id = drive.PNPDeviceID.split("\\")[1].split("&")[1] if "PID_" in drive.PNPDeviceID else "N/A"
+                                            serial = drive.SerialNumber.strip() if drive.SerialNumber else "N/A"
                                             
-                                            # Notify if needed
-                                            if self.notify_connect_var.get():
-                                                title = "USB Device Connected"
-                                                message = f"USB device connected: {device_name}\nStatus: {status}"
-                                                self.show_notification(title, message)
+                                            # Clean up vendor and product IDs
+                                            if vendor_id != "N/A":
+                                                vendor_id = vendor_id.replace("VID_", "")
+                                            if product_id != "N/A":
+                                                product_id = product_id.replace("PID_", "")
                                             
-                                            # Block if autoblock is enabled and not already allowed
-                                            if self.autoblock and status == "Blocked":
-                                                self.block_usb_drive(disk.DeviceID)
+                                            # Determine status
+                                            status = "Allowed" if serial in self.allowed_devices else "Blocked"
+                                            
+                                            # Add to table
+                                            row_position = self.device_table.rowCount()
+                                            self.device_table.insertRow(row_position)
+                                            
+                                            self.device_table.setItem(row_position, 0, QTableWidgetItem(device_name))
+                                            self.device_table.setItem(row_position, 1, QTableWidgetItem(vendor_id))
+                                            self.device_table.setItem(row_position, 2, QTableWidgetItem(product_id))
+                                            self.device_table.setItem(row_position, 3, QTableWidgetItem(serial))
+                                            self.device_table.setItem(row_position, 4, QTableWidgetItem(status))
+                                            
+                                            # Add action button
+                                            action_button = QPushButton("Remove" if status == "Allowed" else "Allow")
+                                            action_button.clicked.connect(lambda checked, s=serial: self.toggle_device_status(s))
+                                            self.device_table.setCellWidget(row_position, 5, action_button)
+                                            
+                                            # Add scan button
+                                            scan_button = QPushButton("Scan")
+                                            scan_button.clicked.connect(lambda checked, d=disk.DeviceID: self.start_scan(d))
+                                            self.device_table.setCellWidget(row_position, 6, scan_button)
+                                            
+                                            # Log device if it's new
+                                            if disk.DeviceID not in self.current_drives:
+                                                self.current_drives.add(disk.DeviceID)
+                                                self.log_event("Connected", device_name, status)
                                                 
                                                 # Notify if needed
-                                                if self.notify_block_var.get():
-                                                    title = "USB Device Blocked"
-                                                    message = f"USB device blocked: {device_name}"
-                                                    self.show_notification(title, message)
-        
-        # Schedule the next update
-        self.root.after(1000, self.update_device_list)
+                                                if self.notify_connect_checkbox.isChecked():
+                                                    self.show_notification("USB Device Connected", 
+                                                                          f"USB device connected: {device_name}\nStatus: {status}")
+                                                
+                                                # Auto-scan if enabled
+                                                if self.autoscan_checkbox.isChecked():
+                                                    self.start_scan(disk.DeviceID)
+                                                
+                                                # Block if autoblock is enabled and not already allowed
+                                                if self.autoblock and status == "Blocked":
+                                                    self.block_usb_drive(disk.DeviceID)
+                                                    
+                                                    # Notify if needed
+                                                    if self.notify_block_checkbox.isChecked():
+                                                        self.show_notification("USB Device Blocked", 
+                                                                              f"USB device blocked: {device_name}")
+        except Exception as e:
+            print(f"Error detecting USB drives: {e}")
     
     def toggle_device_status(self, serial):
         if serial in self.allowed_devices:
             self.allowed_devices.remove(serial)
-            for item in self.device_tree.get_children():
-                values = self.device_tree.item(item, "values")
-                if values[3] == serial:  # Serial is at index 3
-                    self.device_tree.item(item, values=(
-                        values[0], values[1], values[2], values[3], "Blocked", "Allow"
-                    ))
-                    self.log_event("Status Changed", values[0], "Blocked")
-                    
-                    # If this is a connected drive, block it
-                    drive_letter = values[0].split("(")[1].split(")")[0]
-                    self.block_usb_drive(drive_letter)
+            status = "Blocked"
+            action = "Allow"
         else:
             self.allowed_devices.add(serial)
-            for item in self.device_tree.get_children():
-                values = self.device_tree.item(item, "values")
-                if values[3] == serial:  # Serial is at index 3
-                    self.device_tree.item(item, values=(
-                        values[0], values[1], values[2], values[3], "Allowed", "Remove"
-                    ))
-                    self.log_event("Status Changed", values[0], "Allowed")
-                    
-                    # If this is a connected drive, allow it
-                    drive_letter = values[0].split("(")[1].split(")")[0]
+            status = "Allowed"
+            action = "Remove"
+        
+        # Update table
+        for row in range(self.device_table.rowCount()):
+            if self.device_table.item(row, 3).text() == serial:
+                # Update status
+                self.device_table.item(row, 4).setText(status)
+                
+                # Update action button
+                action_button = QPushButton(action)
+                action_button.clicked.connect(lambda checked, s=serial: self.toggle_device_status(s))
+                self.device_table.setCellWidget(row, 5, action_button)
+                
+                # Get device name
+                device_name = self.device_table.item(row, 0).text()
+                
+                # Log event
+                self.log_event("Status Changed", device_name, status)
+                
+                # Get drive letter and update device status
+                drive_letter = device_name.split("(")[1].split(")")[0]
+                if status == "Blocked":
+                    self.block_usb_drive(drive_letter)
+                else:
                     self.allow_usb_drive(drive_letter)
     
     def whitelist_all_devices(self):
-        for item in self.device_tree.get_children():
-            values = self.device_tree.item(item, "values")
-            serial = values[3]  # Serial is at index 3
-            if serial not in self.allowed_devices and serial != "N/A":
+        # Add all devices to allowed list
+        for row in range(self.device_table.rowCount()):
+            serial = self.device_table.item(row, 3).text()
+            if serial != "N/A" and serial not in self.allowed_devices:
                 self.allowed_devices.add(serial)
-                self.device_tree.item(item, values=(
-                    values[0], values[1], values[2], values[3], "Allowed", "Remove"
-                ))
-                self.log_event("Status Changed", values[0], "Allowed")
                 
-                # If this is a connected drive, allow it
-                if "(" in values[0] and ")" in values[0]:
-                    drive_letter = values[0].split("(")[1].split(")")[0]
+                # Update status
+                self.device_table.item(row, 4).setText("Allowed")
+                
+                # Update action button
+                action_button = QPushButton("Remove")
+                action_button.clicked.connect(lambda checked, s=serial: self.toggle_device_status(s))
+                self.device_table.setCellWidget(row, 5, action_button)
+                
+                # Get device name and drive letter
+                device_name = self.device_table.item(row, 0).text()
+                
+                # Log event
+                self.log_event("Status Changed", device_name, "Allowed")
+                
+                # Allow the drive
+                if "(" in device_name and ")" in device_name:
+                    drive_letter = device_name.split("(")[1].split(")")[0]
                     self.allow_usb_drive(drive_letter)
     
     def remove_all_devices(self):
+        # Clear allowed devices list
         self.allowed_devices.clear()
-        for item in self.device_tree.get_children():
-            values = self.device_tree.item(item, "values")
-            self.device_tree.item(item, values=(
-                values[0], values[1], values[2], values[3], "Blocked", "Allow"
-            ))
-            self.log_event("Status Changed", values[0], "Blocked")
+        
+        # Update all rows
+        for row in range(self.device_table.rowCount()):
+            serial = self.device_table.item(row, 3).text()
             
-            # If this is a connected drive, block it
-            if "(" in values[0] and ")" in values[0]:
-                drive_letter = values[0].split("(")[1].split(")")[0]
+            # Update status
+            self.device_table.item(row, 4).setText("Blocked")
+            
+            # Update action button
+            action_button = QPushButton("Allow")
+            action_button.clicked.connect(lambda checked, s=serial: self.toggle_device_status(s))
+            self.device_table.setCellWidget(row, 5, action_button)
+            
+            # Get device name
+            device_name = self.device_table.item(row, 0).text()
+            
+            # Log event
+            self.log_event("Status Changed", device_name, "Blocked")
+            
+            # Block the drive
+            if "(" in device_name and ")" in device_name:
+                drive_letter = device_name.split("(")[1].split(")")[0]
                 self.block_usb_drive(drive_letter)
     
-    def start_usb_monitoring(self):
-        """Start monitoring for new USB devices"""
-        # This is handled by the update_device_list method which is called periodically
-        pass
+    def toggle_autoblock(self, state):
+        self.autoblock = state == Qt.Checked
+    
+    def save_settings(self):
+        self.autoblock = self.autoblock_checkbox.isChecked()
+        QMessageBox.information(self, "Settings", "Settings saved successfully!")
     
     def block_usb_drive(self, drive_letter):
-        """Block access to the USB drive"""
         try:
-            # This is a simplified implementation
-            # In a real application, you would use low-level Windows API or third-party tools
-            # to actually block access to the drive
-            
-            # For demonstration, we'll just simulate blocking by showing a message
             print(f"Blocking drive {drive_letter}")
+            # This is a simplified implementation
+            # In a real implementation, you would use the Windows API to block access
             
-            # In a real implementation, you might:
-            # 1. Use DeviceIoControl API to lock the drive
-            # 2. Use Group Policy to block access
-            # 3. Unmount or eject the drive
-            # 4. Use a kernel-level driver to intercept access
+            # Example of how you might do this (commented out for safety):
+            # win32file.DeviceIoControl(handle, control_code, input_buffer, output_buffer_size)
             
-            # For this demo, we'll just log the action
+            # Log the action
             self.log_event("Blocked", f"Drive {drive_letter}", "Blocked")
         except Exception as e:
             print(f"Error blocking drive {drive_letter}: {e}")
     
     def allow_usb_drive(self, drive_letter):
-        """Allow access to the USB drive"""
         try:
-            # This is a simplified implementation
             print(f"Allowing drive {drive_letter}")
+            # This is a simplified implementation
+            # In a real implementation, you would use the Windows API to allow access
             
-            # In a real implementation, you would reverse whatever blocking method was used
-            
-            # For this demo, we'll just log the action
+            # Log the action
             self.log_event("Allowed", f"Drive {drive_letter}", "Allowed")
         except Exception as e:
             print(f"Error allowing drive {drive_letter}: {e}")
     
     def log_event(self, event, device, status):
-        """Add an event to the logs"""
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.logs_tree.insert("", 0, values=(timestamp, event, device, status))
         
-        # Also add to our internal log
+        # Add to table
+        row_position = self.logs_table.rowCount()
+        self.logs_table.insertRow(row_position)
+        
+        self.logs_table.setItem(row_position, 0, QTableWidgetItem(timestamp))
+        self.logs_table.setItem(row_position, 1, QTableWidgetItem(event))
+        self.logs_table.setItem(row_position, 2, QTableWidgetItem(device))
+        self.logs_table.setItem(row_position, 3, QTableWidgetItem(status))
+        
+        # Also add to internal log
         self.device_log.append({
             "timestamp": timestamp,
             "event": event,
@@ -392,13 +514,10 @@ class USBShield:
         })
     
     def clear_logs(self):
-        """Clear all logs"""
-        for item in self.logs_tree.get_children():
-            self.logs_tree.delete(item)
+        self.logs_table.setRowCount(0)
         self.device_log.clear()
     
     def export_logs(self):
-        """Export logs to a file"""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"usb_shield_logs_{timestamp}.csv"
         
@@ -408,23 +527,266 @@ class USBShield:
                 for log in self.device_log:
                     f.write(f"{log['timestamp']},{log['event']},{log['device']},{log['status']}\n")
             
-            messagebox.showinfo("Export Logs", f"Logs exported successfully to {filename}")
+            QMessageBox.information(self, "Export Logs", f"Logs exported successfully to {filename}")
         except Exception as e:
-            messagebox.showerror("Export Error", f"Error exporting logs: {e}")
+            QMessageBox.critical(self, "Export Error", f"Error exporting logs: {e}")
     
     def show_notification(self, title, message):
-        """Show a notification to the user"""
-        # In a real application, you might use win10toast or another notification library
-        # For this demo, we'll use a simple messagebox
-        # This would be better implemented with non-blocking notifications
         print(f"NOTIFICATION: {title} - {message}")
-        # Commented out to prevent blocking the application
-        # messagebox.showinfo(title, message)
+        # In a real application, you might use a system notification
+        # For this demo, we'll use a simple message box, but set it to non-modal
+        msg = QMessageBox(self)
+        msg.setWindowTitle(title)
+        msg.setText(message)
+        msg.setIcon(QMessageBox.Information)
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.setWindowModality(Qt.NonModal)
+        msg.show()
+    
+    def show_about_dialog(self):
+        QMessageBox.about(self, "About USB Shield", 
+                         "USB Shield v1.0\n\nA security application to monitor and control USB storage devices.\n\n"
+                         "Developed by Security Team")
+    
+    def show_device_context_menu(self, position):
+        menu = QMenu()
+        
+        # Get selected row
+        indexes = self.device_table.selectedIndexes()
+        if indexes:
+            row = indexes[0].row()
+            
+            # Get device info
+            device_name = self.device_table.item(row, 0).text()
+            serial = self.device_table.item(row, 3).text()
+            status = self.device_table.item(row, 4).text()
+            
+            # Add menu items
+            if status == "Blocked":
+                allow_action = menu.addAction("Allow Device")
+                allow_action.triggered.connect(lambda: self.toggle_device_status(serial))
+            else:
+                block_action = menu.addAction("Block Device")
+                block_action.triggered.connect(lambda: self.toggle_device_status(serial))
+            
+            # Add scan option
+            scan_action = menu.addAction("Scan Device")
+            drive_letter = device_name.split("(")[1].split(")")[0]
+            scan_action.triggered.connect(lambda: self.start_scan(drive_letter))
+            
+            # Execute the menu
+            menu.exec_(self.device_table.viewport().mapToGlobal(position))
+    
+    def show_file_context_menu(self, position):
+        menu = QMenu()
+        
+        # Get selected row
+        indexes = self.suspicious_files_table.selectedIndexes()
+        if indexes:
+            row = indexes[0].row()
+            
+            # Get file path
+            file_path = self.suspicious_files_table.item(row, 0).text()
+            
+            # Add menu items
+            quarantine_action = menu.addAction("Quarantine File")
+            quarantine_action.triggered.connect(lambda: self.quarantine_file(file_path))
+            
+            delete_action = menu.addAction("Delete File")
+            delete_action.triggered.connect(lambda: self.delete_file(file_path))
+            
+            open_folder_action = menu.addAction("Open Containing Folder")
+            open_folder_action.triggered.connect(lambda: self.open_containing_folder(file_path))
+            
+            # Execute the menu
+            menu.exec_(self.suspicious_files_table.viewport().mapToGlobal(position))
+    
+    def start_scan(self, drive_letter):
+        """Start scanning a USB drive."""
+        if self.scanner.is_scanning:
+            QMessageBox.warning(self, "Scan in Progress", "Another scan is already in progress. Please wait for it to complete.")
+            return
+        
+        # Update UI
+        self.scan_status_label.setText(f"Scanning drive {drive_letter}...")
+        self.scan_progress_bar.show()
+        self.stop_scan_button.setEnabled(True)
+        self.current_scan_drive = drive_letter
+        
+        # Show scan tab
+        self.tabs.setCurrentWidget(self.scan_tab)
+        
+        # Start scan
+        result = self.scanner.scan_drive(drive_letter)
+        
+        # Log event
+        self.log_event("Scan Started", f"Drive {drive_letter}", result["status"])
+    
+    def scan_selected_drive(self):
+        """Scan the currently selected drive in the device table."""
+        selected_rows = self.device_table.selectedIndexes()
+        if not selected_rows:
+            QMessageBox.warning(self, "No Drive Selected", "Please select a USB drive to scan.")
+            return
+        
+        # Get the drive letter
+        row = selected_rows[0].row()
+        device_name = self.device_table.item(row, 0).text()
+        drive_letter = device_name.split("(")[1].split(")")[0]
+        
+        # Start scan
+        self.start_scan(drive_letter)
+    
+    def stop_scan(self):
+        """Stop the current scan."""
+        if not self.scanner.is_scanning:
+            return
+        
+        result = self.scanner.stop_scanning()
+        self.scan_status_label.setText(result["message"])
+        
+        # Log event
+        self.log_event("Scan Stopped", f"Drive {self.current_scan_drive}", result["status"])
+    
+    def update_scan_results(self, results):
+        """Update the scan results UI with the latest scan results."""
+        # Update status
+        if results["status"] == "completed":
+            self.scan_status_label.setText(f"Scan completed: {results['files_scanned']} files scanned, {len(results['suspicious_files'])} suspicious files found.")
+            self.scan_progress_bar.hide()
+            self.stop_scan_button.setEnabled(False)
+            
+            # Show notification if needed
+            if self.notify_scan_checkbox.isChecked():
+                if len(results['suspicious_files']) > 0:
+                    self.show_notification("Scan Completed", f"USB drive {results['drive']} scan completed.\n{len(results['suspicious_files'])} suspicious files found!")
+                else:
+                    self.show_notification("Scan Completed", f"USB drive {results['drive']} scan completed.\nNo suspicious files found.")
+            
+        elif results["status"] == "error":
+            self.scan_status_label.setText(f"Scan error: {results['error']}")
+            self.scan_progress_bar.hide()
+            self.stop_scan_button.setEnabled(False)
+            
+        elif results["status"] == "stopped":
+            self.scan_status_label.setText("Scan stopped by user.")
+            self.scan_progress_bar.hide()
+            self.stop_scan_button.setEnabled(False)
+        
+        # Update suspicious files table
+        self.suspicious_files_table.setRowCount(0)
+        for file_info in results["suspicious_files"]:
+            row_position = self.suspicious_files_table.rowCount()
+            self.suspicious_files_table.insertRow(row_position)
+            
+            self.suspicious_files_table.setItem(row_position, 0, QTableWidgetItem(file_info["path"]))
+            self.suspicious_files_table.setItem(row_position, 1, QTableWidgetItem(file_info["reason"]))
+            self.suspicious_files_table.setItem(row_position, 2, QTableWidgetItem(file_info["hash"]))
+        
+        # Log event
+        if results["status"] == "completed":
+            self.log_event("Scan Completed", f"Drive {results['drive']}", f"{len(results['suspicious_files'])} suspicious files found")
+    
+    def clear_scan_results(self):
+        """Clear scan results."""
+        self.suspicious_files_table.setRowCount(0)
+        self.scan_status_label.setText("No scan in progress")
+    
+    def quarantine_all_files(self):
+        """Quarantine all suspicious files in the table."""
+        if self.suspicious_files_table.rowCount() == 0:
+            QMessageBox.information(self, "No Files", "No suspicious files to quarantine.")
+            return
+        
+        # Create quarantine directory if it doesn't exist
+        quarantine_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "quarantine")
+        if not os.path.exists(quarantine_dir):
+            os.makedirs(quarantine_dir)
+        
+        # Quarantine each file
+        quarantined_count = 0
+        for row in range(self.suspicious_files_table.rowCount()):
+            file_path = self.suspicious_files_table.item(row, 0).text()
+            if self.quarantine_file(file_path):
+                quarantined_count += 1
+        
+        QMessageBox.information(self, "Quarantine Complete", f"{quarantined_count} files quarantined successfully.")
+    
+    def quarantine_file(self, file_path):
+        """Quarantine a suspicious file by moving it to the quarantine directory."""
+        try:
+            # Create quarantine directory if it doesn't exist
+            quarantine_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "quarantine")
+            if not os.path.exists(quarantine_dir):
+                os.makedirs(quarantine_dir)
+            
+            # Get file name and create quarantine path
+            file_name = os.path.basename(file_path)
+            quarantine_path = os.path.join(quarantine_dir, file_name)
+            
+            # If file already exists in quarantine, add timestamp to name
+            if os.path.exists(quarantine_path):
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                name, ext = os.path.splitext(file_name)
+                quarantine_path = os.path.join(quarantine_dir, f"{name}_{timestamp}{ext}")
+            
+            # Move file to quarantine
+            os.rename(file_path, quarantine_path)
+            
+            # Log event
+            self.log_event("Quarantined", file_path, "Moved to quarantine")
+            
+            return True
+            
+        except Exception as e:
+            print(f"Error quarantining file {file_path}: {e}")
+            QMessageBox.critical(self, "Quarantine Error", f"Error quarantining file: {e}")
+            return False
+    
+    def delete_file(self, file_path):
+        """Delete a suspicious file."""
+        try:
+            # Confirm deletion
+            confirm = QMessageBox.question(self, "Confirm Delete", 
+                                          f"Are you sure you want to delete '{file_path}'?", 
+                                          QMessageBox.Yes | QMessageBox.No)
+            
+            if confirm == QMessageBox.No:
+                return False
+            
+            # Delete file
+            os.remove(file_path)
+            
+            # Log event
+            self.log_event("Deleted", file_path, "Permanently deleted")
+            
+            # Remove from table
+            for row in range(self.suspicious_files_table.rowCount()):
+                if self.suspicious_files_table.item(row, 0).text() == file_path:
+                    self.suspicious_files_table.removeRow(row)
+                    break
+            
+            return True
+            
+        except Exception as e:
+            print(f"Error deleting file {file_path}: {e}")
+            QMessageBox.critical(self, "Delete Error", f"Error deleting file: {e}")
+            return False
+    
+    def open_containing_folder(self, file_path):
+        """Open the folder containing a file."""
+        try:
+            folder_path = os.path.dirname(file_path)
+            os.startfile(folder_path)
+        except Exception as e:
+            print(f"Error opening folder for {file_path}: {e}")
+            QMessageBox.critical(self, "Error", f"Error opening folder: {e}")
+
 
 def main():
-    root = tk.Tk()
-    app = USBShield(root)
-    root.mainloop()
+    app = QApplication(sys.argv)
+    window = USBShield()
+    sys.exit(app.exec_())
 
 if __name__ == "__main__":
     main()
