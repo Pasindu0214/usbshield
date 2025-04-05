@@ -4,6 +4,7 @@ import win32api
 import win32con
 import win32file
 import wmi
+import time
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QHBoxLayout, QLabel
 from PyQt5.QtWidgets import QPushButton, QTableWidget, QTableWidgetItem, QHeaderView, QCheckBox, QMessageBox
 from PyQt5.QtWidgets import QDialog, QGroupBox, QFormLayout, QLineEdit, QTextEdit, QProgressBar, QMenu
@@ -18,19 +19,38 @@ class ScanSignalEmitter(QObject):
 
 # Main application class
 class USBShield(QMainWindow):
-    def __init__(self):
+    def __init__(self, ioc_file_path=None):
         super().__init__()
-        
+    
         # Initialize variables
         self.allowed_devices = set()
         self.device_log = []
         self.current_drives = set()
         self.autoblock = True  # Default to blocking all new devices
         
-        # Initialize scanner
+        # Initialize scanner with IOC file path
         self.scan_signal_emitter = ScanSignalEmitter()
         self.scan_signal_emitter.scan_updated.connect(self.update_scan_results)
-        self.scanner = USBScanner(callback=self.scan_signal_emitter.scan_updated.emit)
+        
+        # Determine default IOC file path
+        if ioc_file_path is None:
+            # Look for IOC file in the same directory as the script
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            default_ioc_paths = [
+                os.path.join(script_dir, 'sha256_only.csv'),
+                os.path.join(script_dir, 'ioc_hashes.csv'),
+                os.path.join(script_dir, 'hashes.csv')
+            ]
+            
+            # Find first existing IOC file
+            ioc_file_path = next((path for path in default_ioc_paths if os.path.exists(path)), None)
+        
+        # Initialize scanner with IOC file path
+        self.scanner = USBScanner(
+            callback=self.scan_signal_emitter.scan_updated.emit, 
+            ioc_file_path=ioc_file_path
+        )
+        
         self.current_scan_drive = None
         
         self.init_ui()
@@ -650,43 +670,71 @@ class USBShield(QMainWindow):
     
     def update_scan_results(self, results):
         """Update the scan results UI with the latest scan results."""
-        # Update status
-        if results["status"] == "completed":
-            self.scan_status_label.setText(f"Scan completed: {results['files_scanned']} files scanned, {len(results['suspicious_files'])} suspicious files found.")
+        # Update status for in-progress scan
+        if results["status"] == "in_progress":
+            # Get scan info
+            scan_info = results.get('scan_info', {})
+            files_scanned = scan_info.get('files_scanned', 0)
+            total_files = scan_info.get('total_files', 0)
+            elapsed_time = scan_info.get('elapsed_time', 0)
+            estimated_remaining_time = scan_info.get('estimated_remaining_time', 0)
+            start_time = scan_info.get('start_time', time.time())
+
+            # Format times
+            elapsed_str = f"{elapsed_time:.2f} seconds"
+            remaining_str = f"{estimated_remaining_time:.2f} seconds"
+            start_time_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(start_time))
+
+            # Update status label
+            status_msg = (f"Scanning: {files_scanned}/{total_files} files "
+                        f"| Started: {start_time_str} "
+                        f"| Elapsed: {elapsed_str} "
+                        f"| Estimated Remaining: {remaining_str}")
+            
+            self.scan_status_label.setText(status_msg)
+
+        # Update status for completed scan
+        elif results["status"] == "completed":
+            files_scanned = results.get('files_scanned', 0)
+            ioc_file_count = len(results.get('suspicious_files', []))
+            
+            # Create status message with red highlighting
+            status_msg = f"<font color='red'>Scan completed: {files_scanned} files scanned, {ioc_file_count} IOC matched files found</font>"
+            
+            self.scan_status_label.setText(status_msg)
             self.scan_progress_bar.hide()
             self.stop_scan_button.setEnabled(False)
             
             # Show notification if needed
             if self.notify_scan_checkbox.isChecked():
-                if len(results['suspicious_files']) > 0:
-                    self.show_notification("Scan Completed", f"USB drive {results['drive']} scan completed.\n{len(results['suspicious_files'])} suspicious files found!")
+                if ioc_file_count > 0:
+                    self.show_notification("Scan Completed", 
+                                        f"USB drive {results['drive']} scan completed.\n"
+                                        f"{ioc_file_count} IOC matched files found!")
                 else:
-                    self.show_notification("Scan Completed", f"USB drive {results['drive']} scan completed.\nNo suspicious files found.")
+                    self.show_notification("Scan Completed", 
+                                        f"USB drive {results['drive']} scan completed.\n"
+                                        f"No suspicious files found.")
             
-        elif results["status"] == "error":
-            self.scan_status_label.setText(f"Scan error: {results['error']}")
+            # Update suspicious files table
+            self.suspicious_files_table.setRowCount(0)
+            for file_info in results.get('suspicious_files', []):
+                row_position = self.suspicious_files_table.rowCount()
+                self.suspicious_files_table.insertRow(row_position)
+                
+                self.suspicious_files_table.setItem(row_position, 0, QTableWidgetItem(file_info["path"]))
+                self.suspicious_files_table.setItem(row_position, 1, QTableWidgetItem(file_info.get("reason", "Suspicious")))
+                self.suspicious_files_table.setItem(row_position, 2, QTableWidgetItem(file_info["hash"]))
+            
+            # Log event
+            self.log_event("Scan Completed", f"Drive {results['drive']}", 
+                        f"{ioc_file_count} IOC files found")
+
+        # Handle error or stopped status
+        elif results["status"] in ["error", "stopped"]:
+            self.scan_status_label.setText(f"Scan {results['status']}: {results.get('error', 'Unknown error')}")
             self.scan_progress_bar.hide()
             self.stop_scan_button.setEnabled(False)
-            
-        elif results["status"] == "stopped":
-            self.scan_status_label.setText("Scan stopped by user.")
-            self.scan_progress_bar.hide()
-            self.stop_scan_button.setEnabled(False)
-        
-        # Update suspicious files table
-        self.suspicious_files_table.setRowCount(0)
-        for file_info in results["suspicious_files"]:
-            row_position = self.suspicious_files_table.rowCount()
-            self.suspicious_files_table.insertRow(row_position)
-            
-            self.suspicious_files_table.setItem(row_position, 0, QTableWidgetItem(file_info["path"]))
-            self.suspicious_files_table.setItem(row_position, 1, QTableWidgetItem(file_info["reason"]))
-            self.suspicious_files_table.setItem(row_position, 2, QTableWidgetItem(file_info["hash"]))
-        
-        # Log event
-        if results["status"] == "completed":
-            self.log_event("Scan Completed", f"Drive {results['drive']}", f"{len(results['suspicious_files'])} suspicious files found")
-    
     def clear_scan_results(self):
         """Clear scan results."""
         self.suspicious_files_table.setRowCount(0)

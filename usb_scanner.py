@@ -2,19 +2,44 @@ import os
 import hashlib
 import threading
 import time
+import csv
 
 class USBScanner:
-    def __init__(self, callback=None):
+    def __init__(self, callback=None, ioc_file_path=None):
         """Initialize the USB scanner.
         
         Args:
             callback: Function to call when scan is complete with results
+            ioc_file_path: Path to the CSV file containing IOC hashes
         """
         self.callback = callback
         self.scan_results = {}
         self.stop_scan = False
         self.is_scanning = False
+        self.ioc_hashes = set()
         
+        # Load IOC hashes if file path is provided
+        if ioc_file_path and os.path.exists(ioc_file_path):
+            self.load_ioc_hashes(ioc_file_path)
+    
+    def load_ioc_hashes(self, ioc_file_path):
+        """Load IOC hashes from a CSV file.
+        
+        Args:
+            ioc_file_path: Path to the CSV file with IOC hashes
+        """
+        try:
+            with open(ioc_file_path, 'r', encoding='utf-8') as f:
+                reader = csv.reader(f)
+                for row in reader:
+                    if row:  # Ensure row is not empty
+                        # Strip whitespace and convert to lowercase
+                        ioc_hash = row[0].strip().lower()
+                        self.ioc_hashes.add(ioc_hash)
+            print(f"Loaded {len(self.ioc_hashes)} IOC hashes")
+        except Exception as e:
+            print(f"Error loading IOC hashes: {e}")
+    
     def scan_drive(self, drive_letter):
         """Scan a USB drive for potential threats.
         
@@ -40,12 +65,19 @@ class USBScanner:
     def _scan_drive_thread(self, drive_letter):
         """Background thread for scanning a drive."""
         try:
+            # Count total files before scanning
+            total_files = 0
+            for root, dirs, files in os.walk(drive_letter):
+                total_files += len(files)
+            
             # Initialize scan results
             self.scan_results = {
                 "drive": drive_letter,
                 "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+                "start_time": time.time(),
                 "status": "in_progress",
                 "files_scanned": 0,
+                "total_files": total_files,
                 "suspicious_files": [],
                 "error": None
             }
@@ -76,16 +108,47 @@ class USBScanner:
                 for file in files:
                     file_path = os.path.join(root, file)
                     try:
-                        # Check file extension and attributes
-                        if self._is_suspicious_file(file_path):
-                            self.scan_results["suspicious_files"].append({
-                                "path": file_path,
-                                "reason": "Suspicious extension or attribute",
-                                "hash": self._get_file_hash(file_path)
-                            })
+                        # Calculate file hash
+                        file_hash = self._get_file_hash(file_path)
                         
-                        # Increment files scanned count
-                        self.scan_results["files_scanned"] += 1
+                        # Update progress
+                        current_time = time.time()
+                        elapsed_time = current_time - self.scan_results["start_time"]
+                        files_scanned = self.scan_results["files_scanned"] + 1
+                        
+                        # Estimate remaining time
+                        if files_scanned > 0:
+                            time_per_file = elapsed_time / files_scanned
+                            remaining_files = total_files - files_scanned
+                            estimated_remaining_time = remaining_files * time_per_file
+                        else:
+                            estimated_remaining_time = 0
+                        
+                        # Prepare scan info
+                        scan_info = {
+                            "files_scanned": files_scanned,
+                            "total_files": total_files,
+                            "elapsed_time": elapsed_time,
+                            "estimated_remaining_time": estimated_remaining_time,
+                            "start_time": self.scan_results["start_time"]
+                        }
+                        
+                        # Update scan results
+                        self.scan_results["files_scanned"] = files_scanned
+                        self.scan_results["scan_info"] = scan_info
+                        
+                        # Check if file hash matches IOC list
+                        if file_hash.lower() in self.ioc_hashes:
+                            file_info = {
+                                "path": file_path,
+                                "hash": file_hash,
+                                "reason": "Matched IOC Hash"
+                            }
+                            self.scan_results["suspicious_files"].append(file_info)
+                        
+                        # Callback to update UI
+                        if self.callback:
+                            self.callback(self.scan_results)
                         
                     except Exception as e:
                         # Continue scanning other files even if one fails
@@ -113,45 +176,6 @@ class USBScanner:
         self.stop_scan = True
         return {"status": "stopping", "message": "Stopping scan..."}
     
-    def _is_suspicious_file(self, file_path):
-        """Check if a file is suspicious based on extension or attributes.
-        
-        Args:
-            file_path: Path to the file
-            
-        Returns:
-            Boolean indicating if the file is suspicious
-        """
-        # List of suspicious file extensions
-        suspicious_extensions = [
-            '.exe', '.dll', '.bat', '.cmd', '.ps1', '.vbs', '.js', 
-            '.wsf', '.hta', '.scr', '.pif', '.reg', '.vbe', '.jse',
-            '.lnk', '.com'
-        ]
-        
-        # Check extension
-        _, ext = os.path.splitext(file_path.lower())
-        if ext in suspicious_extensions:
-            # For executable files, we could add additional checks here
-            try:
-                # Check file size (small executables might be more suspicious)
-                file_size = os.path.getsize(file_path)
-                if file_size < 100000:  # Less than 100KB
-                    return True
-                
-                # In a real implementation, we could add more checks:
-                # - Check file entropy
-                # - Check for known malicious signatures
-                # - Scan with YARA rules (will be implemented later)
-                
-                # For now, mark all executables as suspicious for demonstration
-                return True
-                
-            except Exception as e:
-                print(f"Error checking file {file_path}: {e}")
-        
-        return False
-    
     def _get_file_hash(self, file_path):
         """Get the SHA-256 hash of a file.
         
@@ -170,4 +194,4 @@ class USBScanner:
             return file_hash.hexdigest()
         except Exception as e:
             print(f"Error getting hash for {file_path}: {e}")
-            return "error-calculating-hash" 
+            return "error-calculating-hash"
