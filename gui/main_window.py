@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QTabWidget, QAction, QMessageBox, QSystemTrayIcon, QMenu
 from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QPixmap
+import os
 
 from core.usb_monitor import USBMonitor
 from gui.settings_tab import SettingsTab
@@ -30,7 +31,9 @@ class MainWindow(QMainWindow):
         # Set window properties
         self.setWindowTitle("USBShield - USB Security")
         self.setGeometry(100, 100, 800, 600)
-        self.setWindowIcon(QIcon("assets/icon.png"))
+        
+        # Set the icon
+        self.set_icon()
         
         # Create tab widget
         self.tabs = QTabWidget()
@@ -52,6 +55,42 @@ class MainWindow(QMainWindow):
         # Status bar
         self.status_bar = self.statusBar()
         self.status_bar.showMessage("Ready")
+    
+    def set_icon(self):
+        """Set window icon from file"""
+        try:
+            # Try multiple possible paths for the icon file
+            icon_paths = [
+                "usbshield_icon.ico",  # Try ICO first in current directory
+                "usbshield_icon.png",  # Try PNG in current directory
+                os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "usbshield_icon.ico"),
+                os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "usbshield_icon.png"),
+                os.path.join("gui", "usbshield_icon.ico"),
+                os.path.join("gui", "usbshield_icon.png"),
+                os.path.join("resources", "icons", "usbshield_icon.ico"),
+                os.path.join("resources", "icons", "usbshield_icon.png")
+            ]
+            
+            # Try each path until we find one that exists
+            icon_path = None
+            for path in icon_paths:
+                if os.path.exists(path):
+                    icon_path = path
+                    print(f"Found icon at: {path}")
+                    break
+            
+            if icon_path:
+                icon = QIcon(icon_path)
+                if not icon.isNull():
+                    self.setWindowIcon(icon)
+                    print(f"Successfully set window icon from: {icon_path}")
+                else:
+                    print(f"Icon loaded but is null: {icon_path}")
+            else:
+                print("Could not find icon file in any of the expected locations")
+                
+        except Exception as e:
+            print(f"Error setting icon: {str(e)}")
         
     def setup_menu(self):
         # File menu
@@ -74,8 +113,38 @@ class MainWindow(QMainWindow):
         help_menu.addAction(about_action)
         
     def setup_tray_icon(self):
+        # Try multiple possible paths for the icon file
+        icon_paths = [
+            "usbshield_icon.ico",  # Try ICO first in current directory
+            "usbshield_icon.png",  # Try PNG in current directory
+            os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "usbshield_icon.ico"),
+            os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "usbshield_icon.png"),
+            os.path.join("gui", "usbshield_icon.ico"),
+            os.path.join("gui", "usbshield_icon.png"),
+            os.path.join("resources", "icons", "usbshield_icon.ico"),
+            os.path.join("resources", "icons", "usbshield_icon.png")
+        ]
+        
+        # Try each path until we find one that exists
+        icon_path = None
+        for path in icon_paths:
+            if os.path.exists(path):
+                icon_path = path
+                print(f"Found tray icon at: {path}")
+                break
+        
         # Create tray icon
-        self.tray_icon = QSystemTrayIcon(QIcon("assets/icon.png"), self)
+        if icon_path:
+            icon = QIcon(icon_path)
+            if not icon.isNull():
+                self.tray_icon = QSystemTrayIcon(icon, self)
+                print(f"Successfully set tray icon from: {icon_path}")
+            else:
+                print(f"Tray icon loaded but is null: {icon_path}")
+                self.tray_icon = QSystemTrayIcon(self)
+        else:
+            print("Could not find icon file for tray icon")
+            self.tray_icon = QSystemTrayIcon(self)
         
         # Create tray menu
         tray_menu = QMenu()
