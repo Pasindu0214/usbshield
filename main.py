@@ -62,10 +62,10 @@ class USBShield(QMainWindow):
         
     def init_ui(self):
         self.setWindowTitle('USBShield - USB Security')
-        self.setWindowIcon(QIcon('usb_icon.ico'))
+        self.setWindowIcon(QIcon('usbshield_icon.ico'))
         self.setGeometry(100, 100, 900, 600)
-        
-        # Create central widget and main layout
+    
+    # Create central widget and main layout
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
         main_layout = QVBoxLayout(self.central_widget)
@@ -566,7 +566,7 @@ class USBShield(QMainWindow):
     def show_about_dialog(self):
         QMessageBox.about(self, "About USB Shield", 
                          "USB Shield v1.0\n\nA security application to monitor and control USB storage devices.\n\n"
-                         "Developed by Security Team")
+                         "Developed by Pasindu & Chathurka.")
     
     def show_device_context_menu(self, position):
         menu = QMenu()
@@ -832,8 +832,22 @@ class USBShield(QMainWindow):
 
 
 def main():
+# Create the application
     app = QApplication(sys.argv)
+    
+    # Set application icon (this affects the window icon)
+    app_icon = QIcon('usbshield_icon.ico')
+    app.setWindowIcon(app_icon)
+    
+    # Set the app ID to help Windows properly identify the application in the taskbar
+    import ctypes
+    myappid = 'USBShield.Application.1.0'  # arbitrary string
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+    
+    # Create and show the main window
     window = USBShield()
+    
+    # Exit when the app is closed
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
