@@ -9,23 +9,23 @@
     },
     "file_path": "F:\\SOFTWARE\\Teams_windows_x64.exe",
     "file_size": 98144512,
-    "timestamp": "2025-04-30T18:32:40.609809"
+    "timestamp": "2025-04-30T19:31:09.516026"
   }
 ]]ect Secure (Codes)\\Links.txt",
     "file_size": 193,
-    "timestamp": "2025-04-30T18:32:18.834838"
+    "timestamp": "2025-04-30T19:30:55.876830"
   }
 ]: 75808,
-    "timestamp": "2025-04-30T18:29:30.185827"
+    "timestamp": "2025-04-30T19:29:17.094573"
   }
 ]ile containing 'test'",
       "severity": "info"
     },
     "file_path": "F:\\yaratest.txt",
     "file_size": 157,
-    "timestamp": "2025-04-30T18:28:30.051724"
-  },
-  {
+    "timestamp": "2025-04-30T19:28:39.142941"
+  }
+]  {
     "rule": "Test_TextFile_Pattern",
     "namespace": "test_detection",
     "tags": [],

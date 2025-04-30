@@ -12,6 +12,7 @@ from PyQt5.QtCore import Qt, QTimer, pyqtSignal, QObject
 from PyQt5.QtGui import QIcon, QFont, QColor
 from datetime import datetime
 from usb_scanner import USBScanner
+from PyQt5.QtGui import QColor
 
 
 
@@ -1232,26 +1233,65 @@ class USBShield(QMainWindow):
                                         f"USB drive {results['drive']} scan completed.\n"
                                         f"No suspicious files found.")
             
-            # Update suspicious files table
+            # Clear existing table
             self.suspicious_files_table.setRowCount(0)
             
-            # Add IOC matches first
+            # Define colors
+            ioc_background = QColor("#FFE6E6")  # Light red
+            ioc_text = QColor("#8B0000")  # Dark red
+            
+            yara_background = QColor("#E6F0FF")  # Light blue
+            yara_text = QColor("#000080")  # Navy blue
+            
+            # Add IOC matches first with red color
             for file_info in results.get('suspicious_files', []):
                 row_position = self.suspicious_files_table.rowCount()
                 self.suspicious_files_table.insertRow(row_position)
                 
-                self.suspicious_files_table.setItem(row_position, 0, QTableWidgetItem(file_info["path"]))
-                self.suspicious_files_table.setItem(row_position, 1, QTableWidgetItem("IOC Hash Match"))
-                self.suspicious_files_table.setItem(row_position, 2, QTableWidgetItem(file_info["hash"]))
+                # Create items
+                path_item = QTableWidgetItem(file_info["path"])
+                reason_item = QTableWidgetItem("IOC Hash Match")
+                hash_item = QTableWidgetItem(file_info["hash"])
+                
+                # Apply colors
+                path_item.setBackground(ioc_background)
+                path_item.setForeground(ioc_text)
+                reason_item.setBackground(ioc_background)
+                reason_item.setForeground(ioc_text)
+                hash_item.setBackground(ioc_background)
+                hash_item.setForeground(ioc_text)
+                
+                # Add to table
+                self.suspicious_files_table.setItem(row_position, 0, path_item)
+                self.suspicious_files_table.setItem(row_position, 1, reason_item)
+                self.suspicious_files_table.setItem(row_position, 2, hash_item)
             
-            # Then add YARA matches
+            # Then add YARA matches with blue color
             for yara_match in results.get('yara_matches', []):
                 row_position = self.suspicious_files_table.rowCount()
                 self.suspicious_files_table.insertRow(row_position)
                 
-                self.suspicious_files_table.setItem(row_position, 0, QTableWidgetItem(yara_match["file_path"]))
-                self.suspicious_files_table.setItem(row_position, 1, QTableWidgetItem(f"YARA Rule: {yara_match['rule']}"))
-                self.suspicious_files_table.setItem(row_position, 2, QTableWidgetItem(yara_match.get('details', 'No additional details')))
+                # Create items
+                path_item = QTableWidgetItem(yara_match["file_path"])
+                reason_item = QTableWidgetItem(f"YARA Rule: {yara_match['rule']}")
+                details_item = QTableWidgetItem(yara_match.get('details', 'No additional details'))
+                
+                # Apply colors
+                path_item.setBackground(yara_background)
+                path_item.setForeground(yara_text)
+                reason_item.setBackground(yara_background)
+                reason_item.setForeground(yara_text)
+                details_item.setBackground(yara_background)
+                details_item.setForeground(yara_text)
+                
+                # Add to table
+                self.suspicious_files_table.setItem(row_position, 0, path_item)
+                self.suspicious_files_table.setItem(row_position, 1, reason_item)
+                self.suspicious_files_table.setItem(row_position, 2, details_item)
+            
+            # If there are any results, make sure the table is visible
+            if ioc_file_count > 0 or yara_match_count > 0:
+                self.suspicious_files_table.resizeColumnsToContents()
             
             # Log event
             self.log_event("Scan Completed", f"Drive {results['drive']}", 
@@ -1262,7 +1302,9 @@ class USBShield(QMainWindow):
             self.scan_status_label.setText(f"Scan {results['status']}: {results.get('error', results.get('message', 'Unknown error'))}")
             self.scan_progress_bar.hide()
             self.stop_scan_button.setEnabled(False)
-        
+
+
+
     def clear_scan_results(self):
         """Clear scan results."""
         self.suspicious_files_table.setRowCount(0)
