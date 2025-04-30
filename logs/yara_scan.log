@@ -1,0 +1,98 @@
+2025-04-30 17:30:24,981 - YARAScanner - INFO - Loaded 1 YARA rule files
+2025-04-30 17:30:24,981 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-04-30 17:31:39,266 - YARAScanner - INFO - Skipping large file: F:Chathu Documents\Zoom\2022-09-06 18.03.37 Higgins Intermediate Practice Session\video1056976138.mp4
+2025-04-30 17:32:06,950 - YARAScanner - INFO - Skipping large file: F:Mobile Security Lab Tools\arduino-ide_2.3.4_Windows_64bit.exe
+2025-04-30 17:32:14,748 - YARAScanner - INFO - Skipping large file: F:Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\OneDrive_1_12-8-2022.zip
+2025-04-30 17:32:16,595 - YARAScanner - INFO - Skipping large file: F:Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.ar-sa.dat
+2025-04-30 17:32:16,743 - YARAScanner - INFO - Skipping large file: F:Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\Part 02.mp4
+2025-04-30 17:32:33,837 - YARAScanner - INFO - Skipping large file: F:Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.ru-ru.dat
+2025-04-30 17:32:49,604 - YARAScanner - INFO - Skipping large file: F:Chathu Documents\Windows XP\win2000_srv.x86_en-us.iso
+2025-04-30 17:32:50,778 - YARAScanner - INFO - Skipping large file: F:Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.tr-tr.dat
+2025-04-30 17:32:55,246 - YARAScanner - INFO - Skipping large file: F:Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.es-es.dat
+2025-04-30 17:32:57,083 - YARAScanner - INFO - Skipping large file: F:Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.el-GR.dat
+2025-04-30 17:32:57,292 - YARAScanner - INFO - Skipping large file: F:Mobile Security Lab Tools\jadx\lib\jadx-gui-1.5.1-all.jar
+2025-04-30 17:32:58,023 - YARAScanner - INFO - Skipping large file: F:Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.en-us.dat
+2025-04-30 17:33:02,207 - YARAScanner - INFO - Skipping large file: F:Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.de-de.dat
+2025-04-30 17:33:08,736 - YARAScanner - INFO - Skipping large file: F:Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.it-it.dat
+2025-04-30 17:33:08,929 - YARAScanner - INFO - Skipping large file: F:Mobile Security Lab Tools\IE3092 - Information Security Project\Assignment\Test.mp4
+2025-04-30 17:33:08,986 - YARAScanner - INFO - Skipping large file: F:SOFTWARE\WhatsAppSetup.exe
+2025-04-30 17:33:09,232 - YARAScanner - INFO - Skipping large file: F:Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.fr-fr.dat
+2025-04-30 17:33:16,162 - YARAScanner - INFO - Skipping large file: F:Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\ISP Part 01.mp4
+2025-04-30 17:33:17,632 - YARAScanner - INFO - Skipping large file: F:Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\ISP Part 02.mp4
+2025-04-30 17:33:22,336 - YARAScanner - INFO - Skipping large file: F:video\Stack Intro.ts
+2025-04-30 17:33:22,965 - YARAScanner - INFO - Skipping large file: F:video\Intro to Heap.ts
+2025-04-30 17:37:28,190 - YARAScanner - INFO - Loaded 1 YARA rule files
+2025-04-30 17:37:28,192 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-04-30 17:38:45,403 - YARAScanner - INFO - Skipping large file: F:Chathu Documents\Zoom\2022-09-06 18.03.37 Higgins Intermediate Practice Session\video1056976138.mp4
+2025-04-30 17:39:14,720 - YARAScanner - INFO - Skipping large file: F:Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\Part 02.mp4
+2025-04-30 17:39:16,818 - YARAScanner - INFO - Skipping large file: F:Mobile Security Lab Tools\arduino-ide_2.3.4_Windows_64bit.exe
+2025-04-30 17:39:18,445 - YARAScanner - INFO - Skipping large file: F:Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\OneDrive_1_12-8-2022.zip
+2025-04-30 17:39:28,157 - YARAScanner - INFO - Skipping large file: F:Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.el-GR.dat
+2025-04-30 17:39:49,920 - YARAScanner - INFO - Skipping large file: F:Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.en-us.dat
+2025-04-30 17:39:59,154 - YARAScanner - INFO - Skipping large file: F:Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.ar-sa.dat
+2025-04-30 17:39:59,453 - YARAScanner - INFO - Skipping large file: F:Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.tr-tr.dat
+2025-04-30 17:40:12,294 - YARAScanner - INFO - Skipping large file: F:Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.es-es.dat
+2025-04-30 17:40:14,055 - YARAScanner - INFO - Skipping large file: F:Mobile Security Lab Tools\jadx\lib\jadx-gui-1.5.1-all.jar
+2025-04-30 17:40:23,102 - YARAScanner - INFO - Skipping large file: F:Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.ru-ru.dat
+2025-04-30 17:40:30,653 - YARAScanner - INFO - Skipping large file: F:Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.fr-fr.dat
+2025-04-30 17:40:32,160 - YARAScanner - INFO - Skipping large file: F:Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.de-de.dat
+2025-04-30 17:40:35,851 - YARAScanner - INFO - Skipping large file: F:Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.it-it.dat
+2025-04-30 17:40:41,560 - YARAScanner - INFO - Skipping large file: F:Mobile Security Lab Tools\IE3092 - Information Security Project\Assignment\Test.mp4
+2025-04-30 17:40:42,956 - YARAScanner - INFO - Skipping large file: F:SOFTWARE\WhatsAppSetup.exe
+2025-04-30 17:40:47,499 - YARAScanner - INFO - Skipping large file: F:Chathu Documents\Windows XP\win2000_srv.x86_en-us.iso
+2025-04-30 17:40:47,878 - YARAScanner - INFO - Skipping large file: F:Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\ISP Part 01.mp4
+2025-04-30 17:40:55,540 - YARAScanner - INFO - Skipping large file: F:Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\ISP Part 02.mp4
+2025-04-30 17:41:05,016 - YARAScanner - INFO - Skipping large file: F:video\Stack Intro.ts
+2025-04-30 17:41:06,696 - YARAScanner - INFO - Skipping large file: F:video\Intro to Heap.ts
+2025-04-30 17:48:55,045 - YARAScanner - INFO - Loaded 1 YARA rule files
+2025-04-30 17:48:55,046 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-04-30 17:52:18,914 - YARAScanner - INFO - Loaded 1 YARA rule files
+2025-04-30 17:52:18,914 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-04-30 17:54:47,833 - YARAScanner - INFO - Loaded 1 YARA rule files
+2025-04-30 17:54:47,834 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-04-30 18:02:39,473 - YARAScanner - INFO - Loaded 1 YARA rule files
+2025-04-30 18:02:39,473 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-04-30 18:03:10,451 - YARAScanner - INFO - Skipping large file: F:\Chathu Documents\Windows XP\win2000_srv.x86_en-us.iso
+2025-04-30 18:03:18,705 - YARAScanner - INFO - Skipping large file: F:\Chathu Documents\Zoom\2022-09-06 18.03.37 Higgins Intermediate Practice Session\video1056976138.mp4
+2025-04-30 18:05:25,284 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.es-es.dat
+2025-04-30 18:05:29,730 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.de-de.dat
+2025-04-30 18:05:30,114 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.ar-sa.dat
+2025-04-30 18:05:34,565 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.ru-ru.dat
+2025-04-30 18:05:37,247 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.it-it.dat
+2025-04-30 18:05:37,635 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.fr-fr.dat
+2025-04-30 18:05:39,187 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.el-GR.dat
+2025-04-30 18:05:40,223 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.tr-tr.dat
+2025-04-30 18:05:41,579 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.en-us.dat
+2025-04-30 18:05:48,427 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\arduino-ide_2.3.4_Windows_64bit.exe
+2025-04-30 18:05:59,145 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\IE3092 - Information Security Project\Assignment\Test.mp4
+2025-04-30 18:06:19,533 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\Part 02.mp4
+2025-04-30 18:06:21,858 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\OneDrive_1_12-8-2022.zip
+2025-04-30 18:06:39,395 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\ISP Part 01.mp4
+2025-04-30 18:06:40,278 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\ISP Part 02.mp4
+2025-04-30 18:06:45,984 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\jadx\lib\jadx-gui-1.5.1-all.jar
+2025-04-30 18:07:05,907 - YARAScanner - INFO - Skipping large file: F:\SOFTWARE\WhatsAppSetup.exe
+2025-04-30 18:07:28,369 - YARAScanner - INFO - Skipping large file: F:\video\Stack Intro.ts
+2025-04-30 18:07:29,846 - YARAScanner - INFO - Skipping large file: F:\video\Intro to Heap.ts
+2025-04-30 18:09:40,305 - YARAScanner - INFO - Loaded 1 YARA rule files
+2025-04-30 18:09:40,306 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-04-30 18:09:58,692 - YARAScanner - INFO - Skipping large file: F:\Chathu Documents\Windows XP\win2000_srv.x86_en-us.iso
+2025-04-30 18:10:03,040 - YARAScanner - INFO - Skipping large file: F:\Chathu Documents\Zoom\2022-09-06 18.03.37 Higgins Intermediate Practice Session\video1056976138.mp4
+2025-04-30 18:10:59,003 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.ru-ru.dat
+2025-04-30 18:11:03,617 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.ar-sa.dat
+2025-04-30 18:11:10,493 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.en-us.dat
+2025-04-30 18:11:12,297 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.es-es.dat
+2025-04-30 18:11:12,664 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.fr-fr.dat
+2025-04-30 18:11:12,765 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.de-de.dat
+2025-04-30 18:11:13,322 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.el-GR.dat
+2025-04-30 18:11:14,228 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.it-it.dat
+2025-04-30 18:11:14,244 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.tr-tr.dat
+2025-04-30 18:11:17,485 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\arduino-ide_2.3.4_Windows_64bit.exe
+2025-04-30 18:11:26,102 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\IE3092 - Information Security Project\Assignment\Test.mp4
+2025-04-30 18:11:44,833 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\Part 02.mp4
+2025-04-30 18:11:48,144 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\OneDrive_1_12-8-2022.zip
+2025-04-30 18:12:08,651 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\ISP Part 01.mp4
+2025-04-30 18:12:09,068 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\ISP Part 02.mp4
+2025-04-30 18:12:14,566 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\jadx\lib\jadx-gui-1.5.1-all.jar
+2025-04-30 18:12:35,283 - YARAScanner - INFO - Skipping large file: F:\SOFTWARE\WhatsAppSetup.exe
+2025-04-30 18:12:58,326 - YARAScanner - INFO - Skipping large file: F:\video\Stack Intro.ts
+2025-04-30 18:12:59,653 - YARAScanner - INFO - Skipping large file: F:\video\Intro to Heap.ts

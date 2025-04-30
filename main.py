@@ -1163,10 +1163,14 @@ class USBShield(QMainWindow):
     
     def update_scan_results(self, results):
         """Update the scan results UI with the latest scan results."""
+        # For debugging
+        print(f"Received scan update: {results}")
+        
         # Update status for in-progress scan
         if results["status"] == "in_progress":
             # Get scan info
             scan_info = results.get('scan_info', {})
+            
             files_scanned = scan_info.get('files_scanned', 0)
             total_files = scan_info.get('total_files', 0)
             elapsed_time = scan_info.get('elapsed_time', 0)
@@ -1185,14 +1189,32 @@ class USBShield(QMainWindow):
                         f"| Estimated Remaining: {remaining_str}")
             
             self.scan_status_label.setText(status_msg)
+            
+            # Update progress bar with proper configuration
+            if total_files > 0:
+                progress_value = int((files_scanned / total_files) * 100)
+                
+                # Make progress bar determinate (with a range)
+                self.scan_progress_bar.setRange(0, 100)
+                self.scan_progress_bar.setValue(progress_value)
+                self.scan_progress_bar.setFormat(f"{progress_value}%")
+                self.scan_progress_bar.setTextVisible(True)
+                self.scan_progress_bar.show()
+            else:
+                # If total_files is 0, use indeterminate progress bar
+                self.scan_progress_bar.setRange(0, 0)
+                self.scan_progress_bar.show()
 
         # Update status for completed scan
         elif results["status"] == "completed":
             files_scanned = results.get('files_scanned', 0)
             ioc_file_count = len(results.get('suspicious_files', []))
+            yara_match_count = len(results.get('yara_matches', []))
+            scan_time = results.get('scan_time', 0)
             
             # Create status message with red highlighting
-            status_msg = f"<font color='red'>Scan completed: {files_scanned} files scanned, {ioc_file_count} IOC matched files found</font>"
+            status_msg = (f"<font color='red'>Scan completed: {files_scanned} files scanned in {scan_time:.2f} seconds, "
+                        f"{ioc_file_count} IOC matched files, {yara_match_count} YARA rule matches found</font>")
             
             self.scan_status_label.setText(status_msg)
             self.scan_progress_bar.hide()
@@ -1200,10 +1222,11 @@ class USBShield(QMainWindow):
             
             # Show notification if needed
             if self.notify_scan_checkbox.isChecked():
-                if ioc_file_count > 0:
+                if ioc_file_count > 0 or yara_match_count > 0:
                     self.show_notification("Scan Completed", 
                                         f"USB drive {results['drive']} scan completed.\n"
-                                        f"{ioc_file_count} IOC matched files found!")
+                                        f"{ioc_file_count} IOC matched files\n"
+                                        f"{yara_match_count} YARA rule matches found!")
                 else:
                     self.show_notification("Scan Completed", 
                                         f"USB drive {results['drive']} scan completed.\n"
@@ -1211,24 +1234,35 @@ class USBShield(QMainWindow):
             
             # Update suspicious files table
             self.suspicious_files_table.setRowCount(0)
+            
+            # Add IOC matches first
             for file_info in results.get('suspicious_files', []):
                 row_position = self.suspicious_files_table.rowCount()
                 self.suspicious_files_table.insertRow(row_position)
                 
                 self.suspicious_files_table.setItem(row_position, 0, QTableWidgetItem(file_info["path"]))
-                self.suspicious_files_table.setItem(row_position, 1, QTableWidgetItem(file_info.get("reason", "Suspicious")))
+                self.suspicious_files_table.setItem(row_position, 1, QTableWidgetItem("IOC Hash Match"))
                 self.suspicious_files_table.setItem(row_position, 2, QTableWidgetItem(file_info["hash"]))
+            
+            # Then add YARA matches
+            for yara_match in results.get('yara_matches', []):
+                row_position = self.suspicious_files_table.rowCount()
+                self.suspicious_files_table.insertRow(row_position)
+                
+                self.suspicious_files_table.setItem(row_position, 0, QTableWidgetItem(yara_match["file_path"]))
+                self.suspicious_files_table.setItem(row_position, 1, QTableWidgetItem(f"YARA Rule: {yara_match['rule']}"))
+                self.suspicious_files_table.setItem(row_position, 2, QTableWidgetItem(yara_match.get('details', 'No additional details')))
             
             # Log event
             self.log_event("Scan Completed", f"Drive {results['drive']}", 
-                        f"{ioc_file_count} IOC files found")
+                        f"{ioc_file_count} IOC files, {yara_match_count} YARA matches found")
 
         # Handle error or stopped status
         elif results["status"] in ["error", "stopped"]:
-            self.scan_status_label.setText(f"Scan {results['status']}: {results.get('error', 'Unknown error')}")
+            self.scan_status_label.setText(f"Scan {results['status']}: {results.get('error', results.get('message', 'Unknown error'))}")
             self.scan_progress_bar.hide()
             self.stop_scan_button.setEnabled(False)
-    
+        
     def clear_scan_results(self):
         """Clear scan results."""
         self.suspicious_files_table.setRowCount(0)
