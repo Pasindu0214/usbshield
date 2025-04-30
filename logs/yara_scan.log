@@ -96,3 +96,526 @@
 2025-04-30 18:12:35,283 - YARAScanner - INFO - Skipping large file: F:\SOFTWARE\WhatsAppSetup.exe
 2025-04-30 18:12:58,326 - YARAScanner - INFO - Skipping large file: F:\video\Stack Intro.ts
 2025-04-30 18:12:59,653 - YARAScanner - INFO - Skipping large file: F:\video\Intro to Heap.ts
+2025-04-30 18:28:27,175 - YARAScanner - INFO - Loaded 2 YARA rule files
+2025-04-30 18:28:27,175 - YARAScanner - INFO - Loaded YARA rule file: test_detection.yar
+2025-04-30 18:28:27,177 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-04-30 18:28:30,050 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_Detection_Rule' detected in F:\yaratest.txt
+2025-04-30 18:28:30,051 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\yaratest.txt
+2025-04-30 18:28:30,052 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:30,159 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\LDPlayer64_ens_1291_ld.exe
+2025-04-30 18:28:30,178 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:30,514 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\node-v22.14.0-x64.msi
+2025-04-30 18:28:30,523 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:30,538 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Avatar The Way Of Water (2022) [BLURAY] [1080p] [BluRay] [5.1] [YTS.MX]\Avatar.The.Way.Of.Water.2022.BLURAY.1080p.BluRay.x264.AAC5.1-[YTS.MX].srt
+2025-04-30 18:28:30,546 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:30,550 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Movies.txt
+2025-04-30 18:28:30,562 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:31,195 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Books\Thinking-Fast-and-Slow.pdf
+2025-04-30 18:28:31,204 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:31,375 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Books\Atomic_Habits.pdf
+2025-04-30 18:28:31,383 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:31,401 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Books\rich-dad-poor-dad.pdf
+2025-04-30 18:28:31,410 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:31,658 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Day1\FinalProject\seg0\c230.dat
+2025-04-30 18:28:31,665 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:31,701 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Day1\ProductDB\log\log1.dat
+2025-04-30 18:28:31,710 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:31,721 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Day1\ProductDB\seg0\c10.dat
+2025-04-30 18:28:31,729 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:31,743 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Day1\ProductDB\seg0\cc0.dat
+2025-04-30 18:28:31,743 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Day1\ProductDB\seg0\cd1.dat
+2025-04-30 18:28:31,752 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:31,752 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Day1\ProductDB\seg0\c230.dat
+2025-04-30 18:28:31,752 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:31,759 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:31,783 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Day1\sample\log\log1.dat
+2025-04-30 18:28:31,792 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:31,836 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Day1\sample\seg0\c550.dat
+2025-04-30 18:28:31,847 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:31,870 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Day1\UserDB\log\log1.dat
+2025-04-30 18:28:31,879 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:31,907 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Day1\UserDB\seg0\c3c0.dat
+2025-04-30 18:28:31,907 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Day1\UserDB\seg0\c3d1.dat
+2025-04-30 18:28:31,916 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:31,916 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:31,920 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Day1\UserDB\seg0\c230.dat
+2025-04-30 18:28:31,928 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:31,937 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\NOTICE
+2025-04-30 18:28:31,939 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\RELEASE-NOTES.html
+2025-04-30 18:28:31,948 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:31,948 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:31,989 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\databases\toursdb\log\log1.dat
+2025-04-30 18:28:31,997 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,045 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\databases\toursdb\seg0\c230.dat
+2025-04-30 18:28:32,054 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,064 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\nserverdemo\NetworkServerUtil.class
+2025-04-30 18:28:32,065 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\nserverdemo\NetworkServerUtil.java
+2025-04-30 18:28:32,066 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\nserverdemo\nserverdemo.html
+2025-04-30 18:28:32,067 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\nserverdemo\NsSample.class
+2025-04-30 18:28:32,067 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\nserverdemo\NsSample.java
+2025-04-30 18:28:32,068 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\nserverdemo\NsSampleClientThread.java
+2025-04-30 18:28:32,068 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\nserverdemo\NsSampleWork.class
+2025-04-30 18:28:32,069 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\nserverdemo\SimpleNetworkClientSample.class
+2025-04-30 18:28:32,070 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\nserverdemo\SimpleNetworkClientSample.java
+2025-04-30 18:28:32,071 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\nserverdemo\simpleserversample.html
+2025-04-30 18:28:32,071 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\nserverdemo\SimpleNetworkServerSample.class
+2025-04-30 18:28:32,072 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\nserverdemo\SimpleNetworkServerSample.java
+2025-04-30 18:28:32,075 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,075 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,076 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,076 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,076 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,076 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,076 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,076 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,076 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,076 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,076 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,076 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,090 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\simple\example.html
+2025-04-30 18:28:32,090 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\simple\SimpleApp.class
+2025-04-30 18:28:32,091 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\simple\SimpleApp.java
+2025-04-30 18:28:32,098 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,098 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,099 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,126 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\workingwithderby\WwdClientExample.class
+2025-04-30 18:28:32,127 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\workingwithderby\readme.html
+2025-04-30 18:28:32,127 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\workingwithderby\WwdClientExample.java
+2025-04-30 18:28:32,128 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\workingwithderby\WwdEmbedded.class
+2025-04-30 18:28:32,128 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\workingwithderby\WwdEmbedded.java
+2025-04-30 18:28:32,128 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\workingwithderby\WwdUtils.class
+2025-04-30 18:28:32,129 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\demo\programs\workingwithderby\WwdUtils.java
+2025-04-30 18:28:32,135 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,136 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,136 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,136 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,136 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,136 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,136 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,163 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\adminguide\cadminhubbkup75469.html
+2025-04-30 18:28:32,170 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\adminguide\cadminov16172.html
+2025-04-30 18:28:32,172 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,172 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,177 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\adminguide\cadminovcliconnect.html
+2025-04-30 18:28:32,179 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\adminguide\cadminovsrvsmpprgm.html
+2025-04-30 18:28:32,185 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,185 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,200 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\adminguide\radminembeddedserverex.html
+2025-04-30 18:28:32,208 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,224 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\adminguide\tadminovclirun.html
+2025-04-30 18:28:32,225 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\adminguide\tadminovnsrundemo.html
+2025-04-30 18:28:32,225 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\adminguide\tadminovrunsrvprgm.html
+2025-04-30 18:28:32,227 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\adminguide\adminguide-single.html
+2025-04-30 18:28:32,232 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,233 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,233 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,233 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,246 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\devguide\cdevadvjdbc18939.html
+2025-04-30 18:28:32,255 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,255 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\devguide\cdevconcepts22641.html
+2025-04-30 18:28:32,261 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\devguide\cdevconcepts32861.html
+2025-04-30 18:28:32,263 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,263 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,269 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\devguide\cdevconcepts840995.html
+2025-04-30 18:28:32,275 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\devguide\cdevcsecure12392.html
+2025-04-30 18:28:32,278 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,278 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,329 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\devguide\cdevresman89722.html
+2025-04-30 18:28:32,337 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,347 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\devguide\cdevstandardsxml.html
+2025-04-30 18:28:32,355 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,372 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\devguide\rdevconcepts1119.html
+2025-04-30 18:28:32,373 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\devguide\rdevconcepts38274.html
+2025-04-30 18:28:32,375 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\devguide\rdevconcepts88082.html
+2025-04-30 18:28:32,375 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\devguide\rdevconceptsfor.html
+2025-04-30 18:28:32,376 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\devguide\rdevconceptsholdablecursors.html
+2025-04-30 18:28:32,377 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\devguide\rdevconceptsinsertrow.html
+2025-04-30 18:28:32,379 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\devguide\rdevconceptssur.html
+2025-04-30 18:28:32,381 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,381 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,381 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,381 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,381 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,381 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,382 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,382 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\devguide\rdevcsecure26537.html
+2025-04-30 18:28:32,392 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,404 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\devguide\tdevconcepts41704.html
+2025-04-30 18:28:32,412 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,417 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\devguide\tdevpreupgrade.html
+2025-04-30 18:28:32,427 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,430 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\devguide\devguide-single.html
+2025-04-30 18:28:32,438 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,452 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\getstart\cgsinstallingderby.html
+2025-04-30 18:28:32,462 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,467 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\getstart\tgsrunningij.html
+2025-04-30 18:28:32,471 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\getstart\getstart-single.html
+2025-04-30 18:28:32,477 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,477 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,508 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\adminguide\cadminhubbkup75469.html
+2025-04-30 18:28:32,517 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,522 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\adminguide\cadminovcliconnect.html
+2025-04-30 18:28:32,523 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\adminguide\cadminovsrvsmpprgm.html
+2025-04-30 18:28:32,531 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,532 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,532 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\adminguide\radminappsresultsetdiffs.html
+2025-04-30 18:28:32,538 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\adminguide\radmindrdakeepalive.html
+2025-04-30 18:28:32,540 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\adminguide\radminembeddedserverex.html
+2025-04-30 18:28:32,541 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,541 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,541 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,544 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\adminguide\adminguide-single.html
+2025-04-30 18:28:32,552 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,566 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\adminguide\tadminovclirun.html
+2025-04-30 18:28:32,567 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\adminguide\tadminovnsrundemo.html
+2025-04-30 18:28:32,567 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\adminguide\tadminovrunsrvprgm.html
+2025-04-30 18:28:32,575 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,575 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,575 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,600 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\getstart\tgsrunningij.html
+2025-04-30 18:28:32,602 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\getstart\getstart-single.html
+2025-04-30 18:28:32,610 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,610 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,620 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\ref\crefjavsavesetroll.html
+2025-04-30 18:28:32,621 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\ref\crefjavstateautogen.html
+2025-04-30 18:28:32,630 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,630 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,656 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\ref\rrefcasenullif.html
+2025-04-30 18:28:32,656 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\ref\rrefclob.html
+2025-04-30 18:28:32,660 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\ref\rrefcreatefunctionstatement.html
+2025-04-30 18:28:32,664 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,665 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,665 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,681 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\ref\rrefjavsqlprst.html
+2025-04-30 18:28:32,691 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,698 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\ref\rrefexcept71493.html
+2025-04-30 18:28:32,707 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\ref\rrefjdbc80004.html
+2025-04-30 18:28:32,707 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,708 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\ref\rrefjdbc96386.html
+2025-04-30 18:28:32,716 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,716 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,745 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\ref\rrefsql9241891.html
+2025-04-30 18:28:32,753 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\ref\rrefsqlj15309.html
+2025-04-30 18:28:32,754 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,754 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,760 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\ref\rrefsqlj19433.html
+2025-04-30 18:28:32,763 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\ref\rrefsqlj23075.html
+2025-04-30 18:28:32,768 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,769 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,770 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\ref\rrefsqlj29840.html
+2025-04-30 18:28:32,778 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,841 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\pt_BR\ref\ref-single.html
+2025-04-30 18:28:32,849 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,857 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\ref\crefjavccns.html
+2025-04-30 18:28:32,858 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\ref\crefjavsavesetroll.html
+2025-04-30 18:28:32,865 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,865 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,866 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\ref\crefjavstateautogen.html
+2025-04-30 18:28:32,875 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,896 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\ref\rrefcasenullif.html
+2025-04-30 18:28:32,898 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\ref\rrefclob.html
+2025-04-30 18:28:32,900 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\ref\rrefcreatefunctionstatement.html
+2025-04-30 18:28:32,905 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,905 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,905 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,935 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\ref\rrefjavsqlprst.html
+2025-04-30 18:28:32,943 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,965 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\ref\rrefjdbc80004.html
+2025-04-30 18:28:32,967 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\ref\rrefjdbc96386.html
+2025-04-30 18:28:32,973 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,973 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:32,977 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\ref\rrefexcept71493.html
+2025-04-30 18:28:32,985 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,020 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\ref\rrefsql9241891.html
+2025-04-30 18:28:33,029 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,031 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\ref\rrefsqlj15309.html
+2025-04-30 18:28:33,038 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,045 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\ref\rrefsqlj19433.html
+2025-04-30 18:28:33,047 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\ref\rrefsqlj20937.html
+2025-04-30 18:28:33,050 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\ref\rrefsqlj23075.html
+2025-04-30 18:28:33,054 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,054 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,054 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,055 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\ref\rrefsqlj27781.html
+2025-04-30 18:28:33,057 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\ref\rrefsqlj29840.html
+2025-04-30 18:28:33,063 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,063 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,226 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\ref\ref-single.html
+2025-04-30 18:28:33,234 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,242 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\tools\ctoolsij34525.html
+2025-04-30 18:28:33,250 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,260 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\tools\ctoolsij25986.html
+2025-04-30 18:28:33,268 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,271 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\tools\ctoolssysinfo1002931.html
+2025-04-30 18:28:33,278 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,307 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\tools\rtoolsijcomref62772.html
+2025-04-30 18:28:33,315 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,326 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\tools\rtoolssysinfo1002629.html
+2025-04-30 18:28:33,334 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,367 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\tools\tools-single.html
+2025-04-30 18:28:33,376 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,427 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\tuning\ctunsetprop1003847.html
+2025-04-30 18:28:33,435 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,471 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\tuning\rtunproper26985.html
+2025-04-30 18:28:33,479 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,487 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\tuning\rtunproperdurability.html
+2025-04-30 18:28:33,494 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,501 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\tuning\ttundepth33391.html
+2025-04-30 18:28:33,509 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,515 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\tuning\tuning-single.html
+2025-04-30 18:28:33,523 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,532 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\workingwithderby\cwwdactivities.html
+2025-04-30 18:28:33,533 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\workingwithderby\rwwdactivity3.html
+2025-04-30 18:28:33,538 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\workingwithderby\twwdIntro.html
+2025-04-30 18:28:33,540 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,540 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,540 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,541 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\docs\html\workingwithderby\workingwithderby-single.html
+2025-04-30 18:28:33,549 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,689 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\javadoc\jdbc3\org\apache\derby\authentication\UserAuthenticator.html
+2025-04-30 18:28:33,697 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,708 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\javadoc\jdbc3\org\apache\derby\drda\NetworkServerControl.html
+2025-04-30 18:28:33,717 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,752 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\javadoc\jdbc4\org\apache\derby\authentication\UserAuthenticator.html
+2025-04-30 18:28:33,761 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,770 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\javadoc\jdbc4\org\apache\derby\drda\NetworkServerControl.html
+2025-04-30 18:28:33,779 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,897 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\lib\derby.jar
+2025-04-30 18:28:33,906 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,913 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\test\README.htm
+2025-04-30 18:28:33,921 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:33,995 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\db-derby-10.2.2.0-bin\test\derbyTesting.jar
+2025-04-30 18:28:34,003 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:34,015 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\GitHub\chathurkaaa.github.io\.git\hooks\applypatch-msg.sample
+2025-04-30 18:28:34,015 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\GitHub\chathurkaaa.github.io\.git\hooks\pre-applypatch.sample
+2025-04-30 18:28:34,015 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\GitHub\chathurkaaa.github.io\.git\hooks\pre-merge-commit.sample
+2025-04-30 18:28:34,017 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\GitHub\chathurkaaa.github.io\.git\hooks\pre-commit.sample
+2025-04-30 18:28:34,017 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\GitHub\chathurkaaa.github.io\.git\hooks\commit-msg.sample
+2025-04-30 18:28:34,015 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\GitHub\chathurkaaa.github.io\.git\hooks\pre-receive.sample
+2025-04-30 18:28:34,017 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\GitHub\chathurkaaa.github.io\.git\hooks\pre-push.sample
+2025-04-30 18:28:34,017 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\GitHub\chathurkaaa.github.io\.git\hooks\pre-rebase.sample
+2025-04-30 18:28:34,018 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\GitHub\chathurkaaa.github.io\.git\hooks\prepare-commit-msg.sample
+2025-04-30 18:28:34,024 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:34,025 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:34,026 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:34,026 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:34,026 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:34,026 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:34,026 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:34,026 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:34,026 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:34,767 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Image-Line\FL Studio\Presets\Plugin database\Generators\Synth classic\Transistor Bass.fst
+2025-04-30 18:28:34,776 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:34,873 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Image-Line\FL Studio\Settings\Internet\Default news.rss
+2025-04-30 18:28:34,883 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:37,420 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\IMPORTANT DOCUMENTS\Certificates\Open UOM certificates\CareerMe_Test_Report(English).pdf
+2025-04-30 18:28:37,428 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:37,868 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Day11\target\classes\App\Test.class
+2025-04-30 18:28:37,876 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:37,879 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Day12\src\main\java\com\mycompany\day12\Test.java
+2025-04-30 18:28:37,888 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:37,890 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Day12\src\main\java\newpackage\Test2.java
+2025-04-30 18:28:37,899 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:37,901 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Day12\target\classes\com\mycompany\day12\Test.class
+2025-04-30 18:28:37,909 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:37,910 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Day12\target\classes\newpackage\Test2.class
+2025-04-30 18:28:37,917 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:37,945 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Day14\src\main\java\com\mycompany\day14\Signin_GUI.java
+2025-04-30 18:28:37,954 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:37,968 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Day14\target\classes\com\mycompany\day14\Signin_GUI.class
+2025-04-30 18:28:37,977 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:37,991 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Day15\src\main\java\App\MainStore.java
+2025-04-30 18:28:38,000 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,019 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Day15\target\classes\App\MainStore.class
+2025-04-30 18:28:38,027 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,047 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Day16\src\main\java\com\mycompany\day16\Test.java
+2025-04-30 18:28:38,055 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,057 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Day16\target\classes\com\mycompany\day16\Test.class
+2025-04-30 18:28:38,066 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,081 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Day8\src\main\java\Test.java
+2025-04-30 18:28:38,090 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,099 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Day8\target\classes\Test.class
+2025-04-30 18:28:38,107 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,108 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Day8\target\maven-status\maven-compiler-plugin\compile\default-compile\createdFiles.lst
+2025-04-30 18:28:38,108 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Day8\target\maven-status\maven-compiler-plugin\compile\default-compile\inputFiles.lst
+2025-04-30 18:28:38,116 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,116 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,123 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Day9\src\main\java\Test.java
+2025-04-30 18:28:38,132 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,138 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Day9\target\classes\Test.class
+2025-04-30 18:28:38,146 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,147 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Day9\target\maven-status\maven-compiler-plugin\compile\default-compile\inputFiles.lst
+2025-04-30 18:28:38,147 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Day9\target\maven-status\maven-compiler-plugin\compile\default-compile\createdFiles.lst
+2025-04-30 18:28:38,155 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,156 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,378 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\iText7-Core-7.1.3.zip
+2025-04-30 18:28:38,387 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,408 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\barcodes-7.1.3.pom
+2025-04-30 18:28:38,409 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\BUILDING.md
+2025-04-30 18:28:38,410 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\CONTRIBUTING.md
+2025-04-30 18:28:38,413 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\font-asian-7.1.3.pom
+2025-04-30 18:28:38,417 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,417 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,417 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,417 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,441 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\forms-7.1.3.pom
+2025-04-30 18:28:38,449 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,453 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\gnu-agpl-v3.0.md
+2025-04-30 18:28:38,459 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\hyph-7.1.3.pom
+2025-04-30 18:28:38,462 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,462 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,482 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\io-7.1.3.pom
+2025-04-30 18:28:38,490 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,520 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\kernel-7.1.3.pom
+2025-04-30 18:28:38,529 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,557 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\layout-7.1.3.pom
+2025-04-30 18:28:38,567 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,595 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\LICENSE
+2025-04-30 18:28:38,607 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,608 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\pdfa-7.1.3.pom
+2025-04-30 18:28:38,617 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,653 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\pdftest-7.1.3-sources.jar
+2025-04-30 18:28:38,656 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\pdftest-7.1.3.jar
+2025-04-30 18:28:38,664 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,664 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,688 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\pdftest-7.1.3-javadoc.jar
+2025-04-30 18:28:38,691 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\pdftest-7.1.3.pom
+2025-04-30 18:28:38,696 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\README.md
+2025-04-30 18:28:38,697 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\root-7.1.3.pom
+2025-04-30 18:28:38,701 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,701 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,701 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,702 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,786 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\sign-7.1.3.pom
+2025-04-30 18:28:38,797 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,845 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\styled-xml-parser-7.1.3.pom
+2025-04-30 18:28:38,854 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:38,930 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\svg-7.1.3.pom
+2025-04-30 18:28:38,939 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,019 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\styled-xml-parser-7.1.3.jar
+2025-04-30 18:28:39,028 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,046 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\jar\styled-xml-parser-7.1.3-javadoc.jar
+2025-04-30 18:28:39,056 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,086 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\src\main\java\App\LoginOrSignUp_GUI.java
+2025-04-30 18:28:39,094 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\src\main\java\App\MovieTickets_GUI.java
+2025-04-30 18:28:39,100 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,101 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,157 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\target\classes\App\LoginOrSignUp_GUI.class
+2025-04-30 18:28:39,165 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,179 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\FinalProject\target\classes\App\MovieTickets_GUI.class
+2025-04-30 18:28:39,188 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,192 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Kevini Project\build.xml
+2025-04-30 18:28:39,200 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,220 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Kevini Project\nbproject\project.xml
+2025-04-30 18:28:39,223 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Kevini Project\nbproject\project.properties
+2025-04-30 18:28:39,225 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Kevini Project\nbproject\build-impl.xml
+2025-04-30 18:28:39,230 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,230 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,230 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,234 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\OOPC_Day_02\build.xml
+2025-04-30 18:28:39,242 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,251 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\OOPC_Day_02\nbproject\project.xml
+2025-04-30 18:28:39,254 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\OOPC_Day_02\nbproject\project.properties
+2025-04-30 18:28:39,256 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\OOPC_Day_02\nbproject\build-impl.xml
+2025-04-30 18:28:39,259 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,259 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,260 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,263 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\OOPC_Test_002\build.xml
+2025-04-30 18:28:39,271 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,278 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\OOPC_Test_002\nbproject\project.xml
+2025-04-30 18:28:39,279 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\OOPC_Test_002\nbproject\project.properties
+2025-04-30 18:28:39,283 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\OOPC_Test_002\nbproject\build-impl.xml
+2025-04-30 18:28:39,287 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,287 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,287 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,289 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Test\pom.xml
+2025-04-30 18:28:39,297 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,298 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Test\src\main\java\com\mycompany\test\Test.java
+2025-04-30 18:28:39,306 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,316 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Test\target\classes\com\mycompany\test\Test.class
+2025-04-30 18:28:39,327 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:39,329 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\NetBeansProjects\Test\target\maven-status\maven-compiler-plugin\compile\default-compile\inputFiles.lst
+2025-04-30 18:28:39,344 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:46,057 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\SLIIT\Orientation\Eng project.pptx
+2025-04-30 18:28:46,066 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:46,143 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Windows XP\winworldpc.com.txt
+2025-04-30 18:28:46,152 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:56,747 - YARAScanner - INFO - Skipping large file: F:\Chathu Documents\Windows XP\win2000_srv.x86_en-us.iso
+2025-04-30 18:28:56,754 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Windows XP\Metasploitable2-Linux\Metasploitable.vmx
+2025-04-30 18:28:56,767 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:57,248 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Wondershare\Wondershare Filmora\Download\CategoryItemResource\en\Id_64_trans_recommend_en_PageIndex_1.json
+2025-04-30 18:28:57,260 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:58,189 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Wondershare\Wondershare Filmora\Download\Temp\transition\2_2_Beam_Transition_5\resinfo.json
+2025-04-30 18:28:58,197 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:58,200 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Wondershare\Wondershare Filmora\Download\Temp\transition\2_2_Glitch_Blocks\resinfo.json
+2025-04-30 18:28:58,210 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:58,224 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Wondershare\Wondershare Filmora\Download\Temp\transition\2_2_Shock\resinfo.json
+2025-04-30 18:28:58,233 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:28:59,545 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Chathu Documents\Zoom\2022-09-06 18.03.37 Higgins Intermediate Practice Session\chat.txt
+2025-04-30 18:28:59,554 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:29:04,661 - YARAScanner - INFO - Skipping large file: F:\Chathu Documents\Zoom\2022-09-06 18.03.37 Higgins Intermediate Practice Session\video1056976138.mp4
+2025-04-30 18:29:30,152 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Heretic (2024) [1080p] [BluRay] [5.1] [YTS.MX]\Heretic.2024.1080p.BluRay.x264.AAC5.1-[YTS.MX].srt
+2025-04-30 18:29:30,161 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:29:30,170 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Heretic (2024) [1080p] [BluRay] [5.1] [YTS.MX]\Subs\Brazilian.por.srt
+2025-04-30 18:29:30,171 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Heretic (2024) [1080p] [BluRay] [5.1] [YTS.MX]\Subs\English.srt
+2025-04-30 18:29:30,172 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Heretic (2024) [1080p] [BluRay] [5.1] [YTS.MX]\Subs\Latin American.spa.srt
+2025-04-30 18:29:30,175 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Heretic (2024) [1080p] [BluRay] [5.1] [YTS.MX]\Subs\SDH.eng.HI.srt
+2025-04-30 18:29:30,180 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:29:30,180 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:29:30,180 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:29:30,180 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:29:30,185 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Justice League Crisis On Infinite Earths - Part One (2024) [1080p] [WEBRip] [x265] [10bit] [5.1] [YTS.MX]\Justice.League.Crisis.On.Infinite.Earths.-.Part.One.2024.1080p.WEBRip.x265.10bit.AAC5.1-[YTS.MX].srt
+2025-04-30 18:29:30,195 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:29:30,214 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Justice League Crisis On Infinite Earths - Part One (2024) [1080p] [WEBRip] [x265] [10bit] [5.1] [YTS.MX]\Subs\ger.srt
+2025-04-30 18:29:30,215 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Justice League Crisis On Infinite Earths - Part One (2024) [1080p] [WEBRip] [x265] [10bit] [5.1] [YTS.MX]\Subs\Latin American.spa.srt
+2025-04-30 18:29:30,216 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Justice League Crisis On Infinite Earths - Part One (2024) [1080p] [WEBRip] [x265] [10bit] [5.1] [YTS.MX]\Subs\SDH.eng.HI.srt
+2025-04-30 18:29:30,219 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Justice League Crisis On Infinite Earths - Part One (2024) [1080p] [WEBRip] [x265] [10bit] [5.1] [YTS.MX]\Subs\English.srt
+2025-04-30 18:29:30,223 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:29:30,223 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:29:30,224 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:29:30,224 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:29:30,228 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\wotok_mdl.cmd
+2025-04-30 18:29:30,237 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:29:30,469 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Setup64.exe
+2025-04-30 18:29:30,477 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:30:37,151 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.ar-sa.dat
+2025-04-30 18:30:50,677 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.el-GR.dat
+2025-04-30 18:30:55,559 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.de-de.dat
+2025-04-30 18:30:59,519 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.en-us.dat
+2025-04-30 18:31:12,167 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.es-es.dat
+2025-04-30 18:31:15,768 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.ru-ru.dat
+2025-04-30 18:31:19,082 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.tr-tr.dat
+2025-04-30 18:31:19,946 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.fr-fr.dat
+2025-04-30 18:31:21,079 - YARAScanner - INFO - Skipping large file: F:\Microsoft Office 2019 Professional Plus 2003 Build 12624.20520 x64 [FileCR]\Setup\Office\Data\16.0.12624.20520\stream.x64.it-it.dat
+2025-04-30 18:31:23,552 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Mobile Security Lab Tools\apktool.jar.jar
+2025-04-30 18:31:23,561 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:31:24,682 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Mobile Security Lab Tools\apk-editor-studio_windows_1.7.2.msi
+2025-04-30 18:31:24,690 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:31:27,316 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\arduino-ide_2.3.4_Windows_64bit.exe
+2025-04-30 18:31:36,619 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\IE3092 - Information Security Project\Assignment\Test.mp4
+2025-04-30 18:31:48,231 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\part 1.mp4
+2025-04-30 18:31:48,241 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:31:56,202 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\Part 02.mp4
+2025-04-30 18:32:00,387 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\OneDrive_1_12-8-2022.zip
+2025-04-30 18:32:16,406 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\ISP Part 01.mp4
+2025-04-30 18:32:17,006 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\IE3092 - Information Security Project\ISP\ISP Part 02.mp4
+2025-04-30 18:32:18,522 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Mobile Security Lab Tools\IE3092 - Information Security Project\ISP Progress 02\Codes\ISP Progress 01\.test.py.swp
+2025-04-30 18:32:18,524 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Mobile Security Lab Tools\IE3092 - Information Security Project\ISP Progress 02\Codes\ISP Progress 01\isp_project.py
+2025-04-30 18:32:18,530 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:32:18,530 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:32:18,834 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Mobile Security Lab Tools\IE3092 - Information Security Project\Project Secure (ISP) - IT20171438, IT19187310\Project Secure (Codes)\Links.txt
+2025-04-30 18:32:18,836 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\Mobile Security Lab Tools\IE3092 - Information Security Project\Project Secure (ISP) - IT20171438, IT19187310\Project Secure (Codes)\sqli.py
+2025-04-30 18:32:18,843 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:32:18,843 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:32:22,067 - YARAScanner - INFO - Skipping large file: F:\Mobile Security Lab Tools\jadx\lib\jadx-gui-1.5.1-all.jar
+2025-04-30 18:32:22,877 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\SOFTWARE\windowskeyfinder.exe
+2025-04-30 18:32:22,885 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:32:23,584 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\SOFTWARE\winrar-x64-540.exe
+2025-04-30 18:32:23,593 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:32:39,010 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\SOFTWARE\AdbeRdr11010_en_US.exe
+2025-04-30 18:32:39,018 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:32:40,609 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in F:\SOFTWARE\Teams_windows_x64.exe
+2025-04-30 18:32:40,618 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-04-30 18:32:41,506 - YARAScanner - INFO - Skipping large file: F:\SOFTWARE\WhatsAppSetup.exe
+2025-04-30 18:33:03,416 - YARAScanner - INFO - Skipping large file: F:\video\Stack Intro.ts
+2025-04-30 18:33:04,726 - YARAScanner - INFO - Skipping large file: F:\video\Intro to Heap.ts
