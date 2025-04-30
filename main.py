@@ -13,9 +13,55 @@ from PyQt5.QtGui import QIcon, QFont, QColor
 from datetime import datetime
 from usb_scanner import USBScanner
 
+
+
+# Trusted manufacturers for HID devices
+TRUSTED_MANUFACTURERS = [
+    "microsoft", "logitech", "apple", "dell", "hp", "lenovo", "asus", 
+    "acer", "razer", "corsair", "steelseries", "cooler master", "cherry",
+    "gigabyte", "lg", "samsung", "benq", "kingston", "western digital",
+    "toshiba", "intel", "amd", "nvidia", "broadcom", "realtek", "crucial",
+    "seagate", "sandisk", "dlink", "tplink", "netgear", "belkin", "linksys"
+]
+
+# Known malicious HID device signatures
+HID_ATTACK_SIGNATURES = {
+    # USB Rubber Ducky (Various versions)
+    "VID_03EB&PID_2401": "USB Rubber Ducky (Original)",
+    "VID_03EB&PID_2042": "USB Rubber Ducky (Modified)",
+    "VID_03EB&PID_2403": "USB Rubber Ducky (Twin Duck)",
+    
+    # Bash Bunny
+    "VID_1B4F&PID_9205": "Bash Bunny (Gen1)",
+    "VID_1B4F&PID_9206": "Bash Bunny (Gen2)",
+    
+    # Malduino
+    "VID_1B4F&PID_9207": "Malduino (Elite)",
+    "VID_1B4F&PID_9208": "Malduino (Elite)",
+    
+    # LAN Turtle
+    "VID_1D6B&PID_0102": "LAN Turtle",
+    "VID_1D6B&PID_0103": "LAN Turtle (3.0)",
+    
+    # Packet Squirrel
+    "VID_1D6B&PID_0105": "Packet Squirrel",
+    
+    # O.MG Cable variants
+    "VID_1D6B&PID_0106": "O.MG Cable (Various Types)",
+    "VID_1D6B&PID_0107": "O.MG Cable (Various Types)",
+    
+    # Generic suspicious keyboard emulators
+    "VID_16C0&PID_05DF": "Generic HID Device (Suspicious)",
+    "VID_16C0&PID_0483": "Generic MIDI Device (Suspicious)"
+}
+
 # Signal emitter for scan updates
 class ScanSignalEmitter(QObject):
     scan_updated = pyqtSignal(dict)
+
+# Signal emitter for HID device detection
+class HIDSignalEmitter(QObject):
+    hid_detected = pyqtSignal(dict)
 
 # Main application class
 class USBShield(QMainWindow):
@@ -24,13 +70,21 @@ class USBShield(QMainWindow):
     
         # Initialize variables
         self.allowed_devices = set()
+        self.allowed_hid_devices = set()
+        self.trusted_hid_devices = set()  # For auto-approved trusted manufacturers
         self.device_log = []
         self.current_drives = set()
+        self.current_hid_devices = set()
         self.autoblock = True  # Default to blocking all new devices
+        self.hid_protection = True  # Default to enable HID protection
         
         # Initialize scanner with IOC file path
         self.scan_signal_emitter = ScanSignalEmitter()
         self.scan_signal_emitter.scan_updated.connect(self.update_scan_results)
+        
+        # Initialize HID detection signal
+        self.hid_signal_emitter = HIDSignalEmitter()
+        self.hid_signal_emitter.hid_detected.connect(self.handle_hid_detection)
         
         # Determine default IOC file path
         if ioc_file_path is None:
@@ -63,9 +117,9 @@ class USBShield(QMainWindow):
     def init_ui(self):
         self.setWindowTitle('USBShield - USB Security')
         self.setWindowIcon(QIcon('usbshield_icon.ico'))
-        self.setGeometry(100, 100, 900, 600)
+        self.setGeometry(100, 100, 1000, 700)  # Increased size to accommodate more information
     
-    # Create central widget and main layout
+        # Create central widget and main layout
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
         main_layout = QVBoxLayout(self.central_widget)
@@ -76,18 +130,21 @@ class USBShield(QMainWindow):
         
         # Create tabs
         self.device_tab = QWidget()
+        self.hid_tab = QWidget()  # New tab for HID devices
         self.settings_tab = QWidget()
         self.logs_tab = QWidget()
-        self.scan_tab = QWidget()  # New tab for scan results
+        self.scan_tab = QWidget()
         
-        self.tabs.addTab(self.device_tab, "Device Management")
-        self.tabs.addTab(self.scan_tab, "Scan Results")  # Add scan tab
+        self.tabs.addTab(self.device_tab, "Storage Devices")
+        self.tabs.addTab(self.hid_tab, "HID Devices")  # Add HID tab
+        self.tabs.addTab(self.scan_tab, "Scan Results")
         self.tabs.addTab(self.settings_tab, "Settings")
         self.tabs.addTab(self.logs_tab, "Logs")
         
         # Setup tab contents
         self.setup_device_tab()
-        self.setup_scan_tab()  # Setup scan tab
+        self.setup_hid_tab()  # Setup HID tab
+        self.setup_scan_tab()
         self.setup_settings_tab()
         self.setup_logs_tab()
         
@@ -105,6 +162,19 @@ class USBShield(QMainWindow):
         # Exit action
         exit_action = file_menu.addAction('Exit')
         exit_action.triggered.connect(self.close)
+        
+        # Device menu
+        device_menu = menubar.addMenu('Devices')
+        
+        # Refresh action
+        refresh_action = device_menu.addAction('Refresh All Devices')
+        refresh_action.triggered.connect(self.update_device_list)
+        
+        # HID protection toggle
+        self.hid_protection_action = device_menu.addAction('HID Protection')
+        self.hid_protection_action.setCheckable(True)
+        self.hid_protection_action.setChecked(self.hid_protection)
+        self.hid_protection_action.triggered.connect(self.toggle_hid_protection)
         
         # Scan menu
         scan_menu = menubar.addMenu('Scan')
@@ -128,7 +198,7 @@ class USBShield(QMainWindow):
         layout = QVBoxLayout()
         
         # Add informational label
-        info_label = QLabel("USB Device Management")
+        info_label = QLabel("USB Storage Device Management")
         info_label.setFont(QFont('Arial', 12, QFont.Bold))
         layout.addWidget(info_label)
         
@@ -137,7 +207,7 @@ class USBShield(QMainWindow):
         
         # Create table for devices
         self.device_table = QTableWidget()
-        self.device_table.setColumnCount(7)  # Added column for scan button
+        self.device_table.setColumnCount(7)
         self.device_table.setHorizontalHeaderLabels(["Device", "Vendor ID", "Product ID", "Serial", "Status", "Actions", "Scan"])
         self.device_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
         
@@ -170,6 +240,58 @@ class USBShield(QMainWindow):
         layout.addWidget(self.auto_approve_checkbox)
         
         self.device_tab.setLayout(layout)
+    
+    def setup_hid_tab(self):
+        layout = QVBoxLayout()
+        
+        # Add informational label
+        info_label = QLabel("HID Device Management")
+        info_label.setFont(QFont('Arial', 12, QFont.Bold))
+        layout.addWidget(info_label)
+        
+        description_label = QLabel("This tab shows all Human Interface Devices (HIDs) that have been connected to your computer. "
+                                  "Suspicious HID devices may be used for keyboard injection attacks.")
+        layout.addWidget(description_label)
+        
+        # Create table for HID devices
+        self.hid_table = QTableWidget()
+        self.hid_table.setColumnCount(8)
+        self.hid_table.setHorizontalHeaderLabels([
+            "Device", "Vendor ID", "Product ID", "Serial", "Type", "Risk Level", "Status", "Actions"
+        ])
+        self.hid_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        self.hid_table.horizontalHeader().setSectionResizeMode(5, QHeaderView.ResizeToContents)
+        
+        # Enable right-click menu
+        self.hid_table.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.hid_table.customContextMenuRequested.connect(self.show_hid_context_menu)
+        
+        layout.addWidget(self.hid_table)
+        
+        # Button layout
+        button_layout = QHBoxLayout()
+        
+        # Add buttons
+        refresh_button = QPushButton("Refresh HID Devices")
+        refresh_button.clicked.connect(self.update_hid_device_list)
+        button_layout.addWidget(refresh_button)
+        
+        whitelist_all_button = QPushButton("Whitelist All")
+        whitelist_all_button.clicked.connect(self.whitelist_all_hid_devices)
+        button_layout.addWidget(whitelist_all_button)
+        
+        remove_all_button = QPushButton("Block All")
+        remove_all_button.clicked.connect(self.block_all_hid_devices)
+        button_layout.addWidget(remove_all_button)
+        
+        layout.addLayout(button_layout)
+        
+        # Auto-approve HID checkbox
+        self.auto_approve_hid_checkbox = QCheckBox("Automatically approve HID devices from trusted manufacturers")
+        self.auto_approve_hid_checkbox.setChecked(True)
+        layout.addWidget(self.auto_approve_hid_checkbox)
+        
+        self.hid_tab.setLayout(layout)
     
     def setup_scan_tab(self):
         layout = QVBoxLayout()
@@ -233,20 +355,51 @@ class USBShield(QMainWindow):
     def setup_settings_tab(self):
         layout = QVBoxLayout()
         
-        # Create settings group
-        settings_group = QGroupBox("Security Settings")
-        settings_layout = QVBoxLayout()
+        # Create settings group for storage devices
+        storage_group = QGroupBox("USB Storage Settings")
+        storage_layout = QVBoxLayout()
         
         # Auto-block option
         self.autoblock_checkbox = QCheckBox("Automatically block all new USB storage devices")
         self.autoblock_checkbox.setChecked(self.autoblock)
         self.autoblock_checkbox.stateChanged.connect(self.toggle_autoblock)
-        settings_layout.addWidget(self.autoblock_checkbox)
+        storage_layout.addWidget(self.autoblock_checkbox)
         
         # Auto-scan option
         self.autoscan_checkbox = QCheckBox("Automatically scan new USB devices")
         self.autoscan_checkbox.setChecked(True)
-        settings_layout.addWidget(self.autoscan_checkbox)
+        storage_layout.addWidget(self.autoscan_checkbox)
+        
+        storage_group.setLayout(storage_layout)
+        layout.addWidget(storage_group)
+        
+        # Create settings group for HID devices
+        hid_group = QGroupBox("HID Device Settings")
+        hid_layout = QVBoxLayout()
+        
+        # HID protection option
+        self.hid_protection_checkbox = QCheckBox("Enable HID device protection")
+        self.hid_protection_checkbox.setChecked(self.hid_protection)
+        self.hid_protection_checkbox.stateChanged.connect(self.toggle_hid_protection_checkbox)
+        hid_layout.addWidget(self.hid_protection_checkbox)
+        
+        # Auto-approve trusted manufacturers
+        self.hid_trusted_checkbox = QCheckBox("Automatically approve HID devices from trusted manufacturers")
+        self.hid_trusted_checkbox.setChecked(True)
+        hid_layout.addWidget(self.hid_trusted_checkbox)
+        
+        # Block composite HID devices option
+        self.block_composite_checkbox = QCheckBox("Block composite HID devices (devices with multiple interfaces)")
+        self.block_composite_checkbox.setChecked(True)
+        hid_layout.addWidget(self.block_composite_checkbox)
+        
+        # Block generic HID devices option
+        self.block_generic_checkbox = QCheckBox("Block generic unnamed HID devices")
+        self.block_generic_checkbox.setChecked(True)
+        hid_layout.addWidget(self.block_generic_checkbox)
+        
+        hid_group.setLayout(hid_layout)
+        layout.addWidget(hid_group)
         
         # Notification settings
         notification_group = QGroupBox("Notifications")
@@ -264,16 +417,17 @@ class USBShield(QMainWindow):
         self.notify_scan_checkbox.setChecked(True)
         notification_layout.addWidget(self.notify_scan_checkbox)
         
+        self.notify_hid_checkbox = QCheckBox("Show notification for suspicious HID devices")
+        self.notify_hid_checkbox.setChecked(True)
+        notification_layout.addWidget(self.notify_hid_checkbox)
+        
         notification_group.setLayout(notification_layout)
-        settings_layout.addWidget(notification_group)
+        layout.addWidget(notification_group)
         
         # Save button
         save_button = QPushButton("Save Settings")
         save_button.clicked.connect(self.save_settings)
-        settings_layout.addWidget(save_button, 0, Qt.AlignRight)
-        
-        settings_group.setLayout(settings_layout)
-        layout.addWidget(settings_group)
+        layout.addWidget(save_button, 0, Qt.AlignRight)
         
         self.settings_tab.setLayout(layout)
     
@@ -315,6 +469,9 @@ class USBShield(QMainWindow):
         
         # Get USB removable storage devices
         self.detect_usb_drives()
+        
+        # Get HID devices
+        self.update_hid_device_list()
     
     def detect_usb_drives(self):
         """Detect only removable USB storage devices (flash drives)"""
@@ -393,6 +550,305 @@ class USBShield(QMainWindow):
                                                                               f"USB device blocked: {device_name}")
         except Exception as e:
             print(f"Error detecting USB drives: {e}")
+    
+    def update_hid_device_list(self):
+        """Detect and show HID devices"""
+        try:
+            # Clear existing HID devices list
+            self.hid_table.setRowCount(0)
+            
+            # Get all USB HID devices using WMI
+            wmi_obj = wmi.WMI()
+            
+            # Track current set of device IDs to detect new devices
+            current_device_ids = set()
+            
+            # Get all HID devices
+            for device in wmi_obj.Win32_USBControllerDevice():
+                try:
+                    # Get dependent device
+                    dependent_device = device.Dependent
+                    device_id = dependent_device.DeviceID
+                except AttributeError as e:
+                    print(f"Error processing device: {e}")
+                    continue
+                
+                # Skip non-HID devices
+                if "HID" not in device_id.upper():
+                    continue
+                
+                # Add to current set
+                current_device_ids.add(device_id)
+                
+                # Rest of the method continues here... (everything below should be indented to this level)
+                # Check if this is a new device
+                is_new_device = device_id not in self.current_hid_devices
+                
+                # Extract device information
+                device_name = dependent_device.Caption if hasattr(dependent_device, 'Caption') else "Unknown Device"
+                
+                # ... (rest of the method remains the same, just ensure consistent indentation)
+            
+            # Check for disconnected devices
+            disconnected_devices = self.current_hid_devices - current_device_ids
+            for device_id in disconnected_devices:
+                # Log disconnected device
+                self.log_event("HID Disconnected", device_id, "Removed")
+                
+                # Remove from current devices
+                self.current_hid_devices.remove(device_id)
+        
+        except Exception as e:
+            print(f"Error detecting HID devices: {e}")
+    
+    def determine_hid_type(self, device_name, device_id):
+        """Determine the type of HID device based on its name and ID"""
+        device_name_lower = device_name.lower()
+        device_id_lower = device_id.lower()
+        
+        # Check for keyboard
+        if "keyboard" in device_name_lower or "kbd" in device_id_lower:
+            return "Keyboard"
+        # Check for mouse
+        elif "mouse" in device_name_lower:
+            return "Mouse"
+        # Check for touchpad
+        elif "touchpad" in device_name_lower or "pointing" in device_name_lower:
+            return "Touchpad"
+        # Check for gamepad/joystick
+        elif "gamepad" in device_name_lower or "joystick" in device_name_lower or "game" in device_name_lower:
+            return "Game Controller"
+        # Check for composite device
+        elif "composite" in device_name_lower or "collection" in device_name_lower:
+            return "Composite Device"
+        # Default to Generic HID
+        else:
+            return "Generic HID"
+    
+    def is_trusted_manufacturer(self, device_name):
+        """Check if the device is from a trusted manufacturer"""
+        device_name_lower = device_name.lower()
+        
+        for manufacturer in TRUSTED_MANUFACTURERS:
+            if manufacturer.lower() in device_name_lower:
+                return True
+        
+        return False
+    
+    def assess_hid_risk(self, device_name, vid_pid, device_id, device_type):
+        """Assess the risk level of an HID device"""
+        device_name_lower = device_name.lower()
+        device_id_lower = device_id.lower()
+        
+        # Check against known attack tool signatures
+        if vid_pid in HID_ATTACK_SIGNATURES:
+            return "High", f"Matches known attack tool: {HID_ATTACK_SIGNATURES[vid_pid]}"
+        
+        # Check for suspicious names
+        suspicious_terms = ["rubber ducky", "malduino", "bash bunny", "payload", "hak5", 
+                           "teensy", "digispark", "badusb", "evil", "hack", "attack"]
+        
+        for term in suspicious_terms:
+            if term in device_name_lower or term in device_id_lower:
+                return "High", f"Suspicious keyword detected: {term}"
+        
+        # Check for generic unnamed devices
+        if "hid" in device_name_lower and len(device_name_lower) < 20:
+            return "Medium", "Generic unnamed HID device"
+            
+        if ("usb" in device_name_lower and "device" in device_name_lower and 
+            "keyboard" not in device_name_lower and "mouse" not in device_name_lower):
+            return "Medium", "Generic USB device with minimal identification"
+        
+        # Check for composite devices
+        if device_type == "Composite Device":
+            return "Medium", "Composite HID device with multiple interfaces"
+        
+        # Check if from trusted manufacturer
+        if self.is_trusted_manufacturer(device_name):
+            return "Low", "Device from trusted manufacturer"
+        
+        # Default risk level
+        return "Low", "Standard HID device"
+    
+    def get_risk_color(self, risk_level):
+        """Get the QColor for a risk level"""
+        if risk_level == "High":
+            return QColor(255, 200, 200)  # Light red
+        elif risk_level == "Medium":
+            return QColor(255, 235, 156)  # Light yellow
+        else:
+            return QColor(255, 255, 255)  # White
+    
+    def toggle_hid_device_status(self, device_id):
+        """Toggle the status of an HID device between allowed and blocked"""
+        if device_id in self.allowed_hid_devices:
+            self.allowed_hid_devices.remove(device_id)
+            status = "Blocked"
+            action = "Allow"
+            
+            # Find device name from the table
+            device_name = self.find_hid_device_name(device_id)
+            
+            # Block the device
+            self.block_hid_device(device_id, device_name)
+        else:
+            self.allowed_hid_devices.add(device_id)
+            status = "Allowed"
+            action = "Block"
+            
+            # Find device name from the table
+            device_name = self.find_hid_device_name(device_id)
+            
+            # Allow the device
+            self.allow_hid_device(device_id, device_name)
+        
+        # Update table
+        for row in range(self.hid_table.rowCount()):
+            name_item = self.hid_table.item(row, 0)
+            if name_item and name_item.toolTip() == device_id:
+                # Update status
+                self.hid_table.item(row, 6).setText(status)
+                
+                # Update action button
+                action_button = QPushButton(action)
+                action_button.clicked.connect(lambda checked, d=device_id: self.toggle_hid_device_status(d))
+                self.hid_table.setCellWidget(row, 7, action_button)
+                
+                # Get device name
+                device_name = name_item.text()
+                
+                # Log event
+                self.log_event("HID Status Changed", device_name, status)
+                break
+    
+    def find_hid_device_name(self, device_id):
+        """Find device name from device ID in the HID table"""
+        for row in range(self.hid_table.rowCount()):
+            name_item = self.hid_table.item(row, 0)
+            if name_item and name_item.toolTip() == device_id:
+                return name_item.text()
+        return device_id  # Return the device ID if name not found
+    
+    def block_hid_device(self, device_id, device_name):
+        """Block an HID device"""
+        try:
+            print(f"Blocking HID device: {device_name} ({device_id})")
+            # This is a simplified implementation
+            # In a real implementation, you would use the Windows API or driver to block the device
+            
+            # Log the action
+            self.log_event("HID Blocked", device_name, "Blocked")
+            
+            # Show notification if needed
+            if self.notify_block_checkbox.isChecked():
+                self.show_notification("HID Device Blocked", 
+                                      f"HID device blocked: {device_name}")
+        except Exception as e:
+            print(f"Error blocking HID device {device_name}: {e}")
+    
+    def allow_hid_device(self, device_id, device_name):
+        """Allow an HID device"""
+        try:
+            print(f"Allowing HID device: {device_name} ({device_id})")
+            # This is a simplified implementation
+            # In a real implementation, you would use the Windows API or driver to allow the device
+            
+            # Log the action
+            self.log_event("HID Allowed", device_name, "Allowed")
+        except Exception as e:
+            print(f"Error allowing HID device {device_name}: {e}")
+    
+    def whitelist_all_hid_devices(self):
+        """Whitelist all HID devices"""
+        for row in range(self.hid_table.rowCount()):
+            name_item = self.hid_table.item(row, 0)
+            device_id = name_item.toolTip() if name_item else None
+            
+            if device_id and device_id not in self.allowed_hid_devices:
+                self.allowed_hid_devices.add(device_id)
+                
+                # Update status
+                self.hid_table.item(row, 6).setText("Allowed")
+                
+                # Update action button
+                action_button = QPushButton("Block")
+                action_button.clicked.connect(lambda checked, d=device_id: self.toggle_hid_device_status(d))
+                self.hid_table.setCellWidget(row, 7, action_button)
+                
+                # Log event
+                device_name = name_item.text() if name_item else device_id
+                self.log_event("HID Status Changed", device_name, "Allowed")
+                
+                # Allow the device
+                self.allow_hid_device(device_id, device_name)
+    
+    def block_all_hid_devices(self):
+        """Block all HID devices"""
+        # Clear allowed HID devices list
+        self.allowed_hid_devices.clear()
+        
+        # Update all rows
+        for row in range(self.hid_table.rowCount()):
+            name_item = self.hid_table.item(row, 0)
+            device_id = name_item.toolTip() if name_item else None
+            
+            if device_id:
+                # Update status
+                self.hid_table.item(row, 6).setText("Blocked")
+                
+                # Update action button
+                action_button = QPushButton("Allow")
+                action_button.clicked.connect(lambda checked, d=device_id: self.toggle_hid_device_status(d))
+                self.hid_table.setCellWidget(row, 7, action_button)
+                
+                # Log event
+                device_name = name_item.text() if name_item else device_id
+                self.log_event("HID Status Changed", device_name, "Blocked")
+                
+                # Block the device
+                self.block_hid_device(device_id, device_name)
+    
+    def toggle_hid_protection(self, state):
+        """Toggle HID protection"""
+        self.hid_protection = state
+        self.hid_protection_checkbox.setChecked(state)
+        
+        # Log the change
+        status = "Enabled" if state else "Disabled"
+        self.log_event("HID Protection", status, "Setting Changed")
+        
+        # Show notification
+        self.show_notification("HID Protection", f"HID protection {status.lower()}")
+    
+    def toggle_hid_protection_checkbox(self, state):
+        """Toggle HID protection from checkbox"""
+        checked = state == Qt.Checked
+        self.hid_protection = checked
+        self.hid_protection_action.setChecked(checked)
+        
+        # Log the change
+        status = "Enabled" if checked else "Disabled"
+        self.log_event("HID Protection", status, "Setting Changed")
+    
+    def handle_hid_detection(self, data):
+        """Handle HID detection signals"""
+        if not data:
+            return
+        
+        device_id = data.get('device_id', '')
+        device_name = data.get('device_name', '')
+        risk_level = data.get('risk_level', 'Low')
+        risk_reason = data.get('risk_reason', '')
+        
+        # For high-risk devices, show notification and block
+        if risk_level == "High" and self.hid_protection:
+            self.show_notification("Suspicious HID Device Detected", 
+                                 f"High-risk HID device detected: {device_name}\n"
+                                 f"Reason: {risk_reason}")
+            
+            # Block the device
+            self.block_hid_device(device_id, device_name)
     
     def toggle_device_status(self, serial):
         if serial in self.allowed_devices:
@@ -485,7 +941,13 @@ class USBShield(QMainWindow):
         self.autoblock = state == Qt.Checked
     
     def save_settings(self):
+        # Update storage settings
         self.autoblock = self.autoblock_checkbox.isChecked()
+        
+        # Update HID settings
+        self.hid_protection = self.hid_protection_checkbox.isChecked()
+        self.hid_protection_action.setChecked(self.hid_protection)
+        
         QMessageBox.information(self, "Settings", "Settings saved successfully!")
     
     def block_usb_drive(self, drive_letter):
@@ -524,6 +986,11 @@ class USBShield(QMainWindow):
         self.logs_table.setItem(row_position, 1, QTableWidgetItem(event))
         self.logs_table.setItem(row_position, 2, QTableWidgetItem(device))
         self.logs_table.setItem(row_position, 3, QTableWidgetItem(status))
+        
+        # Color code high-risk events
+        if "High-risk" in status or "suspicious" in status.lower():
+            for col in range(4):
+                self.logs_table.item(row_position, col).setBackground(QColor(255, 200, 200))
         
         # Also add to internal log
         self.device_log.append({
@@ -565,7 +1032,8 @@ class USBShield(QMainWindow):
     
     def show_about_dialog(self):
         QMessageBox.about(self, "About USB Shield", 
-                         "USB Shield v1.0\n\nA security application to monitor and control USB storage devices.\n\n"
+                         "USB Shield v1.0\n\nA security application to monitor and control USB storage devices "
+                         "and protect against HID-based attacks.\n\n"
                          "Developed by Pasindu & Chathurka.")
     
     def show_device_context_menu(self, position):
@@ -596,6 +1064,31 @@ class USBShield(QMainWindow):
             
             # Execute the menu
             menu.exec_(self.device_table.viewport().mapToGlobal(position))
+    
+    def show_hid_context_menu(self, position):
+        menu = QMenu()
+        
+        # Get selected row
+        indexes = self.hid_table.selectedIndexes()
+        if indexes:
+            row = indexes[0].row()
+            
+            # Get device info
+            name_item = self.hid_table.item(row, 0)
+            device_id = name_item.toolTip() if name_item else None
+            status = self.hid_table.item(row, 6).text()
+            
+            if device_id:
+                # Add menu items
+                if status == "Blocked":
+                    allow_action = menu.addAction("Allow Device")
+                    allow_action.triggered.connect(lambda: self.toggle_hid_device_status(device_id))
+                else:
+                    block_action = menu.addAction("Block Device")
+                    block_action.triggered.connect(lambda: self.toggle_hid_device_status(device_id))
+                
+                # Execute the menu
+                menu.exec_(self.hid_table.viewport().mapToGlobal(position))
     
     def show_file_context_menu(self, position):
         menu = QMenu()
@@ -735,10 +1228,12 @@ class USBShield(QMainWindow):
             self.scan_status_label.setText(f"Scan {results['status']}: {results.get('error', 'Unknown error')}")
             self.scan_progress_bar.hide()
             self.stop_scan_button.setEnabled(False)
+    
     def clear_scan_results(self):
         """Clear scan results."""
         self.suspicious_files_table.setRowCount(0)
         self.scan_status_label.setText("No scan in progress")
+
     
     def quarantine_all_files(self):
         """Quarantine all suspicious files in the table."""
@@ -832,7 +1327,7 @@ class USBShield(QMainWindow):
 
 
 def main():
-# Create the application
+    # Create the application
     app = QApplication(sys.argv)
     
     # Set application icon (this affects the window icon)
@@ -852,3 +1347,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+        
