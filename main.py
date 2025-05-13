@@ -401,6 +401,31 @@ class USBShield(QMainWindow):
         
         hid_group.setLayout(hid_layout)
         layout.addWidget(hid_group)
+
+        # After the HID group settings, before the notification settings
+        # Create VirusTotal settings group
+        vt_group = QGroupBox("VirusTotal Integration")
+        vt_layout = QVBoxLayout()
+
+        # Enable VirusTotal scanning
+        self.vt_enabled_checkbox = QCheckBox("Enable VirusTotal scanning")
+        self.vt_enabled_checkbox.setChecked(True)  # Default to enabled
+        self.vt_enabled_checkbox.stateChanged.connect(self.toggle_virustotal)
+        vt_layout.addWidget(self.vt_enabled_checkbox)
+
+        # Only scan executable files option
+        self.vt_executables_only = QCheckBox("Only scan executable files (reduces API usage)")
+        self.vt_executables_only.setChecked(True)
+        vt_layout.addWidget(self.vt_executables_only)
+
+        # Add note about API usage
+        vt_note = QLabel("Note: VirusTotal scanning uses a free API with limits (4 requests/minute).\n"
+                        "Results are cached in hashesDB.db to reduce API usage.")
+        vt_note.setWordWrap(True)
+        vt_layout.addWidget(vt_note)
+
+        vt_group.setLayout(vt_layout)
+        layout.addWidget(vt_group)
         
         # Notification settings
         notification_group = QGroupBox("Notifications")
@@ -431,6 +456,15 @@ class USBShield(QMainWindow):
         layout.addWidget(save_button, 0, Qt.AlignRight)
         
         self.settings_tab.setLayout(layout)
+
+    def toggle_virustotal(self, state):
+        """Toggle VirusTotal scanning."""
+        enabled = state == Qt.Checked
+        self.scanner.enable_virustotal(enabled)
+        
+        # Log the change
+        status = "Enabled" if enabled else "Disabled"
+        self.log_event("VirusTotal Integration", status, "Setting Changed")
     
     def setup_logs_tab(self):
         layout = QVBoxLayout()
@@ -1166,6 +1200,10 @@ class USBShield(QMainWindow):
         """Update the scan results UI with the latest scan results."""
         # For debugging
         print(f"Received scan update: {results}")
+
+        ioc_file_count = 0
+        yara_match_count = 0
+        virustotal_match_count = 0
         
         # Update status for in-progress scan
         if results["status"] == "in_progress":
@@ -1211,6 +1249,7 @@ class USBShield(QMainWindow):
             files_scanned = results.get('files_scanned', 0)
             ioc_file_count = len(results.get('suspicious_files', []))
             yara_match_count = len(results.get('yara_matches', []))
+            virustotal_match_count = len(results.get('virustotal_matches', []))
             scan_time = results.get('scan_time', 0)
             
             # Create status message with red highlighting
@@ -1302,6 +1341,72 @@ class USBShield(QMainWindow):
             self.scan_status_label.setText(f"Scan {results['status']}: {results.get('error', results.get('message', 'Unknown error'))}")
             self.scan_progress_bar.hide()
             self.stop_scan_button.setEnabled(False)
+
+        # For the update_scan_results method in main.py
+        # Add after the YARA matches handling and before updating the UI
+
+        # Define colors for VirusTotal results
+        virustotal_background = QColor("#FFFFE0")  # Light yellow
+        virustotal_text = QColor("#8B4513")  # Saddle brown
+
+        # Add VirusTotal matches with yellow color
+        for vt_match in results.get('virustotal_matches', []):
+            row_position = self.suspicious_files_table.rowCount()
+            self.suspicious_files_table.insertRow(row_position)
+            
+            # Create items
+            path_item = QTableWidgetItem(vt_match["file_path"])
+            reason_item = QTableWidgetItem(f"VirusTotal: {vt_match['reason']}")
+            
+            # Format detection details
+            if vt_match.get('from_cache', False):
+                details = f"Cached result - {vt_match.get('detection_count', 0)}/{vt_match.get('total_engines', 0)} engines"
+            else:
+                details = f"{vt_match.get('detection_count', 0)}/{vt_match.get('total_engines', 0)} engines"
+            
+            # Add permalink if available
+            permalink = vt_match.get('permalink', '')
+            if permalink:
+                details += f" - {permalink}"
+            
+            details_item = QTableWidgetItem(details)
+            
+            # Apply colors based on threat level
+            threat_level = vt_match.get('threat_level', 'medium')
+            if threat_level == 'high':
+                bg_color = QColor("#FFCCCC")  # Lighter red for high threats
+            elif threat_level == 'medium':
+                bg_color = virustotal_background
+            else:
+                bg_color = QColor("#E6FFE6")  # Light green for low threats
+            
+            # Apply colors
+            path_item.setBackground(bg_color)
+            path_item.setForeground(virustotal_text)
+            reason_item.setBackground(bg_color)
+            reason_item.setForeground(virustotal_text)
+            details_item.setBackground(bg_color)
+            details_item.setForeground(virustotal_text)
+            
+            # Add to table
+            self.suspicious_files_table.setItem(row_position, 0, path_item)
+            self.suspicious_files_table.setItem(row_position, 1, reason_item)
+            self.suspicious_files_table.setItem(row_position, 2, details_item)
+
+        # Update status message to include VirusTotal matches
+        virustotal_match_count = len(results.get('virustotal_matches', []))
+        if 'status_msg' in locals() and virustotal_match_count > 0:
+            status_msg = status_msg.replace("</font>", f", {virustotal_match_count} VirusTotal matches found</font>")
+            self.scan_status_label.setText(status_msg)
+
+        # Update log event message to include VirusTotal matches
+        log_message = f"{ioc_file_count} IOC files, {yara_match_count} YARA matches"
+        if virustotal_match_count > 0:
+            log_message += f", {virustotal_match_count} VirusTotal matches"
+        log_message += " found"
+
+        # Log event
+        self.log_event("Scan Completed", f"Drive {results['drive']}", log_message)
 
 
 

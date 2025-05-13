@@ -7,23 +7,26 @@
       "description": "Simple test rule that matches any text file containing 'test'",
       "severity": "info"
     },
-    "file_path": "F:\\SOFTWARE\\Teams_windows_x64.exe",
-    "file_size": 98144512,
-    "timestamp": "2025-04-30T19:31:09.516026"
+    "file_path": "G:\\KMSAuto Net 1.5.1.exe",
+    "file_size": 8987424,
+    "timestamp": "2025-05-13T12:30:01.555182"
   }
-]]ect Secure (Codes)\\Links.txt",
-    "file_size": 193,
-    "timestamp": "2025-04-30T19:30:55.876830"
+]TS.AM].srt",
+    "file_size": 57438,
+    "timestamp": "2025-05-13T12:14:45.795221"
   }
-]: 75808,
-    "timestamp": "2025-04-30T19:29:17.094573"
+]
+]9T21:25:28.427768"
+  }
+]]: 75808,
+    "timestamp": "2025-05-09T21:23:31.307397"
   }
 ]ile containing 'test'",
       "severity": "info"
     },
-    "file_path": "F:\\yaratest.txt",
+    "file_path": "G:\\yaratest.txt",
     "file_size": 157,
-    "timestamp": "2025-04-30T19:28:39.142941"
+    "timestamp": "2025-05-09T21:22:52.309795"
   }
 ]  {
     "rule": "Test_TextFile_Pattern",
@@ -35,7 +38,7 @@
     },
     "file_path": "F:\\LDPlayer64_ens_1291_ld.exe",
     "file_size": 2251088,
-    "timestamp": "2025-04-30T18:28:30.159148"
+    "timestamp": "2025-05-01T17:28:04.822425"
   },
   {
     "rule": "Test_TextFile_Pattern",
@@ -47,7 +50,7 @@
     },
     "file_path": "F:\\node-v22.14.0-x64.msi",
     "file_size": 30916608,
-    "timestamp": "2025-04-30T18:28:30.514646"
+    "timestamp": "2025-05-01T17:28:05.165541"
   },
   {
     "rule": "Test_TextFile_Pattern",
@@ -59,7 +62,7 @@
     },
     "file_path": "F:\\Avatar The Way Of Water (2022) [BLURAY] [1080p] [BluRay] [5.1] [YTS.MX]\\Avatar.The.Way.Of.Water.2022.BLURAY.1080p.BluRay.x264.AAC5.1-[YTS.MX].srt",
     "file_size": 121819,
-    "timestamp": "2025-04-30T18:28:30.538480"
+    "timestamp": "2025-05-01T17:28:05.171200"
   },
   {
     "rule": "Test_TextFile_Pattern",
@@ -71,7 +74,7 @@
     },
     "file_path": "F:\\Chathu Documents\\Movies.txt",
     "file_size": 642,
-    "timestamp": "2025-04-30T18:28:30.550259"
+    "timestamp": "2025-05-01T17:28:05.184057"
   },
   {
     "rule": "Test_TextFile_Pattern",
@@ -83,7 +86,7 @@
     },
     "file_path": "F:\\Chathu Documents\\Books\\Thinking-Fast-and-Slow.pdf",
     "file_size": 3021431,
-    "timestamp": "2025-04-30T18:28:31.195612"
+    "timestamp": "2025-05-01T17:28:05.710375"
   },
   {
     "rule": "Test_TextFile_Pattern",
@@ -95,7 +98,7 @@
     },
     "file_path": "F:\\Chathu Documents\\Books\\Atomic_Habits.pdf",
     "file_size": 6532579,
-    "timestamp": "2025-04-30T18:28:31.375712"
+    "timestamp": "2025-05-01T17:28:05.841448"
   },
   {
     "rule": "Test_TextFile_Pattern",
@@ -107,7 +110,7 @@
     },
     "file_path": "F:\\Chathu Documents\\Books\\rich-dad-poor-dad.pdf",
     "file_size": 10951541,
-    "timestamp": "2025-04-30T18:28:31.401181"
+    "timestamp": "2025-05-01T17:28:05.887833"
   },
   {
     "rule": "Test_TextFile_Pattern",
@@ -119,7 +122,7 @@
     },
     "file_path": "F:\\Chathu Documents\\Day1\\FinalProject\\seg0\\c230.dat",
     "file_size": 368640,
-    "timestamp": "2025-04-30T18:28:31.658104"
+    "timestamp": "2025-05-01T17:28:06.079982"
   },
   {
     "rule": "Test_TextFile_Pattern",
@@ -131,7 +134,7 @@
     },
     "file_path": "F:\\Chathu Documents\\Day1\\ProductDB\\log\\log1.dat",
     "file_size": 1048576,
-    "timestamp": "2025-04-30T18:28:31.701557"
+    "timestamp": "2025-05-01T17:28:06.109288"
   },
   {
     "rule": "Test_TextFile_Pattern",
@@ -143,31 +146,7 @@
     },
     "file_path": "F:\\Chathu Documents\\Day1\\ProductDB\\seg0\\c10.dat",
     "file_size": 8192,
-    "timestamp": "2025-04-30T18:28:31.721083"
-  },
-  {
-    "rule": "Test_TextFile_Pattern",
-    "namespace": "test_detection",
-    "tags": [],
-    "meta": {
-      "description": "Simple test rule that matches any text file containing 'test'",
-      "severity": "info"
-    },
-    "file_path": "F:\\Chathu Documents\\Day1\\ProductDB\\seg0\\cd1.dat",
-    "file_size": 8192,
-    "timestamp": "2025-04-30T18:28:31.743710"
-  },
-  {
-    "rule": "Test_TextFile_Pattern",
-    "namespace": "test_detection",
-    "tags": [],
-    "meta": {
-      "description": "Simple test rule that matches any text file containing 'test'",
-      "severity": "info"
-    },
-    "file_path": "F:\\Chathu Documents\\Day1\\ProductDB\\seg0\\cc0.dat",
-    "file_size": 8192,
-    "timestamp": "2025-04-30T18:28:31.743710"
+    "timestamp": "2025-05-01T17:28:06.120364"
   },
   {
     "rule": "Test_TextFile_Pattern",
@@ -179,7 +158,19 @@
     },
     "file_path": "F:\\Chathu Documents\\Day1\\ProductDB\\seg0\\c230.dat",
     "file_size": 368640,
-    "timestamp": "2025-04-30T18:28:31.752330"
+    "timestamp": "2025-05-01T17:28:06.158659"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "F:\\Chathu Documents\\Day1\\ProductDB\\seg0\\cd1.dat",
+    "file_size": 8192,
+    "timestamp": "2025-05-01T17:28:06.152691"
   },
   {
     "rule": "Test_TextFile_Pattern",
@@ -191,7 +182,7 @@
     },
     "file_path": "F:\\Chathu Documents\\Day1\\sample\\log\\log1.dat",
     "file_size": 1048576,
-    "timestamp": "2025-04-30T18:28:31.783417"
+    "timestamp": "2025-05-01T17:28:06.178070"
   },
   {
     "rule": "Test_TextFile_Pattern",
@@ -203,7 +194,7 @@
     },
     "file_path": "F:\\Chathu Documents\\Day1\\sample\\seg0\\c550.dat",
     "file_size": 8192,
-    "timestamp": "2025-04-30T18:28:31.836112"
+    "timestamp": "2025-05-01T17:28:06.226707"
   },
   {
     "rule": "Test_TextFile_Pattern",
@@ -215,7 +206,7 @@
     },
     "file_path": "F:\\Chathu Documents\\Day1\\UserDB\\log\\log1.dat",
     "file_size": 1048576,
-    "timestamp": "2025-04-30T18:28:31.870258"
+    "timestamp": "2025-05-01T17:28:06.260292"
   },
   {
     "rule": "Test_TextFile_Pattern",
@@ -225,9 +216,9 @@
       "description": "Simple test rule that matches any text file containing 'test'",
       "severity": "info"
     },
-    "file_path": "F:\\Chathu Documents\\Day1\\UserDB\\seg0\\c3c0.dat",
+    "file_path": "F:\\Chathu Documents\\Day1\\UserDB\\seg0\\c3d1.dat",
     "file_size": 8192,
-    "timestamp": "2025-04-30T18:28:31.907430"
+    "timestamp": "2025-05-01T17:28:06.301923"
   },
   {
     "rule": "Test_TextFile_Pattern",
@@ -239,7 +230,7 @@
     },
     "file_path": "F:\\Chathu Documents\\Day1\\UserDB\\seg0\\c230.dat",
     "file_size": 335872,
-    "timestamp": "2025-04-30T18:28:31.920168"
+    "timestamp": "2025-05-01T17:28:06.312850"
   },
   {
     "rule": "Test_TextFile_Pattern",
@@ -249,46 +240,8 @@
       "description": "Simple test rule that matches any text file containing 'test'",
       "severity": "info"
     },
-    "file_path": "F:\\Chathu Documents\\db-derby-10.2.2.0-bin\\RELEASE-NOTES.html",
-    "file_size": 34754,
-    "timestamp": "2025-04-30T18:28:31.939046"
-  },
-  {
-    "rule": "Test_TextFile_Pattern",
-    "namespace": "test_detection",
-    "tags": [],
-    "meta": {
-      "description": "Simple test rule that matches any text file containing 'test'",
-      "severity": "info"
-    },
-    "file_path": "F:\\Chathu Documents\\db-derby-10.2.2.0-bin\\demo\\databases\\toursdb\\log\\log1.dat",
-    "file_size": 1048576,
-    "timestamp": "2025-04-30T18:28:31.989624"
-  },
-  {
-    "rule": "Test_TextFile_Pattern",
-    "namespace": "test_detection",
-    "tags": [],
-    "meta": {
-      "description": "Simple test rule that matches any text file containing 'test'",
-      "severity": "info"
-    },
-    "file_path": "F:\\Chathu Documents\\db-derby-10.2.2.0-bin\\demo\\databases\\toursdb\\seg0\\c230.dat",
-    "file_size": 139264,
-    "timestamp": "2025-04-30T18:28:32.045913"
-  },
-  {
-    "rule": "Test_TextFile_Pattern",
-    "namespace": "test_detection",
-    "tags": [],
-    "meta": {
-      "description": "Simple test rule that matches any text file containing 'test'",
-      "severity": "info"
-    },
-    "file_path": "F:\\Chathu Documents\\db-derby-10.2.2.0-bin\\demo\\programs\\nserverdemo\\simpleserversample.html",
-    "file_size": 8272,
-    "timestamp": "2025-04-30T18:28:32.071818"
+    "file_path": "F:\\Chathu Documents\\db-derby-10.2.2.0-bin\\NOTICE",
+    "file_size": 1414,
+    "timestamp": "2025-05-01T17:28:06.329459"
   }
 ]
-  }
-]]

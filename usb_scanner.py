@@ -6,6 +6,7 @@ import csv
 import concurrent.futures
 from typing import List, Dict, Callable, Optional
 from utils.yara_scanner import YARAScanner  # Using your existing YARAScanner implementation
+from utils.virustotal_scanner import VirusTotalScanner  # Add VirusTotal scanner import
 
 class USBScanner:
     def __init__(
@@ -14,9 +15,10 @@ class USBScanner:
         ioc_file_path=None, 
         max_workers=None,
         yara_rules_path='yara_rules',
-        yara_log_path='logs/yara_scan.log'
+        yara_log_path='logs/yara_scan.log',
+        check_virustotal=True  # Enable VirusTotal scanning by default
     ):
-        """Initialize the USB scanner with YARA integration.
+        """Initialize the USB scanner with YARA and VirusTotal integration.
         
         Args:
             callback: Function to call when scan is complete with results
@@ -24,18 +26,23 @@ class USBScanner:
             max_workers: Maximum number of threads for parallel scanning
             yara_rules_path: Path to YARA rules directory
             yara_log_path: Path to YARA scan log file
+            check_virustotal: Whether to enable VirusTotal scanning
         """
         self.callback = callback
         self.scan_results = {}
         self.stop_scan = False
         self.is_scanning = False
         self.ioc_hashes = set()
+        self.check_virustotal = check_virustotal
         
         # Determine max workers (default to CPU cores or 4)
         self.max_workers = max_workers or (os.cpu_count() or 4)
         
         # Initialize YARA scanner with your existing implementation
         self.yara_scanner = YARAScanner(rules_path=yara_rules_path, log_path=yara_log_path)
+        
+        # Initialize VirusTotal scanner
+        self.vt_scanner = VirusTotalScanner() if check_virustotal else None
         
         # Load IOC hashes if file path is provided
         if ioc_file_path and os.path.exists(ioc_file_path):
@@ -98,13 +105,7 @@ class USBScanner:
     
     def _scan_single_file(self, file_path):
         """
-        Scan a single file for potential threats.
-        
-        Args:
-            file_path: Path to the file to scan
-            
-        Returns:
-            Dictionary with file details if suspicious, else None
+        Scan a single file for potential threats with VirusTotal integration.
         """
         try:
             # Skip very large files to prevent performance issues
@@ -113,22 +114,24 @@ class USBScanner:
                 return None
             
             file_hash = self._get_file_hash(file_path)
+            if file_hash == "error-calculating-hash":
+                return None
             
             # Initialize suspicious findings
             suspicious_findings = []
             
-            # Check against IOC hashes
+            # Check against IOC hashes (step 1)
+            ioc_match = False
             if file_hash.lower() in self.ioc_hashes:
                 suspicious_findings.append({
                     "type": "IOC_HASH",
                     "reason": "Matched Known Malicious Hash",
                     "details": f"Hash matches predefined Indicator of Compromise (IOC)"
                 })
+                ioc_match = True
             
-            # Perform YARA scanning using your existing implementation
+            # Perform YARA scanning independently
             yara_matches = self.yara_scanner.scan_file(file_path)
-            
-            # Process YARA matches - adapted to work with your YARAScanner implementation
             if yara_matches and file_path in yara_matches and yara_matches[file_path]:
                 for match in yara_matches[file_path]:
                     yara_finding = {
@@ -138,6 +141,44 @@ class USBScanner:
                         "details": self._format_yara_match_details(match)
                     }
                     suspicious_findings.append(yara_finding)
+            
+            # Check with VirusTotal if enabled and not found in IOC hashes (step 2 & 3)
+            # First check if the hash is in our database
+            vt_match_from_db = False
+            if self.check_virustotal and self.vt_scanner and not ioc_match:
+                # First check if the hash is in our database (hashesDB.db)
+                db_result = self.vt_scanner.check_hash_in_db(file_hash)
+                if db_result and db_result.get('scan_result') in ['malicious', 'suspicious']:
+                    detection_text, is_threat, threat_level = self.vt_scanner.get_detection_info(db_result)
+                    if is_threat:
+                        vt_finding = {
+                            "type": "VIRUSTOTAL",
+                            "reason": detection_text,
+                            "threat_level": threat_level,
+                            "permalink": db_result.get('permalink', ''),
+                            "detection_count": db_result.get('detection_count', 0),
+                            "total_engines": db_result.get('total_engines', 0),
+                            "from_cache": True
+                        }
+                        suspicious_findings.append(vt_finding)
+                        vt_match_from_db = True
+                
+                # If not in database or not a threat in database, query VirusTotal API
+                if not vt_match_from_db:
+                    vt_result = self.vt_scanner.scan_file_hash(file_hash)
+                    detection_text, is_threat, threat_level = self.vt_scanner.get_detection_info(vt_result)
+                    
+                    if is_threat:
+                        vt_finding = {
+                            "type": "VIRUSTOTAL",
+                            "reason": detection_text,
+                            "threat_level": threat_level,
+                            "permalink": vt_result.get('permalink', ''),
+                            "detection_count": vt_result.get('detection_count', 0),
+                            "total_engines": vt_result.get('total_engines', 0),
+                            "from_cache": vt_result.get('from_cache', False)
+                        }
+                        suspicious_findings.append(vt_finding)
             
             # Return findings if any suspicious elements found
             if suspicious_findings:
@@ -211,6 +252,7 @@ class USBScanner:
             # Initialize result containers
             suspicious_files = []
             yara_matches = []
+            virustotal_matches = []
             files_scanned = 0
             total_files = 0
             
@@ -260,20 +302,34 @@ class USBScanner:
                         
                         # If file is suspicious, add to results
                         if result:
-                            suspicious_file_entry = {
+                            file_entry = {
                                 "path": result["path"],
-                                "hash": result["hash"]
+                                "hash": result["hash"],
+                                "file_size": result["file_size"]
                             }
                             
                             # Process findings
                             for finding in result["suspicious_findings"]:
-                                if finding["type"] == "IOC_HASH":
-                                    suspicious_files.append(suspicious_file_entry)
-                                elif finding["type"] == "YARA_RULE":
+                                finding_type = finding["type"]
+                                
+                                if finding_type == "IOC_HASH":
+                                    suspicious_files.append(file_entry)
+                                elif finding_type == "YARA_RULE":
                                     yara_matches.append({
                                         "file_path": result["path"],
                                         "rule": finding["rule"],
                                         "details": finding["details"]
+                                    })
+                                elif finding_type == "VIRUSTOTAL":
+                                    virustotal_matches.append({
+                                        "file_path": result["path"],
+                                        "hash": result["hash"],
+                                        "reason": finding["reason"],
+                                        "threat_level": finding["threat_level"],
+                                        "permalink": finding.get("permalink", ""),
+                                        "detection_count": finding.get("detection_count", 0),
+                                        "total_engines": finding.get("total_engines", 0),
+                                        "from_cache": finding.get("from_cache", False)
                                     })
                         
                         # Update progress every 10 files or 1 second
@@ -313,11 +369,12 @@ class USBScanner:
                 "files_scanned": files_scanned,
                 "suspicious_files": suspicious_files,
                 "yara_matches": yara_matches,
+                "virustotal_matches": virustotal_matches,  # Add VirusTotal matches
                 "scan_time": scan_time
             })
             
             print(f"Scan completed: {files_scanned} files scanned in {scan_time:.2f} seconds")
-            print(f"Found {len(suspicious_files)} suspicious files and {len(yara_matches)} YARA matches")
+            print(f"Found {len(suspicious_files)} IOC matches, {len(yara_matches)} YARA matches, and {len(virustotal_matches)} VirusTotal matches")
         
         except Exception as e:
             import traceback
@@ -347,3 +404,11 @@ class USBScanner:
         """Stop the current scan."""
         self.stop_scan = True
         return {"status": "stopping", "message": "Stopping scan..."}
+    
+    def enable_virustotal(self, enable=True):
+        """Enable or disable VirusTotal scanning."""
+        if enable and not self.vt_scanner:
+            self.vt_scanner = VirusTotalScanner()
+        
+        self.check_virustotal = enable
+        return {"status": "success", "virustotal_enabled": enable}
