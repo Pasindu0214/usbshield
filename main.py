@@ -5,6 +5,7 @@ import win32con
 import win32file
 import wmi
 import time
+import shutil
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QHBoxLayout, QLabel
 from PyQt5.QtWidgets import QPushButton, QTableWidget, QTableWidgetItem, QHeaderView, QCheckBox, QMessageBox
 from PyQt5.QtWidgets import QDialog, QGroupBox, QFormLayout, QLineEdit, QTextEdit, QProgressBar, QMenu
@@ -14,7 +15,29 @@ from datetime import datetime
 from usb_scanner import USBScanner
 from PyQt5.QtGui import QColor
 
-
+def get_app_path(filename):
+    """Get the correct path for a file, working in both dev and executable modes"""
+    if getattr(sys, 'frozen', False):
+        # Running as executable
+        application_path = os.path.dirname(sys.executable)
+        
+        # Check in main directory first
+        main_path = os.path.join(application_path, filename)
+        if os.path.exists(main_path):
+            return main_path
+            
+        # Check in _internal directory if file not found in main directory
+        internal_path = os.path.join(application_path, '_internal', filename)
+        if os.path.exists(internal_path):
+            return internal_path
+            
+        # If still not found, return the path in _internal directory anyway
+        # (This is where PyInstaller usually places resources)
+        return internal_path
+    else:
+        # Running in development
+        application_path = os.path.dirname(os.path.abspath(__file__))
+        return os.path.join(application_path, filename)
 
 # Trusted manufacturers for HID devices
 TRUSTED_MANUFACTURERS = [
@@ -69,6 +92,9 @@ class USBShield(QMainWindow):
     def __init__(self, ioc_file_path=None):
         super().__init__()
     
+        # Set window icon explicitly here
+        self.setWindowIcon(QIcon(get_app_path('usbshield_icon.ico')))
+
         # Initialize variables
         self.allowed_devices = set()
         self.allowed_hid_devices = set()
@@ -100,10 +126,16 @@ class USBShield(QMainWindow):
             # Find first existing IOC file
             ioc_file_path = next((path for path in default_ioc_paths if os.path.exists(path)), None)
         
+
+        if ioc_file_path is None:
+            ioc_file_path = get_app_path("ioc_hashes.csv")
+
         # Initialize scanner with IOC file path
         self.scanner = USBScanner(
             callback=self.scan_signal_emitter.scan_updated.emit, 
-            ioc_file_path=ioc_file_path
+            ioc_file_path=ioc_file_path,
+            yara_rules_path=get_app_path("yara_rules"),
+            yara_log_path=get_app_path("logs/yara_scan.log")
         )
         
         self.current_scan_drive = None
@@ -117,9 +149,22 @@ class USBShield(QMainWindow):
         
     def init_ui(self):
         self.setWindowTitle('USBShield - USB Security')
-        self.setWindowIcon(QIcon('usbshield_icon.ico'))
+        
+        # Set icon with more explicit steps
+        icon_path = get_app_path('usbshield_icon.ico')
+        print(f"Loading icon from: {icon_path}")  # Debug print
+        
+        if os.path.exists(icon_path):
+            print("Icon file exists!")
+            icon = QIcon(icon_path)
+            self.setWindowIcon(icon)
+            # Force the application to update its icon
+            self.repaint()
+        else:
+            print(f"WARNING: Icon file not found at {icon_path}")
+        
         self.setGeometry(100, 100, 1000, 700)  # Increased size to accommodate more information
-    
+        
         # Create central widget and main layout
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -152,8 +197,12 @@ class USBShield(QMainWindow):
         # Create menu bar
         self.create_menu()
         
+        # Set icon again after UI is built (can help with some Windows versions)
+        if os.path.exists(icon_path):
+            self.setWindowIcon(QIcon(icon_path))
+        
         self.show()
-    
+
     def create_menu(self):
         menubar = self.menuBar()
         
@@ -361,7 +410,7 @@ class USBShield(QMainWindow):
         storage_layout = QVBoxLayout()
         
         # Auto-block option
-        self.autoblock_checkbox = QCheckBox("Automatically block all new USB storage devices")
+        self.autoblock_checkbox = QCheckBox("Automatically allow all new USB storage devices")
         self.autoblock_checkbox.setChecked(self.autoblock)
         self.autoblock_checkbox.stateChanged.connect(self.toggle_autoblock)
         storage_layout.addWidget(self.autoblock_checkbox)
@@ -538,6 +587,10 @@ class USBShield(QMainWindow):
                                             if product_id != "N/A":
                                                 product_id = product_id.replace("PID_", "")
                                             
+                                            # Auto-allow if enabled and not already in allowed list
+                                            if self.autoblock and serial != "N/A" and serial not in self.allowed_devices:
+                                                self.allowed_devices.add(serial)
+                                            
                                             # Determine status
                                             status = "Allowed" if serial in self.allowed_devices else "Blocked"
                                             
@@ -569,20 +622,19 @@ class USBShield(QMainWindow):
                                                 # Notify if needed
                                                 if self.notify_connect_checkbox.isChecked():
                                                     self.show_notification("USB Device Connected", 
-                                                                          f"USB device connected: {device_name}\nStatus: {status}")
+                                                                        f"USB device connected: {device_name}\nStatus: {status}")
                                                 
                                                 # Auto-scan if enabled
                                                 if self.autoscan_checkbox.isChecked():
                                                     self.start_scan(disk.DeviceID)
                                                 
-                                                # Block if autoblock is enabled and not already allowed
-                                                if self.autoblock and status == "Blocked":
+                                                # Apply status to the drive
+                                                if status == "Allowed":
+                                                    self.allow_usb_drive(disk.DeviceID)
+                                                else:
                                                     self.block_usb_drive(disk.DeviceID)
                                                     
-                                                    # Notify if needed
-                                                    if self.notify_block_checkbox.isChecked():
-                                                        self.show_notification("USB Device Blocked", 
-                                                                              f"USB device blocked: {device_name}")
+                                                # No second notification - removed
         except Exception as e:
             print(f"Error detecting USB drives: {e}")
     
@@ -1417,30 +1469,42 @@ class USBShield(QMainWindow):
 
     
     def quarantine_all_files(self):
-        """Quarantine all suspicious files in the table."""
+        """Quarantine all suspicious files in the table, handling duplicates."""
         if self.suspicious_files_table.rowCount() == 0:
             QMessageBox.information(self, "No Files", "No suspicious files to quarantine.")
             return
         
         # Create quarantine directory if it doesn't exist
-        quarantine_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "quarantine")
+        quarantine_dir = get_app_path("quarantine")
         if not os.path.exists(quarantine_dir):
             os.makedirs(quarantine_dir)
         
-        # Quarantine each file
+        # Track already processed files to avoid dupes
+        processed_files = set()
         quarantined_count = 0
+        
+        # Quarantine each file
         for row in range(self.suspicious_files_table.rowCount()):
             file_path = self.suspicious_files_table.item(row, 0).text()
+            
+            # Skip if already processed
+            if file_path in processed_files:
+                continue
+            
+            # Add to processed set
+            processed_files.add(file_path)
+            
+            # Try to quarantine
             if self.quarantine_file(file_path):
                 quarantined_count += 1
         
         QMessageBox.information(self, "Quarantine Complete", f"{quarantined_count} files quarantined successfully.")
     
     def quarantine_file(self, file_path):
-        """Quarantine a suspicious file by moving it to the quarantine directory."""
+        """Quarantine a suspicious file by copying to quarantine directory and then deleting original."""
         try:
             # Create quarantine directory if it doesn't exist
-            quarantine_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "quarantine")
+            quarantine_dir = get_app_path("quarantine")
             if not os.path.exists(quarantine_dir):
                 os.makedirs(quarantine_dir)
             
@@ -1454,14 +1518,17 @@ class USBShield(QMainWindow):
                 name, ext = os.path.splitext(file_name)
                 quarantine_path = os.path.join(quarantine_dir, f"{name}_{timestamp}{ext}")
             
-            # Move file to quarantine
-            os.rename(file_path, quarantine_path)
+            # Copy file to quarantine first
+            shutil.copy2(file_path, quarantine_path)
+            
+            # Then delete the original
+            os.remove(file_path)
             
             # Log event
             self.log_event("Quarantined", file_path, "Moved to quarantine")
             
             return True
-            
+                
         except Exception as e:
             print(f"Error quarantining file {file_path}: {e}")
             QMessageBox.critical(self, "Quarantine Error", f"Error quarantining file: {e}")
@@ -1512,19 +1579,21 @@ def main():
     app = QApplication(sys.argv)
     
     # Set application icon (this affects the window icon)
-    app_icon = QIcon('usbshield_icon.ico')
+    app_icon = QIcon(get_app_path('usbshield_icon.ico'))
     app.setWindowIcon(app_icon)
     
     # Set the app ID to help Windows properly identify the application in the taskbar
     import ctypes
-    myappid = 'USBShield.Application.1.0'  # arbitrary string
+    myappid = 'USBShield.Application'  # Simplified, more consistent app ID
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
     
     # Create and show the main window
     window = USBShield()
+    window.setWindowIcon(app_icon)  # Set icon again on the main window
     
     # Exit when the app is closed
     sys.exit(app.exec_())
+
 
 if __name__ == "__main__":
     main()

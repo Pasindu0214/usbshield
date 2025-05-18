@@ -6027,3 +6027,153 @@
 2025-05-13 12:30:00,373 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
 2025-05-13 12:30:01,555 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
 2025-05-13 12:30:01,563 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 12:40:01,767 - YARAScanner - INFO - Loaded 2 YARA rule files
+2025-05-13 12:40:01,767 - YARAScanner - INFO - Loaded YARA rule file: test_detection.yar
+2025-05-13 12:40:01,767 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-05-13 12:40:04,908 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
+2025-05-13 12:40:04,924 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 12:40:05,289 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net.exe
+2025-05-13 12:40:05,298 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 12:40:43,955 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
+2025-05-13 12:40:43,967 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 12:40:44,350 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net.exe
+2025-05-13 12:40:44,357 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 12:45:50,159 - YARAScanner - INFO - Loaded 2 YARA rule files
+2025-05-13 12:45:50,159 - YARAScanner - INFO - Loaded YARA rule file: test_detection.yar
+2025-05-13 12:45:50,159 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-05-13 12:45:52,967 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net.exe
+2025-05-13 12:45:52,977 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 12:45:54,688 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
+2025-05-13 12:45:54,696 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 12:57:17,706 - YARAScanner - INFO - Loaded 2 YARA rule files
+2025-05-13 12:57:17,706 - YARAScanner - INFO - Loaded YARA rule file: test_detection.yar
+2025-05-13 12:57:17,707 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-05-13 12:57:20,708 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
+2025-05-13 12:57:20,718 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 12:57:21,100 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net.exe
+2025-05-13 12:57:21,108 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 12:57:41,358 - YARAScanner - INFO - Loaded 2 YARA rule files
+2025-05-13 12:57:41,358 - YARAScanner - INFO - Loaded YARA rule file: test_detection.yar
+2025-05-13 12:57:41,358 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-05-13 12:57:43,605 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
+2025-05-13 12:57:43,613 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 12:57:43,995 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net.exe
+2025-05-13 12:57:44,003 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:01:02,416 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
+2025-05-13 13:01:02,428 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:01:02,805 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net.exe
+2025-05-13 13:01:02,814 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:01:49,022 - YARAScanner - INFO - Loaded 2 YARA rule files
+2025-05-13 13:01:49,022 - YARAScanner - INFO - Loaded YARA rule file: test_detection.yar
+2025-05-13 13:01:49,022 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-05-13 13:01:52,200 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\Track.txt
+2025-05-13 13:01:52,213 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:01:52,615 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net.exe
+2025-05-13 13:01:52,622 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:01:53,005 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
+2025-05-13 13:01:53,013 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:19:18,858 - YARAScanner - INFO - Loaded 2 YARA rule files
+2025-05-13 13:19:18,858 - YARAScanner - INFO - Loaded YARA rule file: test_detection.yar
+2025-05-13 13:19:18,858 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-05-13 13:19:21,612 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\Track.txt
+2025-05-13 13:19:21,653 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:19:21,685 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
+2025-05-13 13:19:21,694 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:19:22,106 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net.exe
+2025-05-13 13:19:22,107 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:24:47,923 - YARAScanner - INFO - Loaded 2 YARA rule files
+2025-05-13 13:24:47,923 - YARAScanner - INFO - Loaded YARA rule file: test_detection.yar
+2025-05-13 13:24:47,923 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-05-13 13:24:50,774 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\Track.txt
+2025-05-13 13:24:50,776 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:24:51,298 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net.exe
+2025-05-13 13:24:51,303 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:24:51,610 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
+2025-05-13 13:24:51,617 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:32:20,190 - YARAScanner - INFO - Loaded 2 YARA rule files
+2025-05-13 13:32:20,191 - YARAScanner - INFO - Loaded YARA rule file: test_detection.yar
+2025-05-13 13:32:20,192 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-05-13 13:32:33,314 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\Track.txt
+2025-05-13 13:32:33,335 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:32:36,807 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net.exe
+2025-05-13 13:32:36,818 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:32:37,380 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
+2025-05-13 13:32:37,392 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:34:37,673 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\Track.txt
+2025-05-13 13:34:37,693 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:34:38,526 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net.exe
+2025-05-13 13:34:38,536 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:34:39,094 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
+2025-05-13 13:34:39,105 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:44:42,644 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\Track.txt
+2025-05-13 13:44:42,661 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:44:43,572 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net.exe
+2025-05-13 13:44:43,583 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 13:44:44,089 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
+2025-05-13 13:44:44,100 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 14:02:55,535 - YARAScanner - INFO - Loaded 2 YARA rule files
+2025-05-13 14:02:55,535 - YARAScanner - INFO - Loaded YARA rule file: test_detection.yar
+2025-05-13 14:02:55,538 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-05-13 14:03:01,000 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\Track.txt
+2025-05-13 14:03:01,055 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 14:03:01,225 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
+2025-05-13 14:03:01,241 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 14:03:01,843 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net.exe
+2025-05-13 14:03:01,850 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 14:04:29,795 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\Track.txt
+2025-05-13 14:04:29,838 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 14:04:29,926 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
+2025-05-13 14:04:29,950 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 14:04:30,653 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net.exe
+2025-05-13 14:04:30,667 - YARAScanner - INFO - Detailed YARA matches logged to logs/yara_scan_detailed.json
+2025-05-13 15:26:11,374 - YARAScanner - INFO - Loaded 2 YARA rule files
+2025-05-13 15:26:11,375 - YARAScanner - INFO - Loaded YARA rule file: test_detection.yar
+2025-05-13 15:26:11,375 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-05-13 15:26:16,925 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\Track.txt
+2025-05-13 15:26:16,938 - YARAScanner - INFO - Detailed YARA matches logged to D:\Repos\usbshield\logs/yara_scan_detailed.json
+2025-05-13 15:26:17,139 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
+2025-05-13 15:26:17,160 - YARAScanner - INFO - Detailed YARA matches logged to D:\Repos\usbshield\logs/yara_scan_detailed.json
+2025-05-13 15:26:17,795 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net.exe
+2025-05-13 15:26:17,808 - YARAScanner - INFO - Detailed YARA matches logged to D:\Repos\usbshield\logs/yara_scan_detailed.json
+2025-05-13 15:27:47,554 - YARAScanner - INFO - Loaded 2 YARA rule files
+2025-05-13 15:27:47,554 - YARAScanner - INFO - Loaded YARA rule file: test_detection.yar
+2025-05-13 15:27:47,554 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-05-13 15:27:53,974 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\Track.txt
+2025-05-13 15:27:54,001 - YARAScanner - INFO - Detailed YARA matches logged to D:\Repos\usbshield\logs/yara_scan_detailed.json
+2025-05-13 15:27:54,046 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
+2025-05-13 15:27:54,065 - YARAScanner - INFO - Detailed YARA matches logged to D:\Repos\usbshield\logs/yara_scan_detailed.json
+2025-05-13 15:27:54,699 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net.exe
+2025-05-13 15:27:54,713 - YARAScanner - INFO - Detailed YARA matches logged to D:\Repos\usbshield\logs/yara_scan_detailed.json
+2025-05-13 15:31:11,799 - YARAScanner - INFO - Loaded 2 YARA rule files
+2025-05-13 15:31:11,799 - YARAScanner - INFO - Loaded YARA rule file: test_detection.yar
+2025-05-13 15:31:11,799 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-05-13 15:31:17,724 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\Track.txt
+2025-05-13 15:31:17,754 - YARAScanner - INFO - Detailed YARA matches logged to D:\Repos\usbshield\logs/yara_scan_detailed.json
+2025-05-13 15:31:17,856 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
+2025-05-13 15:31:17,874 - YARAScanner - INFO - Detailed YARA matches logged to D:\Repos\usbshield\logs/yara_scan_detailed.json
+2025-05-13 15:31:18,514 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net.exe
+2025-05-13 15:31:18,524 - YARAScanner - INFO - Detailed YARA matches logged to D:\Repos\usbshield\logs/yara_scan_detailed.json
+2025-05-13 15:52:36,614 - YARAScanner - INFO - Loaded 2 YARA rule files
+2025-05-13 15:52:36,629 - YARAScanner - INFO - Loaded YARA rule file: test_detection.yar
+2025-05-13 15:52:36,629 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-05-13 15:52:42,256 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\Track.txt
+2025-05-13 15:52:42,271 - YARAScanner - INFO - Detailed YARA matches logged to D:\Repos\usbshield\logs/yara_scan_detailed.json
+2025-05-13 15:52:42,451 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
+2025-05-13 15:52:42,472 - YARAScanner - INFO - Detailed YARA matches logged to D:\Repos\usbshield\logs/yara_scan_detailed.json
+2025-05-13 15:52:43,015 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net.exe
+2025-05-13 15:52:43,028 - YARAScanner - INFO - Detailed YARA matches logged to D:\Repos\usbshield\logs/yara_scan_detailed.json
+2025-05-17 13:51:33,918 - YARAScanner - INFO - Loaded 2 YARA rule files
+2025-05-17 13:51:33,918 - YARAScanner - INFO - Loaded YARA rule file: test_detection.yar
+2025-05-17 13:51:33,919 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-05-17 16:58:40,909 - YARAScanner - INFO - Loaded 2 YARA rule files
+2025-05-17 16:58:40,909 - YARAScanner - INFO - Loaded YARA rule file: test_detection.yar
+2025-05-17 16:58:40,909 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-05-17 17:00:20,691 - YARAScanner - INFO - Loaded 2 YARA rule files
+2025-05-17 17:00:20,722 - YARAScanner - INFO - Loaded YARA rule file: test_detection.yar
+2025-05-17 17:00:20,722 - YARAScanner - INFO - Loaded YARA rule file: usb_malware.yar
+2025-05-17 17:05:28,033 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\Track.txt
+2025-05-17 17:05:28,033 - YARAScanner - INFO - Detailed YARA matches logged to D:\Repos\usbshield\logs/yara_scan_detailed.json
+2025-05-17 17:05:28,233 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net.exe
+2025-05-17 17:05:28,233 - YARAScanner - INFO - Detailed YARA matches logged to D:\Repos\usbshield\logs/yara_scan_detailed.json
+2025-05-17 17:05:28,233 - YARAScanner - WARNING - YARA MATCH: Rule 'Test_TextFile_Pattern' detected in G:\KMSAuto Net 1.5.1.exe
+2025-05-17 17:05:28,233 - YARAScanner - INFO - Detailed YARA matches logged to D:\Repos\usbshield\logs/yara_scan_detailed.json

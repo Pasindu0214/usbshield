@@ -1,0 +1,505 @@
+[
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net 1.5.1.exe",
+    "file_size": 8987424,
+    "timestamp": "2025-05-17T15:27:18.057731"
+  }
+]"Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net 1.5.1.exe",
+    "file_size": 8987424,
+    "timestamp": "2025-05-13T16:08:02.160380"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net.exe",
+    "file_size": 8767160,
+    "timestamp": "2025-05-13T16:08:02.730631"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\Track.txt",
+    "file_size": 68,
+    "timestamp": "2025-05-13T16:09:17.785576"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net.exe",
+    "file_size": 8767160,
+    "timestamp": "2025-05-13T16:09:19.005738"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net 1.5.1.exe",
+    "file_size": 8987424,
+    "timestamp": "2025-05-13T16:09:20.733398"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\Track.txt",
+    "file_size": 68,
+    "timestamp": "2025-05-13T16:14:47.030529"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net 1.5.1.exe",
+    "file_size": 8987424,
+    "timestamp": "2025-05-13T16:14:47.069315"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net.exe",
+    "file_size": 8767160,
+    "timestamp": "2025-05-13T16:14:47.796549"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\Track.txt",
+    "file_size": 68,
+    "timestamp": "2025-05-13T16:15:40.918590"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net 1.5.1.exe",
+    "file_size": 8987424,
+    "timestamp": "2025-05-13T16:15:41.003220"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net.exe",
+    "file_size": 8767160,
+    "timestamp": "2025-05-13T16:15:42.496118"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\Track.txt",
+    "file_size": 68,
+    "timestamp": "2025-05-13T16:34:52.999512"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net 1.5.1.exe",
+    "file_size": 8987424,
+    "timestamp": "2025-05-13T16:34:53.573639"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net.exe",
+    "file_size": 8767160,
+    "timestamp": "2025-05-13T16:34:54.152430"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\Track.txt",
+    "file_size": 68,
+    "timestamp": "2025-05-13T16:35:34.106187"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net 1.5.1.exe",
+    "file_size": 8987424,
+    "timestamp": "2025-05-13T16:35:34.225172"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net.exe",
+    "file_size": 8767160,
+    "timestamp": "2025-05-13T16:35:34.914508"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\Track.txt",
+    "file_size": 68,
+    "timestamp": "2025-05-13T17:03:56.453176"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net.exe",
+    "file_size": 8767160,
+    "timestamp": "2025-05-13T17:03:59.712794"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net 1.5.1.exe",
+    "file_size": 8987424,
+    "timestamp": "2025-05-13T17:04:15.872411"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\Track.txt",
+    "file_size": 68,
+    "timestamp": "2025-05-13T18:33:54.460738"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net 1.5.1.exe",
+    "file_size": 8987424,
+    "timestamp": "2025-05-13T18:33:54.682114"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net.exe",
+    "file_size": 8767160,
+    "timestamp": "2025-05-13T18:33:55.403218"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\Track.txt",
+    "file_size": 68,
+    "timestamp": "2025-05-13T18:35:13.891843"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net 1.5.1.exe",
+    "file_size": 8987424,
+    "timestamp": "2025-05-13T18:35:13.954775"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net.exe",
+    "file_size": 8767160,
+    "timestamp": "2025-05-13T18:35:14.350396"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\Track.txt",
+    "file_size": 68,
+    "timestamp": "2025-05-13T18:36:16.152782"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net 1.5.1.exe",
+    "file_size": 8987424,
+    "timestamp": "2025-05-13T18:36:16.206945"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net.exe",
+    "file_size": 8767160,
+    "timestamp": "2025-05-13T18:36:16.587764"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\Track.txt",
+    "file_size": 68,
+    "timestamp": "2025-05-13T19:31:13.505794"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net 1.5.1.exe",
+    "file_size": 8987424,
+    "timestamp": "2025-05-13T19:31:13.727764"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net.exe",
+    "file_size": 8767160,
+    "timestamp": "2025-05-13T19:31:14.087709"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\Track.txt",
+    "file_size": 68,
+    "timestamp": "2025-05-13T19:39:07.106179"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net 1.5.1.exe",
+    "file_size": 8987424,
+    "timestamp": "2025-05-13T19:39:07.143321"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net.exe",
+    "file_size": 8767160,
+    "timestamp": "2025-05-13T19:39:07.557691"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\Track.txt",
+    "file_size": 68,
+    "timestamp": "2025-05-17T13:53:18.735196"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\Track.txt",
+    "file_size": 68,
+    "timestamp": "2025-05-17T13:57:35.405986"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net 1.5.1.exe",
+    "file_size": 8987424,
+    "timestamp": "2025-05-17T13:57:35.424552"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net.exe",
+    "file_size": 8767160,
+    "timestamp": "2025-05-17T13:57:35.812353"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\Track.txt",
+    "file_size": 68,
+    "timestamp": "2025-05-17T14:23:12.155456"
+  },
+  {
+    "rule": "Test_TextFile_Pattern",
+    "namespace": "test_detection",
+    "tags": [],
+    "meta": {
+      "description": "Simple test rule that matches any text file containing 'test'",
+      "severity": "info"
+    },
+    "file_path": "G:\\KMSAuto Net.exe",
+    "file_size": 8767160,
+    "timestamp": "2025-05-17T14:23:12.183899"
+  }
+]
